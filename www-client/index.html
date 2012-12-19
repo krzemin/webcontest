@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="css/cosmo/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="vendors/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/ambiance.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/ambiance-mobile.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/blackboard.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/cobalt.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/eclipse.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/elegant.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/erlang-dark.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/lesser-dark.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/monokai.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/neat.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/night.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/rubyblue.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/solarized.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/twilight.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/vibrant-ink.css">
+    <link rel="stylesheet" href="vendors/codemirror/theme/xq-dark.css">
     <script src="vendors/jquery.min.js"></script>
     <script src="vendors/bootstrap.min.js"></script>
     <script src="vendors/jquery.json-2.3.min.js"></script>
@@ -18,7 +34,6 @@
     <script src="vendors/codemirror/lib/codemirror.js"></script>
     <script src="vendors/codemirror/mode/clike.js"></script>
     <script src="vendors/codemirror/mode/python.js"></script>
-    <script src="vendors/jquery.codemirror.js"></script>
     <script src="release/templates.js"></script>
     <script src="release/app-debug.js"></script>
    </head>
@@ -87,7 +102,13 @@
 -->
           <div class="row-fluid">
             <div class="span12">
-              <textarea id="code" style="border: 1px solid gray;"></textarea>
+              <textarea id="code" style="border: 1px solid gray;">#include<iostream>
+using namespace std;
+
+int main() {
+    cout &lt;&lt; "Hello World!" &lt;&lt; endl;
+    return 0;
+}</textarea>
             </div>
           </div>
 
