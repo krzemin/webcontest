@@ -2,7 +2,6 @@ class LocalStorage
   constructor: (@namespace) ->
 
   set: (key, value) =>
-    console.log(value)
     $.jStorage.set("#{@namespace}/#{key}", value)
 
   get: (key) =>
@@ -15,3 +14,11 @@ class LocalStorage
     for key in $.jStorage.index()
       if key.match("^#{@namespace}")
         $.jStorage.deleteKey(key)
+
+  setCode: (newText) =>
+    @set('code', newText)
+
+  getCode: =>
+    @get('code')
+
+

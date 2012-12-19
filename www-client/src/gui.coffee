@@ -11,15 +11,13 @@ class Gui
       lineNumbers: true,
     }
     codeWidget = document.getElementById('code')
-    cm = CodeMirror.fromTextArea(codeWidget, opts)
-    CodeMirror.on(cm, "change", (instance, chObj) => @codeChanged(instance, chObj))
+    @cm = CodeMirror.fromTextArea(codeWidget, opts)
+    CodeMirror.on(@cm, "change", (instance, chObj) => @codeChanged(instance.getValue()))
 
-  codeChanged: (instance, chObj) =>
-    console.log('from: ' + chObj.from)
-    console.log('to: ' + chObj.to)
-    console.log('text: ' + chObj.text)
-    console.log('next: ' + chObj.next)
-    console.log('TXT: ' + instance.getValue())
+  loadCode: (codeText) =>
+    @cm.setValue(codeText)
+
+  codeChanged: (newText) =>
 
 
 

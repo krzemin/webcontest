@@ -3,5 +3,8 @@ class UseCase
     
   start: =>
     
+  loadCode: (codeText) => 
+ 
+  codeChanged: (newText) =>
 
-    
+   

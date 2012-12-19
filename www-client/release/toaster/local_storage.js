@@ -5,6 +5,10 @@ LocalStorage = (function() {
 
   function LocalStorage(namespace) {
     this.namespace = namespace;
+    this.getCode = __bind(this.getCode, this);
+
+    this.setCode = __bind(this.setCode, this);
+
     this.flush = __bind(this.flush, this);
 
     this.remove = __bind(this.remove, this);
@@ -16,7 +20,6 @@ LocalStorage = (function() {
   }
 
   LocalStorage.prototype.set = function(key, value) {
-    console.log(value);
     return $.jStorage.set("" + this.namespace + "/" + key, value);
   };
 
@@ -41,6 +44,14 @@ LocalStorage = (function() {
       }
     }
     return _results;
+  };
+
+  LocalStorage.prototype.setCode = function(newText) {
+    return this.set('code', newText);
+  };
+
+  LocalStorage.prototype.getCode = function() {
+    return this.get('code');
   };
 
   return LocalStorage;

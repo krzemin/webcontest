@@ -6,7 +6,7 @@ App = (function() {
     var glue, gui, localStorage, useCase;
     useCase = new UseCase();
     gui = new Gui();
-    localStorage = new LocalStorage("app");
+    localStorage = new LocalStorage("webcontest");
     glue = new Glue(useCase, gui, localStorage);
     useCase.start();
   }

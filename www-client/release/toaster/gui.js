@@ -6,6 +6,8 @@ Gui = (function() {
   function Gui() {
     this.codeChanged = __bind(this.codeChanged, this);
 
+    this.loadCode = __bind(this.loadCode, this);
+
     this.initCodeMirror = __bind(this.initCodeMirror, this);
 
     this.start = __bind(this.start, this);
@@ -17,7 +19,7 @@ Gui = (function() {
   };
 
   Gui.prototype.initCodeMirror = function() {
-    var cm, codeWidget, opts,
+    var codeWidget, opts,
       _this = this;
     opts = {
       mode: "text/x-c++src",
@@ -25,19 +27,17 @@ Gui = (function() {
       lineNumbers: true
     };
     codeWidget = document.getElementById('code');
-    cm = CodeMirror.fromTextArea(codeWidget, opts);
-    return CodeMirror.on(cm, "change", function(instance, chObj) {
-      return _this.codeChanged(instance, chObj);
+    this.cm = CodeMirror.fromTextArea(codeWidget, opts);
+    return CodeMirror.on(this.cm, "change", function(instance, chObj) {
+      return _this.codeChanged(instance.getValue());
     });
   };
 
-  Gui.prototype.codeChanged = function(instance, chObj) {
-    console.log('from: ' + chObj.from);
-    console.log('to: ' + chObj.to);
-    console.log('text: ' + chObj.text);
-    console.log('next: ' + chObj.next);
-    return console.log('TXT: ' + instance.getValue());
+  Gui.prototype.loadCode = function(codeText) {
+    return this.cm.setValue(codeText);
   };
+
+  Gui.prototype.codeChanged = function(newText) {};
 
   return Gui;
 
