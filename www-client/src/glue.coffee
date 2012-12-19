@@ -1,5 +1,7 @@
 class Glue
   constructor: (@useCase, @gui, @storage)->
-    LogAll(@useCase)
-    LogAll(@gui)
+    LogAll(@useCase, 'UseCase')
+    LogAll(@gui, 'Gui')
+
+    After(@useCase, 'start', @gui.start)
 

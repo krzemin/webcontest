@@ -6,8 +6,9 @@ Glue = (function() {
     this.useCase = useCase;
     this.gui = gui;
     this.storage = storage;
-    LogAll(this.useCase);
-    LogAll(this.gui);
+    LogAll(this.useCase, 'UseCase');
+    LogAll(this.gui, 'Gui');
+    After(this.useCase, 'start', this.gui.start);
   }
 
   return Glue;

@@ -22,7 +22,7 @@ _.defaults(this, {
     }
     return _results;
   },
-  LogAll: function(object) {
+  LogAll: function(object, name) {
     var key, value, _results;
     _results = [];
     for (key in object) {
@@ -31,7 +31,7 @@ _.defaults(this, {
       if (_.isFunction(value)) {
         _results.push((function(key) {
           return Before(object, key, function() {
-            return console.log("calling: " + key);
+            return console.log("calling: " + name + "::" + key);
           });
         })(key));
       } else {
