@@ -2,20 +2,17 @@ class Gui
   constructor: ->
 
   start: =>
-    @initCodeMirror()
 
-  initCodeMirror: =>
+  initCodeView: (codeText) =>
     opts = {
       mode: "text/x-c++src",
-      theme: "eclipse",
+      theme: "monokai",
       lineNumbers: true,
     }
     codeWidget = document.getElementById('code')
     @cm = CodeMirror.fromTextArea(codeWidget, opts)
-    CodeMirror.on(@cm, "change", (instance, chObj) => @codeChanged(instance.getValue()))
-
-  loadCode: (codeText) =>
     @cm.setValue(codeText)
+    CodeMirror.on(@cm, "change", (instance, chObj) => @codeChanged(instance.getValue()))
 
   codeChanged: (newText) =>
 

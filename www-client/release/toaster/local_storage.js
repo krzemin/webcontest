@@ -51,7 +51,7 @@ LocalStorage = (function() {
   };
 
   LocalStorage.prototype.getCode = function() {
-    return this.get('code');
+    return this.get('code') || "#include<iostream>\nusing namespace std;\n\nint main() {\n    cout << \"Hello World!\" << endl;\n    return 0;\n}";
   };
 
   return LocalStorage;

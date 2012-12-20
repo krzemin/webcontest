@@ -6,15 +6,17 @@ UseCase = (function() {
   function UseCase() {
     this.codeChanged = __bind(this.codeChanged, this);
 
-    this.loadCode = __bind(this.loadCode, this);
+    this.initCodeView = __bind(this.initCodeView, this);
 
     this.start = __bind(this.start, this);
 
   }
 
-  UseCase.prototype.start = function() {};
+  UseCase.prototype.start = function() {
+    return this.initCodeView();
+  };
 
-  UseCase.prototype.loadCode = function(codeText) {};
+  UseCase.prototype.initCodeView = function() {};
 
   UseCase.prototype.codeChanged = function(newText) {};
 

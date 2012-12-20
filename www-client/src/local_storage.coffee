@@ -19,6 +19,13 @@ class LocalStorage
     @set('code', newText)
 
   getCode: =>
-    @get('code')
+    @get('code') || """
+#include<iostream>
+using namespace std;
 
+int main() {
+    cout << "Hello World!" << endl;
+    return 0;
+}
+"""
 

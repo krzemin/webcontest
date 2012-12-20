@@ -2,9 +2,10 @@ class UseCase
   constructor: ->
     
   start: =>
-    
-  loadCode: (codeText) => 
- 
+    @initCodeView()
+  
+  initCodeView: =>
+     
   codeChanged: (newText) =>
 
    
