@@ -15,11 +15,11 @@ Glue = (function() {
     After(this.useCase, 'initCodeView', function() {
       return _this.gui.initCodeView(_this.storage.getCode());
     });
-    After(this.useCase, 'codeChanged', function(newText) {
-      return _this.storage.setCode(newText);
-    });
     After(this.gui, 'codeChanged', function(newText) {
       return _this.useCase.codeChanged(newText);
+    });
+    After(this.useCase, 'codeChanged', function(newText) {
+      return _this.storage.setCode(newText);
     });
   }
 
