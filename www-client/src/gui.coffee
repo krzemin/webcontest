@@ -14,6 +14,7 @@ class Gui
     codeWidget = document.getElementById('code')
     @cm = CodeMirror.fromTextArea(codeWidget, opts)
     @cm.setValue(codeText)
+    @cm.markClean()
     setTimeout(@saveCodeCallback, @saveCodeEvery * 1000)
     # previously, saving the code was performed every editor's content change
     # CodeMirror.on(@cm, "change", (instance, chObj) => @codeChanged(instance.getValue()))

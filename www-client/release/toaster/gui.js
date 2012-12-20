@@ -27,6 +27,7 @@ Gui = (function() {
     codeWidget = document.getElementById('code');
     this.cm = CodeMirror.fromTextArea(codeWidget, opts);
     this.cm.setValue(codeText);
+    this.cm.markClean();
     return setTimeout(this.saveCodeCallback, this.saveCodeEvery * 1000);
   };
 
