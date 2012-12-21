@@ -26,7 +26,7 @@ class Gui
   isCodeViewFullScreen: (cm) =>
     /\bCodeMirror-fullscreen\b/.test(cm.getWrapperElement().className)
 
-  setCodeViewFullscreen: (cm, full) =>
+  setCodeViewFullScreen: (cm, full) =>
     wrap = cm.getWrapperElement()
     winHeight = window.innerHeight || (document.documentElement || document.body).clientHeight
     if full
@@ -37,7 +37,7 @@ class Gui
       wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "")
       wrap.style.height = ""
       document.documentElement.style.overflow = ""
-    cm.refresh
+    cm.refresh()
 
   saveCodeCallback: =>
     @codeChanged(@cm.getValue()) unless @cm.isClean()

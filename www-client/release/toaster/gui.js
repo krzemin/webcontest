@@ -8,7 +8,7 @@ Gui = (function() {
 
     this.saveCodeCallback = __bind(this.saveCodeCallback, this);
 
-    this.setCodeViewFullscreen = __bind(this.setCodeViewFullscreen, this);
+    this.setCodeViewFullScreen = __bind(this.setCodeViewFullScreen, this);
 
     this.isCodeViewFullScreen = __bind(this.isCodeViewFullScreen, this);
 
@@ -50,7 +50,7 @@ Gui = (function() {
     return /\bCodeMirror-fullscreen\b/.test(cm.getWrapperElement().className);
   };
 
-  Gui.prototype.setCodeViewFullscreen = function(cm, full) {
+  Gui.prototype.setCodeViewFullScreen = function(cm, full) {
     var winHeight, wrap;
     wrap = cm.getWrapperElement();
     winHeight = window.innerHeight || (document.documentElement || document.body).clientHeight;
@@ -63,7 +63,7 @@ Gui = (function() {
       wrap.style.height = "";
       document.documentElement.style.overflow = "";
     }
-    return cm.refresh;
+    return cm.refresh();
   };
 
   Gui.prototype.saveCodeCallback = function() {
