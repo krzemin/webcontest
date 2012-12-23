@@ -14,6 +14,44 @@ Gui = (function() {
 
     this.initCodeView = __bind(this.initCodeView, this);
 
+    this.signOut = __bind(this.signOut, this);
+
+    this.showSettingsForm = __bind(this.showSettingsForm, this);
+
+    this.showRanking = __bind(this.showRanking, this);
+
+    this.showStatus = __bind(this.showStatus, this);
+
+    this.showProblem = __bind(this.showProblem, this);
+
+    this.showProblemList = __bind(this.showProblemList, this);
+
+    this.showContestWelcome = __bind(this.showContestWelcome, this);
+
+    this.signOutClicked = __bind(this.signOutClicked, this);
+
+    this.settingsClicked = __bind(this.settingsClicked, this);
+
+    this.rankingClicked = __bind(this.rankingClicked, this);
+
+    this.statusClicked = __bind(this.statusClicked, this);
+
+    this.problemClicked = __bind(this.problemClicked, this);
+
+    this.problemListClicked = __bind(this.problemListClicked, this);
+
+    this.contestWelcomeClicked = __bind(this.contestWelcomeClicked, this);
+
+    this._setActiveNavMenuItem = __bind(this._setActiveNavMenuItem, this);
+
+    this._loadProblemsMenu = __bind(this._loadProblemsMenu, this);
+
+    this.showContestArea = __bind(this.showContestArea, this);
+
+    this.openContestClicked = __bind(this.openContestClicked, this);
+
+    this.registerForContestClicked = __bind(this.registerForContestClicked, this);
+
     this.showContestList = __bind(this.showContestList, this);
 
     this.signInClicked = __bind(this.signInClicked, this);
@@ -63,8 +101,98 @@ Gui = (function() {
   };
 
   Gui.prototype.showContestList = function(contests) {
+    var _this = this;
     console.log(contests);
-    return this._render('contest-list.tmpl', '#main', contests);
+    this._render('contest-list.tmpl', '#main', contests);
+    $('.register-for-contest').click(function(obj) {
+      return _this.registerForContestClicked(obj.toElement.id);
+    });
+    return $('.open-contest').click(function(obj) {
+      return _this.openContestClicked(obj.toElement.id);
+    });
+  };
+
+  Gui.prototype.registerForContestClicked = function(id) {};
+
+  Gui.prototype.openContestClicked = function(id) {};
+
+  Gui.prototype.showContestArea = function(contest) {
+    var _this = this;
+    console.log(contest);
+    this._setLayout('navbar');
+    $('#contest-welcome').text(contest.name);
+    this._loadProblemsMenu(contest.problems);
+    $('#contest-welcome').click(function() {
+      return _this.contestWelcomeClicked();
+    });
+    $('#status').click(function() {
+      return _this.statusClicked();
+    });
+    $('#ranking').click(function() {
+      return _this.rankingClicked();
+    });
+    $('#settings').click(function() {
+      return _this.settingsClicked();
+    });
+    return $('#sign-out').click(function() {
+      return _this.signOutClicked();
+    });
+  };
+
+  Gui.prototype._loadProblemsMenu = function(problems) {
+    var _this = this;
+    return problems.each(function(problem) {
+      var link;
+      link = $('<a>').attr('id', problem.id).text(problem.name).click(function(obj) {
+        return _this.problemClicked(obj.toElement.id);
+      });
+      return $('ul#problems-list').append($('<li>').append(link));
+    });
+  };
+
+  Gui.prototype._setActiveNavMenuItem = function(view) {
+    $('ul#navigation li').removeClass('active');
+    if (view !== '') {
+      return $("#" + view).parent().addClass('active');
+    }
+  };
+
+  Gui.prototype.contestWelcomeClicked = function() {
+    return this._setActiveNavMenuItem('');
+  };
+
+  Gui.prototype.problemListClicked = function() {};
+
+  Gui.prototype.problemClicked = function(id) {
+    return this._setActiveNavMenuItem('problems');
+  };
+
+  Gui.prototype.statusClicked = function() {
+    return this._setActiveNavMenuItem('status');
+  };
+
+  Gui.prototype.rankingClicked = function() {
+    return this._setActiveNavMenuItem('ranking');
+  };
+
+  Gui.prototype.settingsClicked = function() {};
+
+  Gui.prototype.signOutClicked = function() {};
+
+  Gui.prototype.showContestWelcome = function(contest) {};
+
+  Gui.prototype.showProblemList = function(problems) {};
+
+  Gui.prototype.showProblem = function(problem) {};
+
+  Gui.prototype.showStatus = function(status) {};
+
+  Gui.prototype.showRanking = function(ranking) {};
+
+  Gui.prototype.showSettingsForm = function(settings) {};
+
+  Gui.prototype.signOut = function() {
+    return this.start();
   };
 
   Gui.prototype.initCodeView = function(codeText) {

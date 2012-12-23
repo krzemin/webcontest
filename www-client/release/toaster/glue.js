@@ -15,6 +15,9 @@ Glue = (function() {
     After(this.useCase, 'loadContestList', function() {
       return _this.gui.showContestList(_this.storage.getContestList());
     });
+    After(this.useCase, 'openContest', function(id) {
+      return _this.gui.showContestArea(_this.storage.getContest(id));
+    });
   }
 
   return Glue;

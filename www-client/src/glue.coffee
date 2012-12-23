@@ -11,6 +11,7 @@ class Glue
     # initiation & starting an application
     After(@useCase, 'start', @gui.start)
     After(@useCase, 'loadContestList', => @gui.showContestList(@storage.getContestList()))
+    After(@useCase, 'openContest', (id) => @gui.showContestArea(@storage.getContest(id)))
 
     # codemirror stuff
     #After(@useCase, 'initCodeView', => @gui.initCodeView(@storage.getCode()))

@@ -2,7 +2,7 @@
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['contest-list.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
-  var buffer = "", stack1, self=this, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -32,8 +32,13 @@ function program2(depth0,data) {
   return buffer;}
 function program3(depth0,data) {
   
-  
-  return "\n            <button class=\"btn btn-success\">Open contest</button>\n            ";}
+  var buffer = "", stack1, foundHelper;
+  buffer += "\n            <button class=\"btn btn-success open-contest\" id=\"";
+  foundHelper = helpers.id;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\">Open contest</button>\n            ";
+  return buffer;}
 
 function program5(depth0,data) {
   
@@ -42,8 +47,13 @@ function program5(depth0,data) {
 
 function program7(depth0,data) {
   
-  
-  return "\n          <button class=\"btn btn-primary\">Register</button>\n          ";}
+  var buffer = "", stack1, foundHelper;
+  buffer += "\n          <button class=\"btn btn-primary register-for-contest\" id=\"";
+  foundHelper = helpers.id;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\">Register</button>\n          ";
+  return buffer;}
 
   buffer += "<div class=\"well\">\n  <h2>Please select contest</h2>\n\n  <table class=\"table table-stripped\">\n    <thead>\n      <th>Contest</th>\n      <th>Start date</th>\n      <th></th>\n    </thead>\n    <tbody>\n      ";
   stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
@@ -67,7 +77,7 @@ templates['layout-navbar.tmpl'] = template(function (Handlebars,depth0,helpers,p
   
 
 
-  return "<div class=\"navbar\">\n  <div class=\"navbar-inner\">\n    <div class=\"container\">\n      <a class=\"brand\" href=\"#\">Web Programmig Contest</a>\n      <div class=\"navbar-content\">\n\n        <ul class=\"nav\">\n          <li class=\"active\"><a href=\"#\"><i class=\"icon-eye-open icon-white\"></i> Problems</a></li>\n          <li><a href=\"#\"><i class=\"icon-file icon-white\"></i> Submit</a></li>\n          <li><a href=\"#\"><i class=\"icon-fire icon-white\"></i> Status</a></li>\n          <li><a href=\"#\"><i class=\"icon-th-list icon-white\"></i> Ranking</a></li>\n        </ul>\n\n        <ul class=\"nav pull-right\">\n          <li class=\"dropdown\">\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n              <i class=\"icon-user icon-white\"></i>\n              Signed in as <b>krzemin</b>\n              <span class=\"caret\"></span>\n            </a>\n            <ul class=\"dropdown-menu\">  \n              <li><a href=\"#\"><i class=\"icon-envelope\"></i> Messages inbox</a></li>  \n              <li><a href=\"#\"><i class=\"icon-cog\"></i> Settings</a></li>  \n              <li><a href=\"#\"><i class=\"icon-pencil\"></i> Code snippets</a></li>  \n              <li class=\"divider\"></li>  \n              <li><a href=\"#\"><i class=\"icon-off\"></i> Sign out</a></li>  \n            </ul>  \n          </li>\n        </ul>\n\n      </div>\n   </div>\n  </div>\n</div>\n\n<div class=\"container-fluid\" id=\"main\"></div>\n";});
+  return "<div class=\"navbar\">\n  <div class=\"navbar-inner\">\n    <div class=\"container\">\n      <a class=\"brand\" href=\"#\" id=\"contest-welcome\">Web Programmig Contest</a>\n      <div class=\"navbar-content\">\n\n        <ul class=\"nav\" id=\"navigation\">\n          <li class=\"dropdown\">\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" id=\"problems\">\n              <i class=\"icon-eye-open icon-white\"></i>\n              Problems\n              <span class=\"caret\"></span>\n            </a>\n            <ul class=\"dropdown-menu\" id=\"problems-list\"></ul>\n          </li>\n          <li><a id=\"status\"><i class=\"icon-fire icon-white\"></i> Status</a></li>\n          <li><a id=\"ranking\"><i class=\"icon-th-list icon-white\"></i> Ranking</a></li>\n        </ul>\n\n        <ul class=\"nav pull-right\">\n          <li class=\"dropdown\">\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n              <i class=\"icon-user icon-white\"></i>\n              Signed in as <b>krzemin</b>\n              <span class=\"caret\"></span>\n            </a>\n            <ul class=\"dropdown-menu\">  \n              <li><a id=\"messages\"><i class=\"icon-envelope\"></i> Messages</a></li>  \n              <li><a id=\"settings\"><i class=\"icon-cog\"></i> Settings</a></li>  \n              <li class=\"divider\"></li>  \n              <li><a id=\"sign-out\"><i class=\"icon-off\"></i> Sign out</a></li>  \n            </ul>  \n          </li>\n        </ul>\n\n      </div>\n   </div>\n  </div>\n</div>\n\n<div class=\"container-fluid\" id=\"main\"></div>\n";});
 templates['sign-in.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   

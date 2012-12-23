@@ -1,8 +1,11 @@
 .form-signin {
-    max-width: 300px;
-    padding: 19px 29px 29px;
-    margin: 80px auto 20px;
+  max-width: 300px;
+  padding: 19px 29px 29px;
+  margin: 80px auto 20px;
 }
 
+a:hover {
+  cursor: pointer;
+}
 
  

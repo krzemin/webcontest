@@ -10,7 +10,8 @@ class UseCase
 
   loadContestList: =>
 
-
+  openContest: (id) =>
+    
   
   initCodeView: =>
      

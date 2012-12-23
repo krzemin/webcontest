@@ -8,6 +8,8 @@ UseCase = (function() {
 
     this.initCodeView = __bind(this.initCodeView, this);
 
+    this.openContest = __bind(this.openContest, this);
+
     this.loadContestList = __bind(this.loadContestList, this);
 
     this.signIn = __bind(this.signIn, this);
@@ -26,6 +28,8 @@ UseCase = (function() {
   };
 
   UseCase.prototype.loadContestList = function() {};
+
+  UseCase.prototype.openContest = function(id) {};
 
   UseCase.prototype.initCodeView = function() {};
 

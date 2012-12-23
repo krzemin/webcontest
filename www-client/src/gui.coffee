@@ -16,10 +16,13 @@ class Gui
 
 
   # GUI actions
+  
   start: =>
     @_setLayout('center')
     @showSignInForm()
 
+  # sign in
+  
   showSignInForm: =>
     @_render('sign-in.tmpl', '#main', {})
     $('#sign-in').click( =>
@@ -31,10 +34,63 @@ class Gui
   signInClicked: (credentials) =>
     $('#sign-in').off('click').addClass('disabled').text('Signing in...')
   
+  # contest list
 
   showContestList: (contests) =>
     console.log(contests)
     @_render('contest-list.tmpl', '#main', contests)
+    $('.register-for-contest').click((obj) => @registerForContestClicked(obj.toElement.id))
+    $('.open-contest').click((obj) => @openContestClicked(obj.toElement.id))
+
+  registerForContestClicked: (id) =>
+  
+  openContestClicked: (id) =>
+
+  # contest area
+
+  showContestArea: (contest) =>
+    console.log(contest)
+    @_setLayout('navbar')
+    $('#contest-welcome').text(contest.name)
+    @_loadProblemsMenu(contest.problems)
+    $('#contest-welcome').click( => @contestWelcomeClicked() )
+    $('#status').click( => @statusClicked() )
+    $('#ranking').click( => @rankingClicked() )
+    $('#settings').click( => @settingsClicked() )
+    $('#sign-out').click( => @signOutClicked() )
+    
+
+  _loadProblemsMenu: (problems) =>
+    problems.each (problem) =>
+      link = $('<a>').attr('id', problem.id)
+                     .text(problem.name)
+                     .click((obj) => @problemClicked(obj.toElement.id))
+      $('ul#problems-list').append($('<li>').append(link))
+ 
+  _setActiveNavMenuItem: (view) =>
+    $('ul#navigation li').removeClass('active')
+    $("##{view}").parent().addClass('active') unless view == ''
+
+  contestWelcomeClicked: =>
+    @_setActiveNavMenuItem('')
+  problemListClicked: =>
+  problemClicked: (id) =>
+    @_setActiveNavMenuItem('problems')
+  statusClicked: =>
+    @_setActiveNavMenuItem('status')
+  rankingClicked: =>
+    @_setActiveNavMenuItem('ranking')
+  settingsClicked: =>
+  signOutClicked: =>
+
+  showContestWelcome: (contest) =>
+  showProblemList: (problems) =>
+  showProblem: (problem) =>
+  showStatus: (status) =>
+  showRanking: (ranking) =>
+  showSettingsForm: (settings) =>
+  signOut: =>
+    @start()
 
   initCodeView: (codeText) =>
     opts = {
