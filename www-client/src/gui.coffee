@@ -1,18 +1,44 @@
 class Gui
+  
   constructor: ->
     @saveCodeEvery = 15
 
+  # utils
+
+  _render: (template, target, data) =>
+    console.log('template = ' + template)
+    template = Handlebars.templates[template]
+    html = template(data)
+    $(target).html(html)
+
+  _setLayout: (layout) =>
+    @_render("layout-#{layout}.tmpl", 'body', {})
+
+
+  # GUI actions
   start: =>
+    @_setLayout('center')
+    @showSignInForm()
+
+  showSignInForm: =>
+    @_render('sign-in.tmpl', '#main', {})
+    $('#sign-in').click( => @signInClicked($('#email').val(), $('#password').val()))
+  signInClicked: (email, password) =>
+    $('#sign-in').off('click').addClass('disabled').text('Signing in...')
+  
+
+  showContestList: (contests) =>
+    @_render('contest-list.tmpl', '#main', contests)
 
   initCodeView: (codeText) =>
     opts = {
-      mode: "text/x-c++src",
-      theme: "monokai",
+      mode: 'text/x-c++src',
+      theme: 'monokai',
       lineNumbers: true,
       indentUnit: 4,
       extraKeys: {
-        "F11": (cm) => @setCodeViewFullScreen(cm, !@isCodeViewFullScreen(cm))
-        "Esc": (cm) => @setCodeViewFullScreen(cm, false) if @isCodeViewFullScreen(cm)
+        'F11': (cm) => @setCodeViewFullScreen(cm, !@isCodeViewFullScreen(cm))
+        'Esc': (cm) => @setCodeViewFullScreen(cm, false) if @isCodeViewFullScreen(cm)
       }
     }
     codeWidget = document.getElementById('code')
@@ -30,9 +56,9 @@ class Gui
     wrap = cm.getWrapperElement()
     winHeight = window.innerHeight || (document.documentElement || document.body).clientHeight
     if full
-      wrap.className += " CodeMirror-fullscreen"
-      wrap.style.height = winHeight + "px"
-      document.documentElement.style.overflow = "hidden"
+      wrap.className += ' CodeMirror-fullscreen'
+      wrap.style.height = winHeight + 'px'
+      document.documentElement.style.overflow = 'hidden'
     else
       wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "")
       wrap.style.height = ""

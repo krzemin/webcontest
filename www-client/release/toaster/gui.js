@@ -14,25 +14,66 @@ Gui = (function() {
 
     this.initCodeView = __bind(this.initCodeView, this);
 
+    this.showContestList = __bind(this.showContestList, this);
+
+    this.signInClicked = __bind(this.signInClicked, this);
+
+    this.showSignInForm = __bind(this.showSignInForm, this);
+
     this.start = __bind(this.start, this);
+
+    this._setLayout = __bind(this._setLayout, this);
+
+    this._render = __bind(this._render, this);
     this.saveCodeEvery = 15;
   }
 
-  Gui.prototype.start = function() {};
+  Gui.prototype._render = function(template, target, data) {
+    var html;
+    console.log('template = ' + template);
+    template = Handlebars.templates[template];
+    html = template(data);
+    return $(target).html(html);
+  };
+
+  Gui.prototype._setLayout = function(layout) {
+    return this._render("layout-" + layout + ".tmpl", 'body', {});
+  };
+
+  Gui.prototype.start = function() {
+    this._setLayout('center');
+    return this.showSignInForm();
+  };
+
+  Gui.prototype.showSignInForm = function() {
+    var _this = this;
+    this._render('sign-in.tmpl', '#main', {});
+    return $('#sign-in').click(function() {
+      return _this.signInClicked($('#email').val(), $('#password').val());
+    });
+  };
+
+  Gui.prototype.signInClicked = function(email, password) {
+    return $('#sign-in').off('click').addClass('disabled').text('Signing in...');
+  };
+
+  Gui.prototype.showContestList = function(contests) {
+    return this._render('contest-list.tmpl', '#main', contests);
+  };
 
   Gui.prototype.initCodeView = function(codeText) {
     var codeWidget, opts,
       _this = this;
     opts = {
-      mode: "text/x-c++src",
-      theme: "monokai",
+      mode: 'text/x-c++src',
+      theme: 'monokai',
       lineNumbers: true,
       indentUnit: 4,
       extraKeys: {
-        "F11": function(cm) {
+        'F11': function(cm) {
           return _this.setCodeViewFullScreen(cm, !_this.isCodeViewFullScreen(cm));
         },
-        "Esc": function(cm) {
+        'Esc': function(cm) {
           if (_this.isCodeViewFullScreen(cm)) {
             return _this.setCodeViewFullScreen(cm, false);
           }
@@ -55,9 +96,9 @@ Gui = (function() {
     wrap = cm.getWrapperElement();
     winHeight = window.innerHeight || (document.documentElement || document.body).clientHeight;
     if (full) {
-      wrap.className += " CodeMirror-fullscreen";
-      wrap.style.height = winHeight + "px";
-      document.documentElement.style.overflow = "hidden";
+      wrap.className += ' CodeMirror-fullscreen';
+      wrap.style.height = winHeight + 'px';
+      document.documentElement.style.overflow = 'hidden';
     } else {
       wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "");
       wrap.style.height = "";

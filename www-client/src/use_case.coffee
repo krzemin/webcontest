@@ -2,7 +2,14 @@ class UseCase
   constructor: ->
     
   start: =>
-    @initCodeView()
+
+  signIn: (email, password) =>
+    if email == 'a' and password == 'a'
+      @loadContestList
+
+  loadContestList: =>
+
+
   
   initCodeView: =>
      
