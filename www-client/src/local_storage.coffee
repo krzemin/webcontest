@@ -30,7 +30,9 @@ int main() {
 """
 
   signIn: (credentials) =>
-    credentials.email == '' && credentials.password == ''
+    result = credentials.email == '' && credentials.password == ''
+    setTimeout( (=> @signInResponse(result)), 700)
+  signInResponse: (response) =>
 
   getContestList: =>
     [

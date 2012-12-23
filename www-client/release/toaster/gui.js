@@ -18,13 +18,13 @@ Gui = (function() {
 
     this.showSettingsForm = __bind(this.showSettingsForm, this);
 
+    this.showMessages = __bind(this.showMessages, this);
+
     this.showRanking = __bind(this.showRanking, this);
 
     this.showStatus = __bind(this.showStatus, this);
 
     this.showProblem = __bind(this.showProblem, this);
-
-    this.showProblemList = __bind(this.showProblemList, this);
 
     this.showContestWelcome = __bind(this.showContestWelcome, this);
 
@@ -32,13 +32,13 @@ Gui = (function() {
 
     this.settingsClicked = __bind(this.settingsClicked, this);
 
+    this.messagesClicked = __bind(this.messagesClicked, this);
+
     this.rankingClicked = __bind(this.rankingClicked, this);
 
     this.statusClicked = __bind(this.statusClicked, this);
 
     this.problemClicked = __bind(this.problemClicked, this);
-
-    this.problemListClicked = __bind(this.problemListClicked, this);
 
     this.contestWelcomeClicked = __bind(this.contestWelcomeClicked, this);
 
@@ -54,7 +54,11 @@ Gui = (function() {
 
     this.showContestList = __bind(this.showContestList, this);
 
-    this.signInClicked = __bind(this.signInClicked, this);
+    this.signInError = __bind(this.signInError, this);
+
+    this.signIn = __bind(this.signIn, this);
+
+    this.signInFired = __bind(this.signInFired, this);
 
     this.showSignInForm = __bind(this.showSignInForm, this);
 
@@ -86,18 +90,37 @@ Gui = (function() {
   Gui.prototype.showSignInForm = function() {
     var _this = this;
     this._render('sign-in.tmpl', '#main', {});
-    return $('#sign-in').click(function() {
-      var credentials;
-      credentials = {
-        email: $('#email').val(),
-        password: $('#password').val()
-      };
-      return _this.signInClicked(credentials);
+    $('#sign-in').click(function() {
+      return _this.signInFired();
+    });
+    $('#email').enterKey(function() {
+      return _this.signInFired();
+    });
+    return $('#password').enterKey(function() {
+      return _this.signInFired();
     });
   };
 
-  Gui.prototype.signInClicked = function(credentials) {
-    return $('#sign-in').off('click').addClass('disabled').text('Signing in...');
+  Gui.prototype.signInFired = function() {
+    var credentials;
+    credentials = {
+      email: $('#email').val(),
+      password: $('#password').val()
+    };
+    return this.signIn(credentials);
+  };
+
+  Gui.prototype.signIn = function(credentials) {
+    $('#sign-in').off('click').addClass('disabled').text('Signing in...');
+    return $('#sign-in-error').hide('fast');
+  };
+
+  Gui.prototype.signInError = function() {
+    var _this = this;
+    $('#sign-in-error').show('fast');
+    return $('#sign-in').removeClass('disabled').text('Sign in').click(function() {
+      return _this.signInFired();
+    });
   };
 
   Gui.prototype.showContestList = function(contests) {
@@ -131,6 +154,9 @@ Gui = (function() {
     $('#ranking').click(function() {
       return _this.rankingClicked();
     });
+    $('#messages').click(function() {
+      return _this.messagesClicked();
+    });
     $('#settings').click(function() {
       return _this.settingsClicked();
     });
@@ -161,8 +187,6 @@ Gui = (function() {
     return this._setActiveNavMenuItem('');
   };
 
-  Gui.prototype.problemListClicked = function() {};
-
   Gui.prototype.problemClicked = function(id) {
     return this._setActiveNavMenuItem('problems');
   };
@@ -175,21 +199,75 @@ Gui = (function() {
     return this._setActiveNavMenuItem('ranking');
   };
 
+  Gui.prototype.messagesClicked = function() {};
+
   Gui.prototype.settingsClicked = function() {};
 
   Gui.prototype.signOutClicked = function() {};
 
-  Gui.prototype.showContestWelcome = function(contest) {};
+  Gui.prototype.showContestWelcome = function(contest) {
+    var data, options, timeline,
+      _this = this;
+    this._render('welcome.tmpl', '#main', contest);
+    data = [
+      {
+        start: new Date(2012, 12, 24, 13, 0, 0),
+        content: 'Registration end [13:00]'
+      }, {
+        start: new Date(2012, 12, 24, 13, 10, 0),
+        end: new Date(2012, 12, 24, 14, 0, 0),
+        content: 'Trial round [13:10 - 14:00]'
+      }, {
+        start: new Date(2012, 12, 24, 14, 15, 0),
+        end: new Date(2012, 12, 24, 18, 0, 0),
+        content: 'Main round [14:15 - 18:00]'
+      }, {
+        start: new Date(2012, 12, 24, 17, 30, 0),
+        content: 'Ranking freeze [17:30]'
+      }, {
+        start: new Date(2012, 12, 24, 18, 30, 0),
+        content: 'Results publish [18:30]'
+      }
+    ];
+    options = {
+      width: '100%',
+      height: '150px',
+      zoomable: false,
+      selectable: false,
+      moveable: false,
+      showMajorLabels: false,
+      showCurrentTime: false,
+      showCustomTime: true,
+      scale: links.Timeline.StepDate.SCALE.HOURS,
+      step: 1
+    };
+    timeline = new links.Timeline(document.getElementById('mytimeline'));
+    timeline.setCustomTime(new Date(2012, 12, 24, 16, 5, 22));
+    timeline.draw(data, options);
+    return $(window).on('resize', function() {
+      return timeline.redraw();
+    });
+  };
 
-  Gui.prototype.showProblemList = function(problems) {};
+  Gui.prototype.showProblem = function(problem) {
+    return this._render('problem.tmpl', '#main', problem);
+  };
 
-  Gui.prototype.showProblem = function(problem) {};
+  Gui.prototype.showStatus = function(status) {
+    return this._render('status.tmpl', '#main', status);
+  };
 
-  Gui.prototype.showStatus = function(status) {};
+  Gui.prototype.showRanking = function(ranking) {
+    return this._render('ranking.tmpl', '#main', ranking);
+  };
 
-  Gui.prototype.showRanking = function(ranking) {};
+  Gui.prototype.showMessages = function(messages) {
+    return this._render('messages.tmpl', '#main', messages);
+  };
 
-  Gui.prototype.showSettingsForm = function(settings) {};
+  Gui.prototype.showSettingsForm = function(settings) {
+    return this._render('settings.tmpl', '#main', settings);
+  };
 
   Gui.prototype.signOut = function() {
     return this.start();

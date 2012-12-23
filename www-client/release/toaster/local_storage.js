@@ -9,6 +9,8 @@ LocalStorage = (function() {
 
     this.getContestList = __bind(this.getContestList, this);
 
+    this.signInResponse = __bind(this.signInResponse, this);
+
     this.signIn = __bind(this.signIn, this);
 
     this.getCode = __bind(this.getCode, this);
@@ -61,8 +63,15 @@ LocalStorage = (function() {
   };
 
   LocalStorage.prototype.signIn = function(credentials) {
-    return credentials.email === '' && credentials.password === '';
+    var result,
+      _this = this;
+    result = credentials.email === '' && credentials.password === '';
+    return setTimeout((function() {
+      return _this.signInResponse(result);
+    }), 700);
   };
+
+  LocalStorage.prototype.signInResponse = function(response) {};
 
   LocalStorage.prototype.getContestList = function() {
     return [

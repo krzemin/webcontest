@@ -1,5 +1,8 @@
 <form class="form-signin well">
     <h2>Please sign in</h2>
+    <div class="alert alert-error" id="sign-in-error" style="display: none;">
+      <strong>Error!</strong> <br /> You have typed wrong credentials!
+    </div>
     <input type="text" class="input-block-level" placeholder="E-mail address" id="email">
     <input type="password" class="input-block-level" placeholder="Password" id="password">
     <button class="btn btn-large btn-primary" type="button" data-loading-text="Signing in..."  id="sign-in">Sign in</button>

@@ -1,17 +1,29 @@
 class UseCase
   constructor: ->
-    
+    @contest = {}
+
   start: =>
 
-  signIn: (credentials) =>
-    console.log(credentials)
-    if credentials.email == 'a' and credentials.password == 'a'
+  signIn: (response) =>
+    if response
       @loadContestList()
+    else
+      @signInError()
 
+  signInError: =>
   loadContestList: =>
 
   openContest: (id) =>
-    
+    @contestWelcome()
+
+  contestWelcome: =>
+  problem: =>
+  status: =>
+  ranking: =>
+  messages: =>
+  settings: =>
+
+  signOut: =>
   
   initCodeView: =>
      

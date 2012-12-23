@@ -60,12 +60,6 @@ function program7(depth0,data) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    </tbody>     \n  </table>\n</div>\n";
   return buffer;});
-templates['example.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
-  helpers = helpers || Handlebars.helpers;
-  
-
-
-  return "\nkaka\n\n\n";});
 templates['layout-center.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   
@@ -77,11 +71,47 @@ templates['layout-navbar.tmpl'] = template(function (Handlebars,depth0,helpers,p
   
 
 
-  return "<div class=\"navbar\">\n  <div class=\"navbar-inner\">\n    <div class=\"container\">\n      <a class=\"brand\" href=\"#\" id=\"contest-welcome\">Web Programmig Contest</a>\n      <div class=\"navbar-content\">\n\n        <ul class=\"nav\" id=\"navigation\">\n          <li class=\"dropdown\">\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" id=\"problems\">\n              <i class=\"icon-eye-open icon-white\"></i>\n              Problems\n              <span class=\"caret\"></span>\n            </a>\n            <ul class=\"dropdown-menu\" id=\"problems-list\"></ul>\n          </li>\n          <li><a id=\"status\"><i class=\"icon-fire icon-white\"></i> Status</a></li>\n          <li><a id=\"ranking\"><i class=\"icon-th-list icon-white\"></i> Ranking</a></li>\n        </ul>\n\n        <ul class=\"nav pull-right\">\n          <li class=\"dropdown\">\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n              <i class=\"icon-user icon-white\"></i>\n              Signed in as <b>krzemin</b>\n              <span class=\"caret\"></span>\n            </a>\n            <ul class=\"dropdown-menu\">  \n              <li><a id=\"messages\"><i class=\"icon-envelope\"></i> Messages</a></li>  \n              <li><a id=\"settings\"><i class=\"icon-cog\"></i> Settings</a></li>  \n              <li class=\"divider\"></li>  \n              <li><a id=\"sign-out\"><i class=\"icon-off\"></i> Sign out</a></li>  \n            </ul>  \n          </li>\n        </ul>\n\n      </div>\n   </div>\n  </div>\n</div>\n\n<div class=\"container-fluid\" id=\"main\"></div>\n";});
+  return "<div class=\"navbar\">\n  <div class=\"navbar-inner\">\n    <div class=\"container\">\n      <a class=\"brand\" nohref=\"\" id=\"contest-welcome\">Web Programmig Contest</a>\n      <div class=\"navbar-content\">\n\n        <ul class=\"nav\" id=\"navigation\">\n          <li class=\"dropdown\">\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" id=\"problems\">\n              <i class=\"icon-th-large icon-white\"></i>\n              Problems\n              <span class=\"caret\"></span>\n            </a>\n            <ul class=\"dropdown-menu\" id=\"problems-list\"></ul>\n          </li>\n          <li><a id=\"status\"><i class=\"icon-info-sign icon-white\"></i> Status</a></li>\n          <li><a id=\"ranking\"><i class=\"icon-th-list icon-white\"></i> Ranking</a></li>\n        </ul>\n\n        <ul class=\"nav pull-right\">\n          <li class=\"dropdown\">\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n              <i class=\"icon-user icon-white\"></i>\n              Signed in as <b>krzemin</b>\n              <span class=\"caret\"></span>\n            </a>\n            <ul class=\"dropdown-menu\">  \n              <li><a id=\"messages\"><i class=\"icon-envelope\"></i> Messages</a></li>  \n              <li><a id=\"settings\"><i class=\"icon-cog\"></i> Settings</a></li>  \n              <li class=\"divider\"></li>  \n              <li><a id=\"sign-out\"><i class=\"icon-off\"></i> Sign out</a></li>  \n            </ul>  \n          </li>\n        </ul>\n\n      </div>\n   </div>\n  </div>\n</div>\n\n<div class=\"container-fluid\" id=\"main\"></div>\n";});
+templates['messages.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  
+
+
+  return "<h1>Messages</h1>\n\n\n";});
+templates['problem.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  
+
+
+  return "<h1>Problem</h1>\n\n\n";});
+templates['ranking.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  
+
+
+  return "<h1>Ranking</h1>\n\n\n";});
+templates['settings.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  
+
+
+  return "<h1>Settings</h1>\n\n\n";});
 templates['sign-in.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   
 
 
-  return "<form class=\"form-signin well\">\n    <h2>Please sign in</h2>\n    <input type=\"text\" class=\"input-block-level\" placeholder=\"E-mail address\" id=\"email\">\n    <input type=\"password\" class=\"input-block-level\" placeholder=\"Password\" id=\"password\">\n    <button class=\"btn btn-large btn-primary\" type=\"button\" data-loading-text=\"Signing in...\"  id=\"sign-in\">Sign in</button>\n</form>\n";});
+  return "<form class=\"form-signin well\">\n    <h2>Please sign in</h2>\n    <div class=\"alert alert-error\" id=\"sign-in-error\" style=\"display: none;\">\n      <strong>Error!</strong> <br /> You have typed wrong credentials!\n    </div>\n    <input type=\"text\" class=\"input-block-level\" placeholder=\"E-mail address\" id=\"email\">\n    <input type=\"password\" class=\"input-block-level\" placeholder=\"Password\" id=\"password\">\n    <button class=\"btn btn-large btn-primary\" type=\"button\" data-loading-text=\"Signing in...\"  id=\"sign-in\">Sign in</button>\n</form>\n";});
+templates['status.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  
+
+
+  return "<h1>Status</h1>\n\n\n";});
+templates['welcome.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  
+
+
+  return "<h1>Welcome</h2>\n\n<div id=\"mytimeline\"></div>\n\n\n\n\n";});
 })();

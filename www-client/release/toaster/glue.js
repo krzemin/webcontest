@@ -12,11 +12,37 @@ Glue = (function() {
     LogAll(this.gui, 'Gui');
     LogAll(this.storage, 'Storage');
     After(this.useCase, 'start', this.gui.start);
+    After(this.gui, 'signIn', function(credentials) {
+      return _this.storage.signIn(credentials);
+    });
+    After(this.storage, 'signInResponse', function(response) {
+      return _this.useCase.signIn(response);
+    });
+    After(this.useCase, 'signInError', this.gui.signInError);
+    After(this.useCase, 'signOut', this.gui.signOut);
     After(this.useCase, 'loadContestList', function() {
       return _this.gui.showContestList(_this.storage.getContestList());
     });
-    After(this.useCase, 'openContest', function(id) {
+    Before(this.useCase, 'openContest', function(id) {
       return _this.gui.showContestArea(_this.storage.getContest(id));
+    });
+    After(this.useCase, 'contestWelcome', function() {
+      return _this.gui.showContestWelcome({});
+    });
+    After(this.useCase, 'problem', function() {
+      return _this.gui.showProblem({});
+    });
+    After(this.useCase, 'status', function() {
+      return _this.gui.showStatus([]);
+    });
+    After(this.useCase, 'ranking', function() {
+      return _this.gui.showRanking({});
+    });
+    After(this.useCase, 'messages', function() {
+      return _this.gui.showMessages([]);
+    });
+    After(this.useCase, 'settings', function() {
+      return _this.gui.showSettingsForm({});
     });
   }
 

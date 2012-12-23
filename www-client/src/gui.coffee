@@ -22,18 +22,24 @@ class Gui
     @showSignInForm()
 
   # sign in
-  
+
   showSignInForm: =>
     @_render('sign-in.tmpl', '#main', {})
-    $('#sign-in').click( =>
-        credentials =
-            email: $('#email').val()
-            password: $('#password').val()
-        @signInClicked(credentials)
-    )
-  signInClicked: (credentials) =>
+    $('#sign-in').click( => @signInFired())
+    $('#email').enterKey( => @signInFired())
+    $('#password').enterKey( => @signInFired())
+  signInFired: =>
+      credentials =
+        email: $('#email').val()
+        password: $('#password').val()
+      @signIn(credentials)
+  signIn: (credentials) =>
     $('#sign-in').off('click').addClass('disabled').text('Signing in...')
-  
+    $('#sign-in-error').hide('fast')
+  signInError: =>
+    $('#sign-in-error').show('fast')
+    $('#sign-in').removeClass('disabled').text('Sign in').click( => @signInFired())
+
   # contest list
 
   showContestList: (contests) =>
@@ -56,6 +62,7 @@ class Gui
     $('#contest-welcome').click( => @contestWelcomeClicked() )
     $('#status').click( => @statusClicked() )
     $('#ranking').click( => @rankingClicked() )
+    $('#messages').click( => @messagesClicked() )
     $('#settings').click( => @settingsClicked() )
     $('#sign-out').click( => @signOutClicked() )
     
@@ -73,22 +80,64 @@ class Gui
 
   contestWelcomeClicked: =>
     @_setActiveNavMenuItem('')
-  problemListClicked: =>
   problemClicked: (id) =>
     @_setActiveNavMenuItem('problems')
   statusClicked: =>
     @_setActiveNavMenuItem('status')
   rankingClicked: =>
     @_setActiveNavMenuItem('ranking')
+  messagesClicked: =>
   settingsClicked: =>
   signOutClicked: =>
 
   showContestWelcome: (contest) =>
-  showProblemList: (problems) =>
+    @_render('welcome.tmpl', '#main', contest)
+    data = [
+        {
+          start: new Date(2012,12,24,13,0,0)
+          content: 'Registration end [13:00]'
+        }
+        {
+          start: new Date(2012,12,24,13,10,0)
+          end: new Date(2012,12,24,14,0,0)
+          content: 'Trial round [13:10 - 14:00]'
+        }
+        {
+          start: new Date(2012,12,24,14,15,0)
+          end: new Date(2012,12,24,18,0,0)
+          content: 'Main round [14:15 - 18:00]'
+        }
+        { start: new Date(2012,12,24,17,30,0), content: 'Ranking freeze [17:30]' }
+        { start: new Date(2012,12,24,18,30,0), content: 'Results publish [18:30]' }
+    ]
+
+    options = {
+      width: '100%'
+      height: '150px'
+      zoomable: false
+      selectable: false
+      moveable: false
+      showMajorLabels: false
+      showCurrentTime: false
+      showCustomTime: true
+      scale: links.Timeline.StepDate.SCALE.HOURS
+      step: 1
+    }
+    timeline = new links.Timeline(document.getElementById('mytimeline'))
+    timeline.setCustomTime(new Date(2012,12,24,16,5,22))
+    timeline.draw(data, options)
+    $(window).on('resize', => timeline.redraw())
+
   showProblem: (problem) =>
+    @_render('problem.tmpl', '#main', problem)
   showStatus: (status) =>
+    @_render('status.tmpl', '#main', status)
   showRanking: (ranking) =>
+    @_render('ranking.tmpl', '#main', ranking)
+  showMessages: (messages) =>
+    @_render('messages.tmpl', '#main', messages)
   showSettingsForm: (settings) =>
+    @_render('settings.tmpl', '#main', settings)
   signOut: =>
     @start()
 
