@@ -22,12 +22,18 @@ class Gui
 
   showSignInForm: =>
     @_render('sign-in.tmpl', '#main', {})
-    $('#sign-in').click( => @signInClicked($('#email').val(), $('#password').val()))
-  signInClicked: (email, password) =>
+    $('#sign-in').click( =>
+        credentials =
+            email: $('#email').val()
+            password: $('#password').val()
+        @signInClicked(credentials)
+    )
+  signInClicked: (credentials) =>
     $('#sign-in').off('click').addClass('disabled').text('Signing in...')
   
 
   showContestList: (contests) =>
+    console.log(contests)
     @_render('contest-list.tmpl', '#main', contests)
 
   initCodeView: (codeText) =>

@@ -3,9 +3,10 @@ class UseCase
     
   start: =>
 
-  signIn: (email, password) =>
-    if email == 'a' and password == 'a'
-      @loadContestList
+  signIn: (credentials) =>
+    console.log(credentials)
+    if credentials.email == 'a' and credentials.password == 'a'
+      @loadContestList()
 
   loadContestList: =>
 

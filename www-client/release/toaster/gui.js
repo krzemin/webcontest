@@ -49,15 +49,21 @@ Gui = (function() {
     var _this = this;
     this._render('sign-in.tmpl', '#main', {});
     return $('#sign-in').click(function() {
-      return _this.signInClicked($('#email').val(), $('#password').val());
+      var credentials;
+      credentials = {
+        email: $('#email').val(),
+        password: $('#password').val()
+      };
+      return _this.signInClicked(credentials);
     });
   };
 
-  Gui.prototype.signInClicked = function(email, password) {
+  Gui.prototype.signInClicked = function(credentials) {
     return $('#sign-in').off('click').addClass('disabled').text('Signing in...');
   };
 
   Gui.prototype.showContestList = function(contests) {
+    console.log(contests);
     return this._render('contest-list.tmpl', '#main', contests);
   };
 

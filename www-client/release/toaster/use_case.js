@@ -18,9 +18,10 @@ UseCase = (function() {
 
   UseCase.prototype.start = function() {};
 
-  UseCase.prototype.signIn = function(email, password) {
-    if (email === 'a' && password === 'a') {
-      return this.loadContestList;
+  UseCase.prototype.signIn = function(credentials) {
+    console.log(credentials);
+    if (credentials.email === 'a' && credentials.password === 'a') {
+      return this.loadContestList();
     }
   };
 
