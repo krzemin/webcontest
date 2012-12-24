@@ -9,7 +9,7 @@ class Gui
     console.log('template = ' + template)
     template = Handlebars.templates[template]
     html = template(data)
-    $(target).html(html)
+    $(target).hide().html(html).fadeIn(500)
 
   _setLayout: (layout) =>
     @_render("layout-#{layout}.tmpl", 'body', {})

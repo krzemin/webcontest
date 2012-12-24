@@ -75,7 +75,7 @@ Gui = (function() {
     console.log('template = ' + template);
     template = Handlebars.templates[template];
     html = template(data);
-    return $(target).html(html);
+    return $(target).hide().html(html).fadeIn(500);
   };
 
   Gui.prototype._setLayout = function(layout) {
