@@ -1,11 +1,15 @@
 class UseCase
   constructor: ->
+    @user = {}
+    @contest_list = []
     @contest = {}
 
   start: =>
 
   signIn: (response) =>
     if response
+      @user = response.user
+      @contest_list = response.contest_list
       @loadContestList()
     else
       @signInError()
@@ -14,6 +18,8 @@ class UseCase
   loadContestList: =>
 
   openContest: (id) =>
+  loadContest: (contest) =>
+    @contest = contest
     @contestWelcome()
 
   contestWelcome: =>

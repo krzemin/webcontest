@@ -68,6 +68,7 @@ Gui = (function() {
 
     this._render = __bind(this._render, this);
     this.saveCodeEvery = 15;
+    this.fadeInTimeout = 200;
   }
 
   Gui.prototype._render = function(template, target, data) {
@@ -75,7 +76,7 @@ Gui = (function() {
     console.log('template = ' + template);
     template = Handlebars.templates[template];
     html = template(data);
-    return $(target).hide().html(html).fadeIn(500);
+    return $(target).hide().html(html).fadeIn(200);
   };
 
   Gui.prototype._setLayout = function(layout) {
@@ -137,13 +138,16 @@ Gui = (function() {
 
   Gui.prototype.registerForContestClicked = function(id) {};
 
-  Gui.prototype.openContestClicked = function(id) {};
+  Gui.prototype.openContestClicked = function(id) {
+    return $('.open-contest').off('click').addClass('disabled').text('Loading...');
+  };
 
-  Gui.prototype.showContestArea = function(contest) {
+  Gui.prototype.showContestArea = function(user, contest) {
     var _this = this;
     console.log(contest);
     this._setLayout('navbar');
     $('#contest-welcome').text(contest.name);
+    $('#user-name').text(user.name);
     this._loadProblemsMenu(contest.problems);
     $('#contest-welcome').click(function() {
       return _this.contestWelcomeClicked();
@@ -206,42 +210,28 @@ Gui = (function() {
   Gui.prototype.signOutClicked = function() {};
 
   Gui.prototype.showContestWelcome = function(contest) {
-    var data, options, timeline,
+    var data, dates, endDate, options, startDate, timeline,
       _this = this;
     this._render('welcome.tmpl', '#main', contest);
-    data = [
-      {
-        start: new Date(2012, 12, 24, 13, 0, 0),
-        content: 'Registration end'
-      }, {
-        start: new Date(2012, 12, 24, 13, 10, 0),
-        content: 'Trial round start'
-      }, {
-        start: new Date(2012, 12, 24, 14, 0, 0),
-        content: 'Trial round end'
-      }, {
-        start: new Date(2012, 12, 24, 14, 15, 0),
-        content: 'Main round start'
-      }, {
-        start: new Date(2012, 12, 24, 18, 0, 0),
-        content: 'Main round end'
-      }, {
-        start: new Date(2012, 12, 24, 17, 30, 0),
-        content: 'Ranking freeze'
-      }, {
-        start: new Date(2012, 12, 24, 18, 30, 0),
-        content: 'Results publish'
-      }
-    ];
-    data = data.map(function(a) {
+    data = contest.agenda.map(function(it) {
       return {
-        start: a.start,
-        content: "<span class=\"label label-success\">" + a.content + "</span>"
+        start: Date.create(it.start),
+        content: "<span class=\"label label-success\">" + it.content + "</span>"
       };
     });
+    dates = data.map(function(it) {
+      return it.start;
+    });
+    startDate = Date.create(dates.min());
+    endDate = Date.create(dates.max());
+    console.log(data);
     options = {
-      start: new Date(2012, 12, 24, 11, 30, 0),
-      end: new Date(2012, 12, 24, 20, 0, 0),
+      start: startDate.rewind({
+        hours: 2
+      }),
+      end: endDate.rewind({
+        hours: -2
+      }),
       width: '100%',
       style: 'dot',
       zoomable: false,
@@ -250,9 +240,10 @@ Gui = (function() {
       showMajorLabels: false,
       showCurrentTime: true
     };
+    console.log(options);
     timeline = new links.Timeline(document.getElementById('timeline'));
     timeline.draw(data, options);
-    timeline.setCurrentTime(new Date(2012, 12, 24, 16, 5, 22));
+    timeline.setCurrentTime(Date.create("2012-12-24 16:05:22"));
     return $(window).on('resize', function() {
       return timeline.redraw();
     });

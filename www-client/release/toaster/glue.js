@@ -21,13 +21,19 @@ Glue = (function() {
     After(this.useCase, 'signInError', this.gui.signInError);
     After(this.useCase, 'signOut', this.gui.signOut);
     After(this.useCase, 'loadContestList', function() {
-      return _this.gui.showContestList(_this.storage.getContestList());
+      return _this.gui.showContestList(_this.useCase.contest_list);
     });
-    Before(this.useCase, 'openContest', function(id) {
-      return _this.gui.showContestArea(_this.storage.getContest(id));
+    After(this.useCase, 'openContest', function(id) {
+      return _this.storage.getContest(id);
+    });
+    After(this.storage, 'contestResponse', function(contest) {
+      return _this.useCase.loadContest(contest);
+    });
+    Before(this.useCase, 'loadContest', function(contest) {
+      return _this.gui.showContestArea(_this.useCase.user, contest);
     });
     After(this.useCase, 'contestWelcome', function() {
-      return _this.gui.showContestWelcome({});
+      return _this.gui.showContestWelcome(_this.useCase.contest);
     });
     After(this.useCase, 'problem', function() {
       return _this.gui.showProblem({});

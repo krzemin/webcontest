@@ -22,6 +22,8 @@ UseCase = (function() {
 
     this.contestWelcome = __bind(this.contestWelcome, this);
 
+    this.loadContest = __bind(this.loadContest, this);
+
     this.openContest = __bind(this.openContest, this);
 
     this.loadContestList = __bind(this.loadContestList, this);
@@ -31,6 +33,8 @@ UseCase = (function() {
     this.signIn = __bind(this.signIn, this);
 
     this.start = __bind(this.start, this);
+    this.user = {};
+    this.contest_list = [];
     this.contest = {};
   }
 
@@ -38,6 +42,8 @@ UseCase = (function() {
 
   UseCase.prototype.signIn = function(response) {
     if (response) {
+      this.user = response.user;
+      this.contest_list = response.contest_list;
       return this.loadContestList();
     } else {
       return this.signInError();
@@ -48,7 +54,10 @@ UseCase = (function() {
 
   UseCase.prototype.loadContestList = function() {};
 
-  UseCase.prototype.openContest = function(id) {
+  UseCase.prototype.openContest = function(id) {};
+
+  UseCase.prototype.loadContest = function(contest) {
+    this.contest = contest;
     return this.contestWelcome();
   };
 

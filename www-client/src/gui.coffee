@@ -2,6 +2,7 @@ class Gui
   
   constructor: ->
     @saveCodeEvery = 15
+    @fadeInTimeout = 200
 
   # utils
 
@@ -9,7 +10,7 @@ class Gui
     console.log('template = ' + template)
     template = Handlebars.templates[template]
     html = template(data)
-    $(target).hide().html(html).fadeIn(500)
+    $(target).hide().html(html).fadeIn(200)
 
   _setLayout: (layout) =>
     @_render("layout-#{layout}.tmpl", 'body', {})
@@ -51,13 +52,15 @@ class Gui
   registerForContestClicked: (id) =>
   
   openContestClicked: (id) =>
+    $('.open-contest').off('click').addClass('disabled').text('Loading...')
 
   # contest area
 
-  showContestArea: (contest) =>
+  showContestArea: (user, contest) =>
     console.log(contest)
     @_setLayout('navbar')
     $('#contest-welcome').text(contest.name)
+    $('#user-name').text(user.name)
     @_loadProblemsMenu(contest.problems)
     $('#contest-welcome').click( => @contestWelcomeClicked() )
     $('#status').click( => @statusClicked() )
@@ -92,20 +95,20 @@ class Gui
 
   showContestWelcome: (contest) =>
     @_render('welcome.tmpl', '#main', contest)
-    data = [
-        { start: new Date(2012,12,24,13,0,0), content: 'Registration end' }
-        { start: new Date(2012,12,24,13,10,0), content: 'Trial round start' }
-        { start: new Date(2012,12,24,14,0,0), content: 'Trial round end' }
-        { start: new Date(2012,12,24,14,15,0), content: 'Main round start' }
-        { start: new Date(2012,12,24,18,0,0), content: 'Main round end' }
-        { start: new Date(2012,12,24,17,30,0), content: 'Ranking freeze' }
-        { start: new Date(2012,12,24,18,30,0), content: 'Results publish' }
-    ]
-    data = data.map (a) => { start: a.start, content: """<span class="label label-success">#{a.content}</span>""" }
+    
+    data = contest.agenda.map (it) => {
+      start: Date.create(it.start)
+      content: """<span class="label label-success">#{it.content}</span>"""
+    }
+    
+    dates = (data.map (it) => it.start)
+    startDate = Date.create(dates.min())
+    endDate = Date.create(dates.max())
 
+    console.log(data)
     options = {
-      start: new Date(2012,12,24,11,30,0)
-      end: new Date(2012,12,24,20,0,0)
+      start: startDate.rewind({hours: 2})
+      end: endDate.rewind({hours: -2})
       width: '100%'
       style: 'dot'
       zoomable: false
@@ -114,9 +117,10 @@ class Gui
       showMajorLabels: false
       showCurrentTime: true
     }
+    console.log(options)
     timeline = new links.Timeline(document.getElementById('timeline'))
     timeline.draw(data, options)
-    timeline.setCurrentTime(new Date(2012,12,24,16,5,22))
+    timeline.setCurrentTime(Date.create("2012-12-24 16:05:22"))
     $(window).on('resize', => timeline.redraw())
 
   showProblem: (problem) =>
