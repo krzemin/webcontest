@@ -212,38 +212,47 @@ Gui = (function() {
     data = [
       {
         start: new Date(2012, 12, 24, 13, 0, 0),
-        content: 'Registration end [13:00]'
+        content: 'Registration end'
       }, {
         start: new Date(2012, 12, 24, 13, 10, 0),
-        end: new Date(2012, 12, 24, 14, 0, 0),
-        content: 'Trial round [13:10 - 14:00]'
+        content: 'Trial round start'
+      }, {
+        start: new Date(2012, 12, 24, 14, 0, 0),
+        content: 'Trial round end'
       }, {
         start: new Date(2012, 12, 24, 14, 15, 0),
-        end: new Date(2012, 12, 24, 18, 0, 0),
-        content: 'Main round [14:15 - 18:00]'
+        content: 'Main round start'
+      }, {
+        start: new Date(2012, 12, 24, 18, 0, 0),
+        content: 'Main round end'
       }, {
         start: new Date(2012, 12, 24, 17, 30, 0),
-        content: 'Ranking freeze [17:30]'
+        content: 'Ranking freeze'
       }, {
         start: new Date(2012, 12, 24, 18, 30, 0),
-        content: 'Results publish [18:30]'
+        content: 'Results publish'
       }
     ];
+    data = data.map(function(a) {
+      return {
+        start: a.start,
+        content: "<span class=\"label label-success\">" + a.content + "</span>"
+      };
+    });
     options = {
+      start: new Date(2012, 12, 24, 11, 30, 0),
+      end: new Date(2012, 12, 24, 20, 0, 0),
       width: '100%',
-      height: '150px',
+      style: 'dot',
       zoomable: false,
       selectable: false,
       moveable: false,
       showMajorLabels: false,
-      showCurrentTime: false,
-      showCustomTime: true,
-      scale: links.Timeline.StepDate.SCALE.HOURS,
-      step: 1
+      showCurrentTime: true
     };
-    timeline = new links.Timeline(document.getElementById('mytimeline'));
-    timeline.setCustomTime(new Date(2012, 12, 24, 16, 5, 22));
+    timeline = new links.Timeline(document.getElementById('timeline'));
     timeline.draw(data, options);
+    timeline.setCurrentTime(new Date(2012, 12, 24, 16, 5, 22));
     return $(window).on('resize', function() {
       return timeline.redraw();
     });

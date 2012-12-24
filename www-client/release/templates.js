@@ -113,5 +113,5 @@ templates['welcome.tmpl'] = template(function (Handlebars,depth0,helpers,partial
   
 
 
-  return "<h1>Welcome</h2>\n\n<div id=\"mytimeline\"></div>\n\n\n\n\n";});
+  return "<h1>Welcome</h2>\n\n<div id=\"timeline\"></div>\n\n\n\n\n";});
 })();
