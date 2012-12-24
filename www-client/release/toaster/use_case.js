@@ -10,6 +10,8 @@ UseCase = (function() {
 
     this.signOut = __bind(this.signOut, this);
 
+    this.exitContestArea = __bind(this.exitContestArea, this);
+
     this.settings = __bind(this.settings, this);
 
     this.messages = __bind(this.messages, this);
@@ -72,6 +74,10 @@ UseCase = (function() {
   UseCase.prototype.messages = function() {};
 
   UseCase.prototype.settings = function() {};
+
+  UseCase.prototype.exitContestArea = function() {
+    return this.loadContestList();
+  };
 
   UseCase.prototype.signOut = function() {};
 

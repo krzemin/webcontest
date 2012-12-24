@@ -28,7 +28,8 @@ class UseCase
   ranking: =>
   messages: =>
   settings: =>
-
+  exitContestArea: =>
+    @loadContestList()
   signOut: =>
   
   initCodeView: =>

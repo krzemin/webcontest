@@ -19,12 +19,12 @@ class Gui
   # GUI actions
   
   start: =>
-    @_setLayout('center')
     @showSignInForm()
 
   # sign in
 
   showSignInForm: =>
+    @_setLayout('center')
     @_render('sign-in.tmpl', '#main', {})
     $('#sign-in').click( => @signInFired())
     $('#email').enterKey( => @signInFired())
@@ -44,6 +44,7 @@ class Gui
   # contest list
 
   showContestList: (contests) =>
+    @_setLayout('center')
     console.log(contests)
     @_render('contest-list.tmpl', '#main', contests)
     $('.register-for-contest').click((obj) => @registerForContestClicked(obj.toElement.id))
@@ -67,6 +68,7 @@ class Gui
     $('#ranking').click( => @rankingClicked() )
     $('#messages').click( => @messagesClicked() )
     $('#settings').click( => @settingsClicked() )
+    $('#exit-contest-area').click( => @exitContestAreaClicked() )
     $('#sign-out').click( => @signOutClicked() )
     
 
@@ -90,24 +92,27 @@ class Gui
   rankingClicked: =>
     @_setActiveNavMenuItem('ranking')
   messagesClicked: =>
+    @_setActiveNavMenuItem('')
   settingsClicked: =>
+    @_setActiveNavMenuItem('')
+  exitContestAreaClicked: =>
   signOutClicked: =>
 
   showContestWelcome: (contest) =>
     @_render('welcome.tmpl', '#main', contest)
-    
-    data = contest.agenda.map (it) => {
+    @_showTimeline(contest.agenda)
+
+
+  _showTimeline: (agenda) =>
+    timeline_agenda = agenda.map (it) => {
       start: Date.create(it.start)
-      content: """<span class="label label-success">#{it.content}</span>"""
+      content: """<span class="badge badge-info">#{it.content}</span>"""
     }
-    
-    dates = (data.map (it) => it.start)
+    dates = (timeline_agenda.map (it) => it.start)
     startDate = Date.create(dates.min())
     endDate = Date.create(dates.max())
-
-    console.log(data)
-    options = {
-      start: startDate.rewind({hours: 2})
+    timeline_options = {
+      start: startDate.rewind({hours: 1})
       end: endDate.rewind({hours: -2})
       width: '100%'
       style: 'dot'
@@ -117,9 +122,8 @@ class Gui
       showMajorLabels: false
       showCurrentTime: true
     }
-    console.log(options)
     timeline = new links.Timeline(document.getElementById('timeline'))
-    timeline.draw(data, options)
+    timeline.draw(timeline_agenda, timeline_options)
     timeline.setCurrentTime(Date.create("2012-12-24 16:05:22"))
     $(window).on('resize', => timeline.redraw())
 

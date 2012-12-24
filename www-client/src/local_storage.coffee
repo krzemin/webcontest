@@ -72,7 +72,6 @@ int main() {
         { id: 5, name: 'Planet Welfare' }
         { id: 6, name: 'Gem' }
       ]
-
     }
     setTimeout( (=> @contestResponse(contest)), 800)
 

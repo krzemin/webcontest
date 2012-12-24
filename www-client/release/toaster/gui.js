@@ -26,9 +26,13 @@ Gui = (function() {
 
     this.showProblem = __bind(this.showProblem, this);
 
+    this._showTimeline = __bind(this._showTimeline, this);
+
     this.showContestWelcome = __bind(this.showContestWelcome, this);
 
     this.signOutClicked = __bind(this.signOutClicked, this);
+
+    this.exitContestAreaClicked = __bind(this.exitContestAreaClicked, this);
 
     this.settingsClicked = __bind(this.settingsClicked, this);
 
@@ -84,12 +88,12 @@ Gui = (function() {
   };
 
   Gui.prototype.start = function() {
-    this._setLayout('center');
     return this.showSignInForm();
   };
 
   Gui.prototype.showSignInForm = function() {
     var _this = this;
+    this._setLayout('center');
     this._render('sign-in.tmpl', '#main', {});
     $('#sign-in').click(function() {
       return _this.signInFired();
@@ -126,6 +130,7 @@ Gui = (function() {
 
   Gui.prototype.showContestList = function(contests) {
     var _this = this;
+    this._setLayout('center');
     console.log(contests);
     this._render('contest-list.tmpl', '#main', contests);
     $('.register-for-contest').click(function(obj) {
@@ -163,6 +168,9 @@ Gui = (function() {
     });
     $('#settings').click(function() {
       return _this.settingsClicked();
+    });
+    $('#exit-contest-area').click(function() {
+      return _this.exitContestAreaClicked();
     });
     return $('#sign-out').click(function() {
       return _this.signOutClicked();
@@ -203,31 +211,40 @@ Gui = (function() {
     return this._setActiveNavMenuItem('ranking');
   };
 
-  Gui.prototype.messagesClicked = function() {};
+  Gui.prototype.messagesClicked = function() {
+    return this._setActiveNavMenuItem('');
+  };
 
-  Gui.prototype.settingsClicked = function() {};
+  Gui.prototype.settingsClicked = function() {
+    return this._setActiveNavMenuItem('');
+  };
+
+  Gui.prototype.exitContestAreaClicked = function() {};
 
   Gui.prototype.signOutClicked = function() {};
 
   Gui.prototype.showContestWelcome = function(contest) {
-    var data, dates, endDate, options, startDate, timeline,
-      _this = this;
     this._render('welcome.tmpl', '#main', contest);
-    data = contest.agenda.map(function(it) {
+    return this._showTimeline(contest.agenda);
+  };
+
+  Gui.prototype._showTimeline = function(agenda) {
+    var dates, endDate, startDate, timeline, timeline_agenda, timeline_options,
+      _this = this;
+    timeline_agenda = agenda.map(function(it) {
       return {
         start: Date.create(it.start),
-        content: "<span class=\"label label-success\">" + it.content + "</span>"
+        content: "<span class=\"badge badge-info\">" + it.content + "</span>"
       };
     });
-    dates = data.map(function(it) {
+    dates = timeline_agenda.map(function(it) {
       return it.start;
     });
     startDate = Date.create(dates.min());
     endDate = Date.create(dates.max());
-    console.log(data);
-    options = {
+    timeline_options = {
       start: startDate.rewind({
-        hours: 2
+        hours: 1
       }),
       end: endDate.rewind({
         hours: -2
@@ -240,9 +257,8 @@ Gui = (function() {
       showMajorLabels: false,
       showCurrentTime: true
     };
-    console.log(options);
     timeline = new links.Timeline(document.getElementById('timeline'));
-    timeline.draw(data, options);
+    timeline.draw(timeline_agenda, timeline_options);
     timeline.setCurrentTime(Date.create("2012-12-24 16:05:22"));
     return $(window).on('resize', function() {
       return timeline.redraw();
