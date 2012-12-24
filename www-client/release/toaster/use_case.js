@@ -20,6 +20,8 @@ UseCase = (function() {
 
     this.status = __bind(this.status, this);
 
+    this.getProblem = __bind(this.getProblem, this);
+
     this.problem = __bind(this.problem, this);
 
     this.contestWelcome = __bind(this.contestWelcome, this);
@@ -65,7 +67,13 @@ UseCase = (function() {
 
   UseCase.prototype.contestWelcome = function() {};
 
-  UseCase.prototype.problem = function() {};
+  UseCase.prototype.problem = function(id) {};
+
+  UseCase.prototype.getProblem = function(id) {
+    return this.contest.problems.find({
+      id: id
+    });
+  };
 
   UseCase.prototype.status = function() {};
 

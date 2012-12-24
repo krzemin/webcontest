@@ -4,16 +4,6 @@ var Gui,
 Gui = (function() {
 
   function Gui() {
-    this.codeChanged = __bind(this.codeChanged, this);
-
-    this.saveCodeCallback = __bind(this.saveCodeCallback, this);
-
-    this.setCodeViewFullScreen = __bind(this.setCodeViewFullScreen, this);
-
-    this.isCodeViewFullScreen = __bind(this.isCodeViewFullScreen, this);
-
-    this.initCodeView = __bind(this.initCodeView, this);
-
     this.signOut = __bind(this.signOut, this);
 
     this.showSettingsForm = __bind(this.showSettingsForm, this);
@@ -23,6 +13,16 @@ Gui = (function() {
     this.showRanking = __bind(this.showRanking, this);
 
     this.showStatus = __bind(this.showStatus, this);
+
+    this.codeChanged = __bind(this.codeChanged, this);
+
+    this.saveCodeCallback = __bind(this.saveCodeCallback, this);
+
+    this.setCodeViewFullScreen = __bind(this.setCodeViewFullScreen, this);
+
+    this.isCodeViewFullScreen = __bind(this.isCodeViewFullScreen, this);
+
+    this._initCodeView = __bind(this._initCodeView, this);
 
     this.showProblem = __bind(this.showProblem, this);
 
@@ -266,30 +266,11 @@ Gui = (function() {
   };
 
   Gui.prototype.showProblem = function(problem) {
-    return this._render('problem.tmpl', '#main', problem);
+    this._render('problem.tmpl', '#main', problem);
+    return this._initCodeView('#include<dupa>');
   };
 
-  Gui.prototype.showStatus = function(status) {
-    return this._render('status.tmpl', '#main', status);
-  };
-
-  Gui.prototype.showRanking = function(ranking) {
-    return this._render('ranking.tmpl', '#main', ranking);
-  };
-
-  Gui.prototype.showMessages = function(messages) {
-    return this._render('messages.tmpl', '#main', messages);
-  };
-
-  Gui.prototype.showSettingsForm = function(settings) {
-    return this._render('settings.tmpl', '#main', settings);
-  };
-
-  Gui.prototype.signOut = function() {
-    return this.start();
-  };
-
-  Gui.prototype.initCodeView = function(codeText) {
+  Gui.prototype._initCodeView = function(codeText) {
     var codeWidget, opts,
       _this = this;
     opts = {
@@ -308,7 +289,7 @@ Gui = (function() {
         }
       }
     };
-    codeWidget = document.getElementById('code');
+    codeWidget = document.getElementById('codemirror');
     this.cm = CodeMirror.fromTextArea(codeWidget, opts);
     this.cm.setValue(codeText);
     this.cm.markClean();
@@ -344,6 +325,26 @@ Gui = (function() {
   };
 
   Gui.prototype.codeChanged = function(newText) {};
+
+  Gui.prototype.showStatus = function(status) {
+    return this._render('status.tmpl', '#main', status);
+  };
+
+  Gui.prototype.showRanking = function(ranking) {
+    return this._render('ranking.tmpl', '#main', ranking);
+  };
+
+  Gui.prototype.showMessages = function(messages) {
+    return this._render('messages.tmpl', '#main', messages);
+  };
+
+  Gui.prototype.showSettingsForm = function(settings) {
+    return this._render('settings.tmpl', '#main', settings);
+  };
+
+  Gui.prototype.signOut = function() {
+    return this.start();
+  };
 
   return Gui;
 

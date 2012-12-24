@@ -23,7 +23,11 @@ class UseCase
     @contestWelcome()
 
   contestWelcome: =>
-  problem: =>
+
+  problem: (id) =>
+  getProblem: (id) =>
+    @contest.problems.find({id: id})
+
   status: =>
   ranking: =>
   messages: =>

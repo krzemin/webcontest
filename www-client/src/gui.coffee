@@ -129,18 +129,9 @@ class Gui
 
   showProblem: (problem) =>
     @_render('problem.tmpl', '#main', problem)
-  showStatus: (status) =>
-    @_render('status.tmpl', '#main', status)
-  showRanking: (ranking) =>
-    @_render('ranking.tmpl', '#main', ranking)
-  showMessages: (messages) =>
-    @_render('messages.tmpl', '#main', messages)
-  showSettingsForm: (settings) =>
-    @_render('settings.tmpl', '#main', settings)
-  signOut: =>
-    @start()
+    @_initCodeView('#include<dupa>')
 
-  initCodeView: (codeText) =>
+  _initCodeView: (codeText) =>
     opts = {
       mode: 'text/x-c++src',
       theme: 'monokai',
@@ -151,7 +142,7 @@ class Gui
         'Esc': (cm) => @setCodeViewFullScreen(cm, false) if @isCodeViewFullScreen(cm)
       }
     }
-    codeWidget = document.getElementById('code')
+    codeWidget = document.getElementById('codemirror')
     @cm = CodeMirror.fromTextArea(codeWidget, opts)
     @cm.setValue(codeText)
     @cm.markClean()
@@ -181,6 +172,17 @@ class Gui
     setTimeout(@saveCodeCallback, @saveCodeEvery * 1000)
 
   codeChanged: (newText) =>
+
+  showStatus: (status) =>
+    @_render('status.tmpl', '#main', status)
+  showRanking: (ranking) =>
+    @_render('ranking.tmpl', '#main', ranking)
+  showMessages: (messages) =>
+    @_render('messages.tmpl', '#main', messages)
+  showSettingsForm: (settings) =>
+    @_render('settings.tmpl', '#main', settings)
+  signOut: =>
+    @start()
 
 
 

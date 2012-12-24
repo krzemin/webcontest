@@ -35,8 +35,8 @@ Glue = (function() {
     After(this.useCase, 'contestWelcome', function() {
       return _this.gui.showContestWelcome(_this.useCase.contest);
     });
-    After(this.useCase, 'problem', function() {
-      return _this.gui.showProblem({});
+    After(this.useCase, 'problem', function(id) {
+      return _this.gui.showProblem(_this.useCase.getProblem(id));
     });
     After(this.useCase, 'status', function() {
       return _this.gui.showStatus([]);

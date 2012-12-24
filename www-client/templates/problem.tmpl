@@ -1,3 +1,66 @@
-<h1>Problem</h1>
+<div class="row-fluid">
 
+  <div class="span6">
+    <h1>{{name}}</h1>
+    <p>{{description}}</p>
+    <h2>Input specification</h2>
+    <p>{{input_specification}}</p>
+    <h2>Output specification</h2>
+    <p>{{output_specification}}</p>
+    <h2>Example testcases</h2>
+    {{#each testcases}}
+      <div class="row-fluid">
+        <div class="span6">
+          <h4>Input</h4>
+          <pre>{{input}}</pre>
+        </div>
+        <div class="span6">
+          <h4>Output</h4>
+          <pre>{{output}}</pre>
+        </div>
+      </div>
+    {{/each}}
+    {{testcases_explanation}}
+  </div>
 
+  <div class="span6">
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab-code" data-toggle="tab">Code</a></li>
+        <li><a href="#tab-tests" data-toggle="tab">Tests</a></li>
+        <li><a href="#tab-submit" data-toggle="tab">Submit</a></li>
+        <li><a href="#tab-status" data-toggle="tab">Status</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab-code">
+          <div class="row-fluid">
+            <textarea id="codemirror"></textarea>
+          </div>
+          <div class="row-fluid">
+            <div class="btn-toolbar">
+              <div class="btn-group">
+                <button class="btn">Save</button>
+                <button class="btn">Compile</button>
+                <button class="btn">Test</button>
+                <button class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div class="row-fluid">
+            <pre class="pre-scrollable">Compilation messages will appear here</pre> 
+          </div>
+        </div>
+        <div class="tab-pane" id="tab-tests">
+          tests
+        </div>
+        <div class="tab-pane" id="tab-submit">
+          submit
+        </div>
+        <div class="tab-pane" id="tab-status">
+          status
+        </div>
+     </div>
+    </div>
+  </div>
+
+</div>

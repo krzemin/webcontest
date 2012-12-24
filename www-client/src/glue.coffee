@@ -19,7 +19,7 @@ class Glue
     After(@storage, 'contestResponse', (contest) => @useCase.loadContest(contest))
     Before(@useCase, 'loadContest', (contest) => @gui.showContestArea(@useCase.user, contest))
     After(@useCase, 'contestWelcome', => @gui.showContestWelcome(@useCase.contest))
-    After(@useCase, 'problem', => @gui.showProblem({}))
+    After(@useCase, 'problem', (id) => @gui.showProblem(@useCase.getProblem(id)))
     After(@useCase, 'status', => @gui.showStatus([]))
     After(@useCase, 'ranking', => @gui.showRanking({}))
     After(@useCase, 'messages', => @gui.showMessages([]))
