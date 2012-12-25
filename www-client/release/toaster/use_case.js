@@ -42,7 +42,9 @@ UseCase = (function() {
     this.contest = {};
   }
 
-  UseCase.prototype.start = function() {};
+  UseCase.prototype.start = function() {
+    return this.openContest('1');
+  };
 
   UseCase.prototype.signIn = function(response) {
     if (response) {

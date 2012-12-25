@@ -55,7 +55,7 @@ function program7(depth0,data) {
   buffer += escapeExpression(stack1) + "\">Register</button>\n          ";
   return buffer;}
 
-  buffer += "<div class=\"well\">\n  <h2>Please select contest</h2>\n\n  <table class=\"table table-stripped\">\n    <thead>\n      <th>Contest</th>\n      <th>Start date</th>\n      <th></th>\n    </thead>\n    <tbody>\n      ";
+  buffer += "<div class=\"well\">\n  <button class=\"btn pull-right\" id=\"sign-out\">Sign out</button>\n  <h2>Please select contest</h2>\n\n  <table class=\"table table-stripped\">\n    <thead>\n      <th>Contest</th>\n      <th>Start date</th>\n      <th></th>\n    </thead>\n    <tbody>\n      ";
   stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    </tbody>     \n  </table>\n</div>\n";
@@ -96,7 +96,7 @@ function program1(depth0,data) {
   buffer += escapeExpression(stack1) + "</pre>\n        </div>\n      </div>\n    ";
   return buffer;}
 
-  buffer += "<div class=\"row-fluid\">\n\n  <div class=\"span6\">\n    <h1>";
+  buffer += "\n<div class=\"fixed-height-container\" style=\"border: 1px solid red;\">\n\n<div class=\"drag_column\">left</div>\n<div class=\"drag_column\">right</div>\n\n</div>\n\n<!--\n<div class=\"row-fluid\">\n\n  <div class=\"span6\" id=\"problem-description\">\n    <h1>";
   foundHelper = helpers.name;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
@@ -120,7 +120,7 @@ function program1(depth0,data) {
   foundHelper = helpers.testcases_explanation;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.testcases_explanation; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\n  </div>\n\n  <div class=\"span6\">\n    <div class=\"tabbable\">\n      <ul class=\"nav nav-tabs\">\n        <li class=\"active\"><a href=\"#tab-code\" data-toggle=\"tab\">Code</a></li>\n        <li><a href=\"#tab-tests\" data-toggle=\"tab\">Tests</a></li>\n        <li><a href=\"#tab-submit\" data-toggle=\"tab\">Submit</a></li>\n        <li><a href=\"#tab-status\" data-toggle=\"tab\">Status</a></li>\n      </ul>\n      <div class=\"tab-content\">\n        <div class=\"tab-pane active\" id=\"tab-code\">\n          <div class=\"row-fluid\">\n            <textarea id=\"codemirror\"></textarea>\n          </div>\n          <div class=\"row-fluid\">\n            <div class=\"btn-toolbar\">\n              <div class=\"btn-group\">\n                <button class=\"btn\">Save</button>\n                <button class=\"btn\">Compile</button>\n                <button class=\"btn\">Test</button>\n                <button class=\"btn btn-primary\">Submit</button>\n              </div>\n            </div>\n          </div>\n          <div class=\"row-fluid\">\n            <pre class=\"pre-scrollable\">Compilation messages will appear here</pre> \n          </div>\n        </div>\n        <div class=\"tab-pane\" id=\"tab-tests\">\n          tests\n        </div>\n        <div class=\"tab-pane\" id=\"tab-submit\">\n          submit\n        </div>\n        <div class=\"tab-pane\" id=\"tab-status\">\n          status\n        </div>\n     </div>\n    </div>\n  </div>\n\n</div>\n";
+  buffer += escapeExpression(stack1) + "\n  </div>\n\n  <div class=\"span6\" id=\"coding-side\">\n    <div class=\"tabbable\">\n      <ul class=\"nav nav-tabs\">\n        <li class=\"active\"><a href=\"#tab-code\" data-toggle=\"tab\">Code</a></li>\n        <li><a href=\"#tab-tests\" data-toggle=\"tab\">Tests</a></li>\n        <li><a href=\"#tab-submit\" data-toggle=\"tab\">Submit</a></li>\n        <li><a href=\"#tab-status\" data-toggle=\"tab\">Status</a></li>\n      </ul>\n      <div class=\"tab-content\">\n        <div class=\"tab-pane active\" id=\"tab-code\">\n          <div class=\"row-fluid\">\n            <textarea id=\"codemirror\"></textarea>\n          </div>\n          <div class=\"row-fluid\">\n            <div class=\"btn-toolbar\">\n              <div class=\"btn-group\">\n                <button class=\"btn\">Save</button>\n                <button class=\"btn\">Compile</button>\n                <button class=\"btn\">Test</button>\n                <button class=\"btn\">Submit</button>\n              </div>\n            </div>\n          </div>\n          <div class=\"row-fluid\">\n            <pre class=\"pre-scrollable\">Compilation messages will appear here</pre> \n          </div>\n        </div>\n        <div class=\"tab-pane\" id=\"tab-tests\">\n          tests\n        </div>\n        <div class=\"tab-pane\" id=\"tab-submit\">\n          submit\n        </div>\n        <div class=\"tab-pane\" id=\"tab-status\">\n          status\n        </div>\n     </div>\n    </div>\n  </div>\n\n</div>\n-->\n";
   return buffer;});
 templates['ranking.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
@@ -139,7 +139,7 @@ templates['sign-in.tmpl'] = template(function (Handlebars,depth0,helpers,partial
   
 
 
-  return "<form class=\"form-signin well\">\n    <h2>Please sign in</h2>\n    <div class=\"alert alert-error\" id=\"sign-in-error\" style=\"display: none;\">\n      <strong>Error!</strong> <br /> You have typed wrong credentials!\n    </div>\n    <input type=\"text\" class=\"input-block-level\" placeholder=\"E-mail address\" id=\"email\">\n    <input type=\"password\" class=\"input-block-level\" placeholder=\"Password\" id=\"password\">\n    <button class=\"btn btn-large btn-primary\" type=\"button\" data-loading-text=\"Signing in...\"  id=\"sign-in\">Sign in</button>\n</form>\n";});
+  return "<form class=\"form-signin well\">\n  <h2>Please sign in</h2>\n  <div class=\"alert alert-error\" id=\"sign-in-error\" style=\"display: none;\">\n    <strong>Error!</strong> <br /> You have typed wrong credentials!\n  </div>\n  <input type=\"text\" class=\"input-block-level\" placeholder=\"E-mail address\" id=\"email\">\n  <input type=\"password\" class=\"input-block-level\" placeholder=\"Password\" id=\"password\">\n  <button class=\"btn btn-large btn-primary\" type=\"button\" data-loading-text=\"Signing in...\"  id=\"sign-in\">Sign in</button>\n</form>\n";});
 templates['status.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   

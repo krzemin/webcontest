@@ -47,8 +47,9 @@ class Gui
     @_setLayout('center')
     console.log(contests)
     @_render('contest-list.tmpl', '#main', contests)
-    $('.register-for-contest').click((obj) => @registerForContestClicked(obj.toElement.id))
-    $('.open-contest').click((obj) => @openContestClicked(obj.toElement.id))
+    $('.register-for-contest').click((obj) => @registerForContestClicked($(obj).attr('id')))
+    $('.open-contest').click((obj) => @openContestClicked($(obj).attr('id')))
+    $('#sign-out').click( => @signOutClicked() )
 
   registerForContestClicked: (id) =>
   
@@ -76,7 +77,7 @@ class Gui
     problems.each (problem) =>
       link = $('<a>').attr('id', problem.id)
                      .text(problem.name)
-                     .click((obj) => @problemClicked(obj.toElement.id))
+                     .click((obj) => @problemClicked(problem.id))
       $('ul#problems-list').append($('<li>').append(link))
  
   _setActiveNavMenuItem: (view) =>
@@ -129,7 +130,13 @@ class Gui
 
   showProblem: (problem) =>
     @_render('problem.tmpl', '#main', problem)
-    @_initCodeView('#include<dupa>')
+    #@_resizeFixedHeightContainer()
+    $(window).on('resize', => @_resizeFixedHeightContainer())
+    #@_initCodeView('#include<dupa>')
+
+  _resizeFixedHeightContainer: =>
+    $(".fixed-height-container").height(window.innerHeight - $(".navbar").height() - 40)
+    $(".drag_column").addClass('drag_column')
 
   _initCodeView: (codeText) =>
     opts = {
@@ -138,22 +145,22 @@ class Gui
       lineNumbers: true,
       indentUnit: 4,
       extraKeys: {
-        'F11': (cm) => @setCodeViewFullScreen(cm, !@isCodeViewFullScreen(cm))
-        'Esc': (cm) => @setCodeViewFullScreen(cm, false) if @isCodeViewFullScreen(cm)
+        'F11': (cm) => @_setCodeViewFullScreen(cm, !@_isCodeViewFullScreen(cm))
+        'Esc': (cm) => @_setCodeViewFullScreen(cm, false) if @_isCodeViewFullScreen(cm)
       }
     }
     codeWidget = document.getElementById('codemirror')
     @cm = CodeMirror.fromTextArea(codeWidget, opts)
     @cm.setValue(codeText)
     @cm.markClean()
-    setTimeout(@saveCodeCallback, @saveCodeEvery * 1000)
+    setTimeout(@_saveCodeCallback, @saveCodeEvery * 1000)
     # previously, saving the code was performed every editor's content change
     # CodeMirror.on(@cm, "change", (instance, chObj) => @codeChanged(instance.getValue()))
 
-  isCodeViewFullScreen: (cm) =>
+  _isCodeViewFullScreen: (cm) =>
     /\bCodeMirror-fullscreen\b/.test(cm.getWrapperElement().className)
 
-  setCodeViewFullScreen: (cm, full) =>
+  _setCodeViewFullScreen: (cm, full) =>
     wrap = cm.getWrapperElement()
     winHeight = window.innerHeight || (document.documentElement || document.body).clientHeight
     if full
@@ -166,10 +173,10 @@ class Gui
       document.documentElement.style.overflow = ""
     cm.refresh()
 
-  saveCodeCallback: =>
+  _saveCodeCallback: =>
     @codeChanged(@cm.getValue()) unless @cm.isClean()
     @cm.markClean()
-    setTimeout(@saveCodeCallback, @saveCodeEvery * 1000)
+    setTimeout(@_saveCodeCallback, @saveCodeEvery * 1000)
 
   codeChanged: (newText) =>
 

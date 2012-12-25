@@ -8,4 +8,42 @@ a:hover {
   cursor: pointer;
 }
 
- 
+.fixed-height-container {
+  width: 100%;
+  min-height: 200px;
+}
+
+.drag_column {
+  height: 100%;
+  width: 50%;
+  border: 1px solid white;
+}
+
+.drag_left {
+  position: relative;
+  left: -5px;
+}
+
+.drag_right {
+  position: relative;
+  right: -5px;
+}
+
+.drag_handler_vertical {
+  width: 8px;
+  height: 100%;
+  padding: 5px 0;
+  cursor: col-resize;
+  //position: relative;
+  //top: -5px;
+  //left: 0;
+  background-color: yellow;
+}
+
+#problem-description {
+  overflow: auto;
+}
+
+#coding-side {
+}
+

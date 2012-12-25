@@ -5,6 +5,8 @@ class UseCase
     @contest = {}
 
   start: =>
+    # temporary, for faster contest area loading
+    @openContest('1')
 
   signIn: (response) =>
     if response

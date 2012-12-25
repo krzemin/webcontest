@@ -16,13 +16,15 @@ Gui = (function() {
 
     this.codeChanged = __bind(this.codeChanged, this);
 
-    this.saveCodeCallback = __bind(this.saveCodeCallback, this);
+    this._saveCodeCallback = __bind(this._saveCodeCallback, this);
 
-    this.setCodeViewFullScreen = __bind(this.setCodeViewFullScreen, this);
+    this._setCodeViewFullScreen = __bind(this._setCodeViewFullScreen, this);
 
-    this.isCodeViewFullScreen = __bind(this.isCodeViewFullScreen, this);
+    this._isCodeViewFullScreen = __bind(this._isCodeViewFullScreen, this);
 
     this._initCodeView = __bind(this._initCodeView, this);
+
+    this._resizeFixedHeightContainer = __bind(this._resizeFixedHeightContainer, this);
 
     this.showProblem = __bind(this.showProblem, this);
 
@@ -134,10 +136,13 @@ Gui = (function() {
     console.log(contests);
     this._render('contest-list.tmpl', '#main', contests);
     $('.register-for-contest').click(function(obj) {
-      return _this.registerForContestClicked(obj.toElement.id);
+      return _this.registerForContestClicked($(obj).attr('id'));
     });
-    return $('.open-contest').click(function(obj) {
-      return _this.openContestClicked(obj.toElement.id);
+    $('.open-contest').click(function(obj) {
+      return _this.openContestClicked($(obj).attr('id'));
+    });
+    return $('#sign-out').click(function() {
+      return _this.signOutClicked();
     });
   };
 
@@ -182,7 +187,7 @@ Gui = (function() {
     return problems.each(function(problem) {
       var link;
       link = $('<a>').attr('id', problem.id).text(problem.name).click(function(obj) {
-        return _this.problemClicked(obj.toElement.id);
+        return _this.problemClicked(problem.id);
       });
       return $('ul#problems-list').append($('<li>').append(link));
     });
@@ -266,8 +271,16 @@ Gui = (function() {
   };
 
   Gui.prototype.showProblem = function(problem) {
+    var _this = this;
     this._render('problem.tmpl', '#main', problem);
-    return this._initCodeView('#include<dupa>');
+    return $(window).on('resize', function() {
+      return _this._resizeFixedHeightContainer();
+    });
+  };
+
+  Gui.prototype._resizeFixedHeightContainer = function() {
+    $(".fixed-height-container").height(window.innerHeight - $(".navbar").height() - 40);
+    return $(".drag_column").addClass('drag_column');
   };
 
   Gui.prototype._initCodeView = function(codeText) {
@@ -280,11 +293,11 @@ Gui = (function() {
       indentUnit: 4,
       extraKeys: {
         'F11': function(cm) {
-          return _this.setCodeViewFullScreen(cm, !_this.isCodeViewFullScreen(cm));
+          return _this._setCodeViewFullScreen(cm, !_this._isCodeViewFullScreen(cm));
         },
         'Esc': function(cm) {
-          if (_this.isCodeViewFullScreen(cm)) {
-            return _this.setCodeViewFullScreen(cm, false);
+          if (_this._isCodeViewFullScreen(cm)) {
+            return _this._setCodeViewFullScreen(cm, false);
           }
         }
       }
@@ -293,14 +306,14 @@ Gui = (function() {
     this.cm = CodeMirror.fromTextArea(codeWidget, opts);
     this.cm.setValue(codeText);
     this.cm.markClean();
-    return setTimeout(this.saveCodeCallback, this.saveCodeEvery * 1000);
+    return setTimeout(this._saveCodeCallback, this.saveCodeEvery * 1000);
   };
 
-  Gui.prototype.isCodeViewFullScreen = function(cm) {
+  Gui.prototype._isCodeViewFullScreen = function(cm) {
     return /\bCodeMirror-fullscreen\b/.test(cm.getWrapperElement().className);
   };
 
-  Gui.prototype.setCodeViewFullScreen = function(cm, full) {
+  Gui.prototype._setCodeViewFullScreen = function(cm, full) {
     var winHeight, wrap;
     wrap = cm.getWrapperElement();
     winHeight = window.innerHeight || (document.documentElement || document.body).clientHeight;
@@ -316,12 +329,12 @@ Gui = (function() {
     return cm.refresh();
   };
 
-  Gui.prototype.saveCodeCallback = function() {
+  Gui.prototype._saveCodeCallback = function() {
     if (!this.cm.isClean()) {
       this.codeChanged(this.cm.getValue());
     }
     this.cm.markClean();
-    return setTimeout(this.saveCodeCallback, this.saveCodeEvery * 1000);
+    return setTimeout(this._saveCodeCallback, this.saveCodeEvery * 1000);
   };
 
   Gui.prototype.codeChanged = function(newText) {};
