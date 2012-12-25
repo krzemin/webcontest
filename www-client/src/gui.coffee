@@ -130,7 +130,13 @@ class Gui
 
   showProblem: (problem) =>
     @_render('problem.tmpl', '#main', problem)
-    #@_resizeFixedHeightContainer()
+    @_resizeFixedHeightContainer()
+    $('.fixed-height-container').layout({
+      applyDefaultStyles: false
+      livePaneResizing: true
+      center__paneSelector: "#problem-description"
+      east__paneSelector: "#coding-panel"
+    })
     $(window).on('resize', => @_resizeFixedHeightContainer())
     #@_initCodeView('#include<dupa>')
 

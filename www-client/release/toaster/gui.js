@@ -273,6 +273,13 @@ Gui = (function() {
   Gui.prototype.showProblem = function(problem) {
     var _this = this;
     this._render('problem.tmpl', '#main', problem);
+    this._resizeFixedHeightContainer();
+    $('.fixed-height-container').layout({
+      applyDefaultStyles: false,
+      livePaneResizing: true,
+      center__paneSelector: "#problem-description",
+      east__paneSelector: "#coding-panel"
+    });
     return $(window).on('resize', function() {
       return _this._resizeFixedHeightContainer();
     });

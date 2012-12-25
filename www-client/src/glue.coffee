@@ -10,6 +10,7 @@ class Glue
 
     # initiation & starting an application
     After(@useCase, 'start', @gui.start)
+    After(@gui, 'start', @useCase.problem('1'))
     After(@gui, 'signIn', (credentials) => @storage.signIn(credentials))
     After(@storage, 'signInResponse', (response) => @useCase.signIn(response))
     After(@useCase, 'signInError', @gui.signInError)
