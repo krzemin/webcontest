@@ -99,12 +99,13 @@ class Gui
   exitContestAreaClicked: =>
   signOutClicked: =>
 
+  # welcome view
+
   showContestWelcome: (contest) =>
     @_render('welcome.tmpl', '#main', contest)
-    @_showTimeline(contest.agenda)
+    @_initTimeline(contest.agenda)
 
-
-  _showTimeline: (agenda) =>
+  _initTimeline: (agenda) =>
     timeline_agenda = agenda.map (it) => {
       start: Date.create(it.start)
       content: """<span class="badge badge-info">#{it.content}</span>"""
@@ -128,56 +129,54 @@ class Gui
     timeline.setCurrentTime(Date.create("2012-12-24 16:05:22"))
     $(window).on('resize', => timeline.redraw())
 
+  # problem view
+
   showProblem: (problem) =>
     @_render('problem.tmpl', '#main', problem)
     @_resizeFixedHeightContainer()
+    @_initProblemPageLayout()
+    $(window).on('resize', => @_resizeFixedHeightContainer())
+    @_initCodeView('#include<dupa>')
+
+  _initProblemPageLayout: =>
     $('.fixed-height-container').layout({
       applyDefaultStyles: false
       livePaneResizing: true
-      center__paneSelector: "#problem-description"
-      east__paneSelector: "#coding-panel"
+      slidable: false
+      center__paneSelector: '#problem-description'
+      east__paneSelector: '#coding-panel'
+      east__size: 0.5
+      east__minSize: 320
+      east__maxSize: 0.8
     })
-    $(window).on('resize', => @_resizeFixedHeightContainer())
-    #@_initCodeView('#include<dupa>')
-
+    $('#tab-code').layout({
+      applyDefaultStyles: false
+      livePaneResizing: true
+      slidable: false
+      center__paneSelector: '#code-editor-container'
+      south__paneSelector: '#code-messages-container'
+      south__size: 0.25
+      south__minSize: 0.1
+      south__maxSize: 0.9
+      south__initClosed: true
+    })
+ 
   _resizeFixedHeightContainer: =>
     $(".fixed-height-container").height(window.innerHeight - $(".navbar").height() - 40)
-    $(".drag_column").addClass('drag_column')
+    $(".tab-content").height($("#coding-panel").height() - $("#coding-panel .nav-tabs").height() - 1)
 
   _initCodeView: (codeText) =>
     opts = {
-      mode: 'text/x-c++src',
-      theme: 'monokai',
-      lineNumbers: true,
-      indentUnit: 4,
-      extraKeys: {
-        'F11': (cm) => @_setCodeViewFullScreen(cm, !@_isCodeViewFullScreen(cm))
-        'Esc': (cm) => @_setCodeViewFullScreen(cm, false) if @_isCodeViewFullScreen(cm)
-      }
+      mode: 'text/x-c++src'
+      theme: 'monokai'
+      lineNumbers: true
+      indentUnit: 4
     }
     codeWidget = document.getElementById('codemirror')
     @cm = CodeMirror.fromTextArea(codeWidget, opts)
     @cm.setValue(codeText)
     @cm.markClean()
     setTimeout(@_saveCodeCallback, @saveCodeEvery * 1000)
-    # previously, saving the code was performed every editor's content change
-    # CodeMirror.on(@cm, "change", (instance, chObj) => @codeChanged(instance.getValue()))
-
-  _isCodeViewFullScreen: (cm) =>
-    /\bCodeMirror-fullscreen\b/.test(cm.getWrapperElement().className)
-
-  _setCodeViewFullScreen: (cm, full) =>
-    wrap = cm.getWrapperElement()
-    winHeight = window.innerHeight || (document.documentElement || document.body).clientHeight
-    if full
-      wrap.className += ' CodeMirror-fullscreen'
-      wrap.style.height = winHeight + 'px'
-      document.documentElement.style.overflow = 'hidden'
-    else
-      wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "")
-      wrap.style.height = ""
-      document.documentElement.style.overflow = ""
-    cm.refresh()
 
   _saveCodeCallback: =>
     @codeChanged(@cm.getValue()) unless @cm.isClean()

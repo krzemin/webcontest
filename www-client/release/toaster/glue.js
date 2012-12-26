@@ -12,7 +12,6 @@ Glue = (function() {
     LogAll(this.gui, 'Gui');
     LogAll(this.storage, 'Storage');
     After(this.useCase, 'start', this.gui.start);
-    After(this.gui, 'start', this.useCase.problem('1'));
     After(this.gui, 'signIn', function(credentials) {
       return _this.storage.signIn(credentials);
     });

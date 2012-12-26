@@ -13,43 +13,59 @@ a:hover {
   min-height: 200px;
 }
 
+#coding-panel {
+  height: 100%;
+}  
 
-
-
-
-/*
- *  *   PANES & CONTENT-DIVs
- *   */
-.ui-layout-pane { /* all 'panes' */
-  padding:    10px; 
-  overflow:   auto;
- /* DO NOT add scrolling (or padding) to 'panes' that have a content-div,
- *     otherwise you may get double-scrollbars - on the pane AND on the content-div
- *         - use ui-layout-wrapper class if pane has a content-div
- *             - use ui-layout-container if pane has an inner-layout
- *              */
+#coding-panel ul.nav-tabs {
+  margin-bottom: 0;
 }
-/* (scrolling) content-div inside pane allows for fixed header(s) and/or footer(s) */
+
+#code-toolbar {
+  position: absolute;
+  top: 0;
+  right: 22px;
+  opacity: 0.5;
+  z-index: 100;
+}
+
+#code-toolbar:hover {
+  opacity: 1.0;
+}
+
+#tab-code {
+  height: 100%;
+}
+
+.CodeMirror {
+  height: 100%;
+}
+
+
+.ui-layout-pane {
+//  padding:    10px; 
+  overflow:   auto;
+}
 .ui-layout-content {
   padding:    10px;
-  position:   relative; /* contain floated or positioned elements */
-  overflow:   auto; /* add scrolling to content-div */
+  position:   relative; 
+  overflow:   auto; 
 }
 
-.ui-layout-resizer  { /* all 'resizer-bars' */
+.ui-layout-resizer  { 
   background:     #444;
   border:         1px solid #BBB;
   border-width:   0;
 }
-.ui-layout-resizer-drag {       /* REAL resizer while resize in progress */
+.ui-layout-resizer-drag {       
 }
-.ui-layout-resizer-hover    {   /* affects both open and closed states */
+.ui-layout-resizer-hover    {   
 }
-.ui-layout-resizer-open-hover , /* hover-color to 'resize' */
-.ui-layout-resizer-dragging {   /* resizer beging 'dragging' */
+.ui-layout-resizer-open-hover , 
+.ui-layout-resizer-dragging {   
   background: #666;
 }
-.ui-layout-resizer-dragging {   /* CLONED resizer being dragged */
+.ui-layout-resizer-dragging {   
   border:      1px solid #BBB;
 }
 .ui-layout-resizer-north-dragging,
@@ -60,66 +76,58 @@ a:hover {
 .ui-layout-resizer-east-dragging {
   border-width:   0 1px;
 }
-/* NOTE: Add a 'dragging-limit' color to provide visual feedback when resizer hits min/max size limits */
-.ui-layout-resizer-dragging-limit { /* CLONED resizer at min or max size-limit */
-  background: #E1A4A4; /* red */
+
+.ui-layout-resizer-dragging-limit { 
+  background: #E1A4A4; 
 }
 
-.ui-layout-resizer-closed-hover { /* hover-color to 'slide open' */
+.ui-layout-resizer-closed-hover { 
   background: #EBD5AA;
 }
-.ui-layout-resizer-sliding {    /* resizer when pane is 'slid open' */
-  opacity: .10; /* show only a slight shadow */
+.ui-layout-resizer-sliding {    
+  opacity: .10; 
   filter:  alpha(opacity=10);
 }
-.ui-layout-resizer-sliding-hover {  /* sliding resizer - hover */
-  opacity: 1.00; /* on-hover, show the resizer-bar normally */
+.ui-layout-resizer-sliding-hover {  
+  opacity: 1.00; 
   filter:  alpha(opacity=100);
 }
-/* sliding resizer - add 'outside-border' to resizer on-hover 
- * this sample illustrates how to target specific panes and states */
 .ui-layout-resizer-north-sliding-hover  { border-bottom-width:  1px; }
 .ui-layout-resizer-south-sliding-hover  { border-top-width:     1px; }
 .ui-layout-resizer-west-sliding-hover   { border-right-width:   1px; }
 .ui-layout-resizer-east-sliding-hover   { border-left-width:    1px; }
 
-/*
- *  *   TOGGLER-BUTTONS
- *   */
 .ui-layout-toggler {
-  border: 0; /* match pane-border */
+  border: 0; 
   background-color: #888;
 }
 .ui-layout-resizer-hover .ui-layout-toggler {
   opacity: .60;
   filter:  alpha(opacity=60);
 }
-.ui-layout-toggler-hover , /* need when NOT resizable */
-.ui-layout-resizer-hover .ui-layout-toggler-hover { /* need specificity when IS resizable */
+.ui-layout-toggler-hover , 
+.ui-layout-resizer-hover .ui-layout-toggler-hover { 
   background-color: #aaa;
   opacity: 1.00;
   filter:  alpha(opacity=100);
 }
 .ui-layout-toggler-north ,
 .ui-layout-toggler-south {
-  border-width: 0 1px; /* left/right borders */
+  border-width: 0 1px; 
 }
 .ui-layout-toggler-west ,
 .ui-layout-toggler-east {
-  border-width: 1px 0; /* top/bottom borders */
+  border-width: 1px 0; 
 }
-/* hide the toggler-button when the pane is 'slid open' */
+
 .ui-layout-resizer-sliding  .ui-layout-toggler {
   display: none;
 }
-/*
- *   *  style the text we put INSIDE the togglers
- *       */
 .ui-layout-toggler .content {
   color:          #666;
   font-size:      12px;
   font-weight:    bold;
   width:          100%;
-  padding-bottom: 0.35ex; /* to 'vertically center' text inside text-span */
+  padding-bottom: 0.35ex; 
 }
 

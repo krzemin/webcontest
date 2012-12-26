@@ -25,32 +25,36 @@
     {{testcases_explanation}}
   </div>
 
-  <div class="" id="coding-panel">
+  <div id="coding-panel">
     <div class="tabbable">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-code" data-toggle="tab">Code</a></li>
         <li><a href="#tab-tests" data-toggle="tab">Tests</a></li>
         <li><a href="#tab-submit" data-toggle="tab">Submit</a></li>
-        <li><a href="#tab-status" data-toggle="tab">Status</a></li>
+        <li><a href="#tab-my-submissions" data-toggle="tab">My submissions</a></li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-code">
-          <div class="row-fluid">
-            <textarea id="codemirror"></textarea>
-          </div>
-          <div class="row-fluid">
-            <div class="btn-toolbar">
-              <div class="btn-group">
-                <button class="btn">Save</button>
-                <button class="btn">Compile</button>
-                <button class="btn">Test</button>
-                <button class="btn">Submit</button>
+          <div id="code-editor-container">
+              <textarea id="codemirror"></textarea>
+            <div class="" id="code-toolbar">
+              <div class="btn-toolbar">
+                  <button class="btn">Save</button>
+                  <button class="btn">Compile</button>
+                  <button class="btn">Test</button>
+                  <button class="btn">Submit</button>
               </div>
             </div>
           </div>
-          <div class="row-fluid">
-            <pre class="pre-scrollable">Compilation messages will appear here</pre> 
-          </div>
+          <pre id="code-messages-container">Compilation messages will appear here
+Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum ligula, elementum et, varius in, ipsum. Nunc turpis. Pellentesque ac lacus. Integer erat volutpat. Vestibulum tortor vehicula dolor lorem, pellentesque facilisis. In hac habitasse platea dictumst. Quisque eu lectus elit, pulvinar sed, ornare eu, odio. Mauris eget dolor auctor odio
+Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum ligula, elementum et, varius in, ipsum. Nunc turpis. Pellentesque ac lacus. Integer erat volutpat. Vestibulum tortor vehicula dolor lorem, pellentesque facilisis. In hac habitasse platea dictumst. Quisque eu lectus elit, pulvinar sed, ornare eu, odio. Mauris eget dolor auctor odio
+Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum ligula, elementum et, varius in, ipsum. Nunc turpis. Pellentesque ac lacus. Integer erat volutpat. Vestibulum tortor vehicula dolor lorem, pellentesque facilisis. In hac habitasse platea dictumst. Quisque eu lectus elit, pulvinar sed, ornare eu, odio. Mauris eget dolor auctor odio
+Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum ligula, elementum et, varius in, ipsum. Nunc turpis. Pellentesque ac lacus. Integer erat volutpat. Vestibulum tortor vehicula dolor lorem, pellentesque facilisis. In hac habitasse platea dictumst. Quisque eu lectus elit, pulvinar sed, ornare eu, odio. Mauris eget dolor auctor odio
+Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum ligula, elementum et, varius in, ipsum. Nunc turpis. Pellentesque ac lacus. Integer erat volutpat. Vestibulum tortor vehicula dolor lorem, pellentesque facilisis. In hac habitasse platea dictumst. Quisque eu lectus elit, pulvinar sed, ornare eu, odio. Mauris eget dolor auctor odio
+Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum ligula, elementum et, varius in, ipsum. Nunc turpis. Pellentesque ac lacus. Integer erat volutpat. Vestibulum tortor vehicula dolor lorem, pellentesque facilisis. In hac habitasse platea dictumst. Quisque eu lectus elit, pulvinar sed, ornare eu, odio. Mauris eget dolor auctor odio
+Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum ligula, elementum et, varius in, ipsum. Nunc turpis. Pellentesque ac lacus. Integer erat volutpat. Vestibulum tortor vehicula dolor lorem, pellentesque facilisis. In hac habitasse platea dictumst. Quisque eu lectus elit, pulvinar sed, ornare eu, odio. Mauris eget dolor auctor odio
+          </pre> 
         </div>
         <div class="tab-pane" id="tab-tests">
           tests
@@ -58,8 +62,8 @@
         <div class="tab-pane" id="tab-submit">
           submit
         </div>
-        <div class="tab-pane" id="tab-status">
-          status
+        <div class="tab-pane" id="tab-my-submissions">
+          my submissions
         </div>
      </div>
     </div>

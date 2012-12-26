@@ -18,17 +18,15 @@ Gui = (function() {
 
     this._saveCodeCallback = __bind(this._saveCodeCallback, this);
 
-    this._setCodeViewFullScreen = __bind(this._setCodeViewFullScreen, this);
-
-    this._isCodeViewFullScreen = __bind(this._isCodeViewFullScreen, this);
-
     this._initCodeView = __bind(this._initCodeView, this);
 
     this._resizeFixedHeightContainer = __bind(this._resizeFixedHeightContainer, this);
 
+    this._initProblemPageLayout = __bind(this._initProblemPageLayout, this);
+
     this.showProblem = __bind(this.showProblem, this);
 
-    this._showTimeline = __bind(this._showTimeline, this);
+    this._initTimeline = __bind(this._initTimeline, this);
 
     this.showContestWelcome = __bind(this.showContestWelcome, this);
 
@@ -230,10 +228,10 @@ Gui = (function() {
 
   Gui.prototype.showContestWelcome = function(contest) {
     this._render('welcome.tmpl', '#main', contest);
-    return this._showTimeline(contest.agenda);
+    return this._initTimeline(contest.agenda);
   };
 
-  Gui.prototype._showTimeline = function(agenda) {
+  Gui.prototype._initTimeline = function(agenda) {
     var dates, endDate, startDate, timeline, timeline_agenda, timeline_options,
       _this = this;
     timeline_agenda = agenda.map(function(it) {
@@ -274,66 +272,55 @@ Gui = (function() {
     var _this = this;
     this._render('problem.tmpl', '#main', problem);
     this._resizeFixedHeightContainer();
+    this._initProblemPageLayout();
+    $(window).on('resize', function() {
+      return _this._resizeFixedHeightContainer();
+    });
+    return this._initCodeView('#include<dupa>');
+  };
+
+  Gui.prototype._initProblemPageLayout = function() {
     $('.fixed-height-container').layout({
       applyDefaultStyles: false,
       livePaneResizing: true,
-      center__paneSelector: "#problem-description",
-      east__paneSelector: "#coding-panel"
+      slidable: false,
+      center__paneSelector: '#problem-description',
+      east__paneSelector: '#coding-panel',
+      east__size: 0.5,
+      east__minSize: 320,
+      east__maxSize: 0.8
     });
-    return $(window).on('resize', function() {
-      return _this._resizeFixedHeightContainer();
+    return $('#tab-code').layout({
+      applyDefaultStyles: false,
+      livePaneResizing: true,
+      slidable: false,
+      center__paneSelector: '#code-editor-container',
+      south__paneSelector: '#code-messages-container',
+      south__size: 0.25,
+      south__minSize: 0.1,
+      south__maxSize: 0.9,
+      south__initClosed: true
     });
   };
 
   Gui.prototype._resizeFixedHeightContainer = function() {
     $(".fixed-height-container").height(window.innerHeight - $(".navbar").height() - 40);
-    return $(".drag_column").addClass('drag_column');
+    return $(".tab-content").height($("#coding-panel").height() - $("#coding-panel .nav-tabs").height() - 1);
   };
 
   Gui.prototype._initCodeView = function(codeText) {
-    var codeWidget, opts,
-      _this = this;
+    var codeWidget, opts;
     opts = {
       mode: 'text/x-c++src',
       theme: 'monokai',
       lineNumbers: true,
-      indentUnit: 4,
-      extraKeys: {
-        'F11': function(cm) {
-          return _this._setCodeViewFullScreen(cm, !_this._isCodeViewFullScreen(cm));
-        },
-        'Esc': function(cm) {
-          if (_this._isCodeViewFullScreen(cm)) {
-            return _this._setCodeViewFullScreen(cm, false);
-          }
-        }
-      }
+      indentUnit: 4
     };
     codeWidget = document.getElementById('codemirror');
     this.cm = CodeMirror.fromTextArea(codeWidget, opts);
     this.cm.setValue(codeText);
     this.cm.markClean();
     return setTimeout(this._saveCodeCallback, this.saveCodeEvery * 1000);
-  };
-
-  Gui.prototype._isCodeViewFullScreen = function(cm) {
-    return /\bCodeMirror-fullscreen\b/.test(cm.getWrapperElement().className);
-  };
-
-  Gui.prototype._setCodeViewFullScreen = function(cm, full) {
-    var winHeight, wrap;
-    wrap = cm.getWrapperElement();
-    winHeight = window.innerHeight || (document.documentElement || document.body).clientHeight;
-    if (full) {
-      wrap.className += ' CodeMirror-fullscreen';
-      wrap.style.height = winHeight + 'px';
-      document.documentElement.style.overflow = 'hidden';
-    } else {
-      wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "");
-      wrap.style.height = "";
-      document.documentElement.style.overflow = "";
-    }
-    return cm.refresh();
   };
 
   Gui.prototype._saveCodeCallback = function() {
