@@ -69,7 +69,9 @@ LocalStorage = (function() {
       response = {
         user: {
           name: 'Piotr Krzemiński',
-          email: 'pio.krzeminski@gmail.com'
+          email: 'pio.krzeminski@gmail.com',
+          language: 'c++',
+          code_template: "/*\n * Piotr Krzemiński\n * Web Programming Contest demo (2012-12-24)\n * Problem easy\n */\n\n#include <cstdio>\n#include <cstring>\n#include <algorithm>\n#include <functional>\n\nusing namespace std;\n\nint T, C, R, max_d = 0;\nbool BOARD[1000][1000];\nbool VISITED[1000][1000];\nchar line[1001];\npair<int, int> start;\n\nint dfs(int row, int col)\n{\n    if(row < 0 || row >= R || col < 0 || col >= C) return 0;\n    if(VISITED[row][col]) return 0;\n    if(!BOARD[row][col]) return 0;\n    VISITED[row][col] = true;\n\n    int t[4];\n    t[0] = dfs(row, col - 1);\n    t[1] = dfs(row - 1, col);\n    t[2] = dfs(row, col + 1);\n    t[3] = dfs(row + 1, col);\n\n    partial_sort(t, t + 2, t + 4, greater<int>());\n\n    if(t[0] + t[1] + 1 > max_d)\n        max_d = t[0] + t[1] + 1;\n\n    return 1 + t[0];\n}\n\nint main()\n{\n    scanf(\"%d\", &T);\n\n    while(T--)\n    {\n        memset(BOARD, 0, 1000000);\n        memset(VISITED, 0, 1000000);\n        max_d = 0;\n        scanf(\"%d %d\\n\", &C, &R);\n        for(int r = 0; r < R; ++r)\n        {\n            scanf(\"%s\\n\", line);\n            for(int c = 0; c < C; ++c)\n            {\n                BOARD[r][c] = (line[c] != '#');\n                if(BOARD[r][c])\n                {\n                    start.first = r;\n                    start.second = c;\n                }\n            }\n        }\n        max_d = max(max_d, dfs(start.first, start.second));\n        printf(\"Maximum rope length is %d.\\n\", max_d - 1);\n    }\n\n    return 0;\n}"
         },
         contest_list: [
           {

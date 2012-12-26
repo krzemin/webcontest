@@ -268,7 +268,7 @@ Gui = (function() {
     });
   };
 
-  Gui.prototype.showProblem = function(problem) {
+  Gui.prototype.showProblem = function(problem, user) {
     var _this = this;
     this._render('problem.tmpl', '#main', problem);
     this._resizeFixedHeightContainer();
@@ -276,7 +276,7 @@ Gui = (function() {
     $(window).on('resize', function() {
       return _this._resizeFixedHeightContainer();
     });
-    return this._initCodeView('#include<dupa>');
+    return this._initCodeView(user.code_template);
   };
 
   Gui.prototype._initProblemPageLayout = function() {
@@ -287,7 +287,7 @@ Gui = (function() {
       center__paneSelector: '#problem-description',
       east__paneSelector: '#coding-panel',
       east__size: 0.5,
-      east__minSize: 320,
+      east__minSize: 380,
       east__maxSize: 0.8
     });
     return $('#tab-code').layout({

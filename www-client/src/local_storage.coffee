@@ -35,6 +35,77 @@ int main() {
         user: {
           name: 'Piotr Krzemiński'
           email: 'pio.krzeminski@gmail.com'
+          language: 'c++'
+          code_template: """
+/*
+ * Piotr Krzemiński
+ * Web Programming Contest demo (2012-12-24)
+ * Problem easy
+ */
+
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <functional>
+
+using namespace std;
+
+int T, C, R, max_d = 0;
+bool BOARD[1000][1000];
+bool VISITED[1000][1000];
+char line[1001];
+pair<int, int> start;
+
+int dfs(int row, int col)
+{
+    if(row < 0 || row >= R || col < 0 || col >= C) return 0;
+    if(VISITED[row][col]) return 0;
+    if(!BOARD[row][col]) return 0;
+    VISITED[row][col] = true;
+
+    int t[4];
+    t[0] = dfs(row, col - 1);
+    t[1] = dfs(row - 1, col);
+    t[2] = dfs(row, col + 1);
+    t[3] = dfs(row + 1, col);
+
+    partial_sort(t, t + 2, t + 4, greater<int>());
+
+    if(t[0] + t[1] + 1 > max_d)
+        max_d = t[0] + t[1] + 1;
+
+    return 1 + t[0];
+}
+
+int main()
+{
+    scanf("%d", &T);
+
+    while(T--)
+    {
+        memset(BOARD, 0, 1000000);
+        memset(VISITED, 0, 1000000);
+        max_d = 0;
+        scanf("%d %d\\n", &C, &R);
+        for(int r = 0; r < R; ++r)
+        {
+            scanf("%s\\n", line);
+            for(int c = 0; c < C; ++c)
+            {
+                BOARD[r][c] = (line[c] != '#');
+                if(BOARD[r][c])
+                {
+                    start.first = r;
+                    start.second = c;
+                }
+            }
+        }
+        max_d = max(max_d, dfs(start.first, start.second));
+        printf("Maximum rope length is %d.\\n", max_d - 1);
+    }
+
+    return 0;
+}"""
         }
         contest_list: [
           { id: '1', name: 'NSN Programming Open (Qualification Round I)', date: '27.06.2013 17:00', registered: true, active: true}

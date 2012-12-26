@@ -131,12 +131,12 @@ class Gui
 
   # problem view
 
-  showProblem: (problem) =>
+  showProblem: (problem, user) =>
     @_render('problem.tmpl', '#main', problem)
     @_resizeFixedHeightContainer()
     @_initProblemPageLayout()
     $(window).on('resize', => @_resizeFixedHeightContainer())
-    @_initCodeView('#include<dupa>')
+    @_initCodeView(user.code_template)
 
   _initProblemPageLayout: =>
     $('.fixed-height-container').layout({
@@ -146,7 +146,7 @@ class Gui
       center__paneSelector: '#problem-description'
       east__paneSelector: '#coding-panel'
       east__size: 0.5
-      east__minSize: 320
+      east__minSize: 380
       east__maxSize: 0.8
     })
     $('#tab-code').layout({
