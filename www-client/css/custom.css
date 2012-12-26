@@ -13,6 +13,10 @@ a:hover {
   min-height: 200px;
 }
 
+#problem-description {
+  padding-right: 20px;
+}
+
 #coding-panel {
   height: 100%;
 }  
