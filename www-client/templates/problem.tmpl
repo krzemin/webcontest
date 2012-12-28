@@ -35,8 +35,9 @@
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-code">
+
           <div id="code-editor-container">
-              <textarea id="codemirror"></textarea>
+            <textarea id="codemirror"></textarea>
             <div class="" id="code-toolbar">
               <div class="btn-toolbar">
                   <button class="btn"><i class="icon-hdd"></i> Save</button>
@@ -55,16 +56,94 @@ Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum l
 Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum ligula, elementum et, varius in, ipsum. Nunc turpis. Pellentesque ac lacus. Integer erat volutpat. Vestibulum tortor vehicula dolor lorem, pellentesque facilisis. In hac habitasse platea dictumst. Quisque eu lectus elit, pulvinar sed, ornare eu, odio. Mauris eget dolor auctor odio
 Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum ligula, elementum et, varius in, ipsum. Nunc turpis. Pellentesque ac lacus. Integer erat volutpat. Vestibulum tortor vehicula dolor lorem, pellentesque facilisis. In hac habitasse platea dictumst. Quisque eu lectus elit, pulvinar sed, ornare eu, odio. Mauris eget dolor auctor odio
           </pre> 
+
         </div>
+
         <div class="tab-pane" id="tab-tests">
-          tests
+
+          <div class="container-fluid">
+            <div class="row-fluid">
+              <h2>Tests</h2>
+              
+
+            </div>
+          </div>
+
         </div>
+
         <div class="tab-pane" id="tab-submit">
-          submit
+
+          <div class="container-fluid">
+            <div class="row-fluid">
+              <form class="form-horizontal">
+                <fieldset>
+                  <legend>Submit from a file</legend>
+                  <div class="alert alert-error" id="submit-error" style="display: none;">
+                    <strong>Error!</strong> <br />
+                    File not submitted! You have to select proper programming language.
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="file">Select a file</label>
+                    <div class="controls">
+                      <input type="file" class="input-file" id="file" />
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label" for="language">Programming language</label>
+                    <div class="controls">
+                      <select id="language">
+                        <option value="0">Detect automatically</option>
+                        <optgroup label="C">
+                          <option value="1">gcc 4.7.2</option>
+                          <option value="2">clang 3.1</option>
+                        </optgroup>
+                        <optgroup label="C++">
+                          <option value="3">g++ 4.7.2</option>
+                          <option value="4">clang++ 3.1</option>
+                        </optgroup>
+                        <optgroup label="Java">
+                          <option value="5">OpenJDK 1.7.0_09</option>
+                          <option value="6">Oracle JDK 1.7.0_11</option>
+                        </optgroup>
+                        <optgroup label="Python">
+                          <option value="7">python 2.7</option>
+                          <option value="8">python 3.2</option>
+                        </optgroup>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <div class="controls">
+                      <label class="checkbox" for="load-to-editor">
+                        <input type="checkbox" id="load-to-editor" value="true" />
+                        Load to code editor
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <button type="button" class="btn btn-primary btn-large" id="submit">
+                      <i class="icon-upload"></i>
+                      Submit
+                    </button>
+                  </div>
+                </fieldset>
+              </form> 
+            </div>
+          </div>
+
         </div>
+
         <div class="tab-pane" id="tab-my-submissions">
-          my submissions
+
+          <div class="container-fluid">
+            <div class="row-fluid">
+              <h2>My submissions</h2>
+
+            </div>
+          </div>
+
         </div>
+
      </div>
     </div>
   </div>

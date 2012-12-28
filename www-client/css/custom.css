@@ -127,7 +127,7 @@ a:hover {
 .ui-layout-resizer-sliding  .ui-layout-toggler {
   display: none;
 }
-.ui-layout-toggler .content {
+.ui-layout-toggler {
   color:          #666;
   font-size:      12px;
   font-weight:    bold;

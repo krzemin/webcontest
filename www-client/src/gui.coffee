@@ -45,7 +45,6 @@ class Gui
 
   showContestList: (contests) =>
     @_setLayout('center')
-    console.log(contests)
     @_render('contest-list.tmpl', '#main', contests)
     $('.register-for-contest').click((obj) => @registerForContestClicked($(obj).attr('id')))
     $('.open-contest').click((obj) => @openContestClicked($(obj).attr('id')))
@@ -76,7 +75,7 @@ class Gui
   _loadProblemsMenu: (problems) =>
     problems.each (problem) =>
       link = $('<a>').attr('id', problem.id)
-                     .text(problem.name)
+                     .html(problem.name + ' <i class="icon-ok"></i>')
                      .click((obj) => @problemClicked(problem.id))
       $('ul#problems-list').append($('<li>').append(link))
  

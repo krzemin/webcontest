@@ -131,7 +131,6 @@ Gui = (function() {
   Gui.prototype.showContestList = function(contests) {
     var _this = this;
     this._setLayout('center');
-    console.log(contests);
     this._render('contest-list.tmpl', '#main', contests);
     $('.register-for-contest').click(function(obj) {
       return _this.registerForContestClicked($(obj).attr('id'));
@@ -184,7 +183,7 @@ Gui = (function() {
     var _this = this;
     return problems.each(function(problem) {
       var link;
-      link = $('<a>').attr('id', problem.id).text(problem.name).click(function(obj) {
+      link = $('<a>').attr('id', problem.id).html(problem.name + ' <i class="icon-ok"></i>').click(function(obj) {
         return _this.problemClicked(problem.id);
       });
       return $('ul#problems-list').append($('<li>').append(link));
