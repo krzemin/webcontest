@@ -192,8 +192,12 @@ Gui = (function() {
 
   Gui.prototype._setActiveNavMenuItem = function(view) {
     $('ul#navigation li').removeClass('active');
+    $('ul#navigation li a i').removeClass('icon-white');
     if (view !== '') {
-      return $("#" + view).parent().addClass('active');
+      $("#" + view).parent().addClass('active');
+    }
+    if (view !== '') {
+      return $("#" + view).parent().find('a i').addClass('icon-white');
     }
   };
 

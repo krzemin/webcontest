@@ -81,7 +81,9 @@ class Gui
  
   _setActiveNavMenuItem: (view) =>
     $('ul#navigation li').removeClass('active')
+    $('ul#navigation li a i').removeClass('icon-white')
     $("##{view}").parent().addClass('active') unless view == ''
+    $("##{view}").parent().find('a i').addClass('icon-white') unless view == ''
 
   contestWelcomeClicked: =>
     @_setActiveNavMenuItem('')
