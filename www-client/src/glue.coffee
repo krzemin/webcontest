@@ -21,10 +21,11 @@ class Glue
     After(@useCase, 'contestWelcome', => @gui.showContestWelcome(@useCase.contest))
     After(@useCase, 'problem', (id) => @gui.showProblem(@useCase.getProblem(id), @useCase.user))
     After(@useCase, 'status', => @gui.showStatus([]))
-    After(@useCase, 'ranking', => @gui.showRanking({}))
+    #After(@useCase, 'ranking', => @gui.showRanking({}))
+    After(@useCase, 'ranking', => @storage.getRanking(@useCase.contest.id))
+    After(@storage, 'rankingResponse', (ranking) => @gui.showRanking(ranking))
     After(@useCase, 'messages', => @gui.showMessages([]))
     After(@useCase, 'settings', => @gui.showSettingsForm({}))
-
 
     # codemirror stuff
     #After(@useCase, 'initCodeView', => @gui.initCodeView(@storage.getCode()))

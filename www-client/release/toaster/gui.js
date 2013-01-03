@@ -68,6 +68,8 @@ Gui = (function() {
 
     this.start = __bind(this.start, this);
 
+    this._loading = __bind(this._loading, this);
+
     this._setLayout = __bind(this._setLayout, this);
 
     this._render = __bind(this._render, this);
@@ -85,6 +87,10 @@ Gui = (function() {
 
   Gui.prototype._setLayout = function(layout) {
     return this._render("layout-" + layout + ".tmpl", 'body', {});
+  };
+
+  Gui.prototype._loading = function(target) {
+    return this._render("loading.tmpl", target, {});
   };
 
   Gui.prototype.start = function() {
@@ -214,7 +220,8 @@ Gui = (function() {
   };
 
   Gui.prototype.rankingClicked = function() {
-    return this._setActiveNavMenuItem('ranking');
+    this._setActiveNavMenuItem('ranking');
+    return this._loading('#main');
   };
 
   Gui.prototype.messagesClicked = function() {
@@ -341,6 +348,7 @@ Gui = (function() {
   };
 
   Gui.prototype.showRanking = function(ranking) {
+    console.log(ranking);
     return this._render('ranking.tmpl', '#main', ranking);
   };
 

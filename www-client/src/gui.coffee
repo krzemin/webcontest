@@ -15,6 +15,8 @@ class Gui
   _setLayout: (layout) =>
     @_render("layout-#{layout}.tmpl", 'body', {})
 
+  _loading: (target) =>
+    @_render("loading.tmpl", target, {})
 
   # GUI actions
   
@@ -93,6 +95,7 @@ class Gui
     @_setActiveNavMenuItem('status')
   rankingClicked: =>
     @_setActiveNavMenuItem('ranking')
+    @_loading('#main')
   messagesClicked: =>
     @_setActiveNavMenuItem('')
   settingsClicked: =>
@@ -189,6 +192,7 @@ class Gui
   showStatus: (status) =>
     @_render('status.tmpl', '#main', status)
   showRanking: (ranking) =>
+    console.log(ranking)
     @_render('ranking.tmpl', '#main', ranking)
   showMessages: (messages) =>
     @_render('messages.tmpl', '#main', messages)

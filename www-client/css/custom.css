@@ -4,6 +4,10 @@
   margin: 20px auto 20px;
 }
 
+.centered-text {
+  text-align: center;
+}
+
 a:hover {
   cursor: pointer;
 }

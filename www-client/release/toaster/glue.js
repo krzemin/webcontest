@@ -42,7 +42,10 @@ Glue = (function() {
       return _this.gui.showStatus([]);
     });
     After(this.useCase, 'ranking', function() {
-      return _this.gui.showRanking({});
+      return _this.storage.getRanking(_this.useCase.contest.id);
+    });
+    After(this.storage, 'rankingResponse', function(ranking) {
+      return _this.gui.showRanking(ranking);
     });
     After(this.useCase, 'messages', function() {
       return _this.gui.showMessages([]);

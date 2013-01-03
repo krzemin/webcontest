@@ -1,3 +1,28 @@
-<h1>Ranking</h1>
-
-
+<div class="container-fluid">
+  <div class="row-fluid">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Score</th>
+          <th>Solved</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this}}
+        <tr>
+          <td>{{no}}</td>
+          <td>{{name}}</td>
+          <td>{{score}}</td>
+          <td>
+            {{#each solved}}
+            <span class="badge badge-success">{{this}}</span>
+            {{/each}}
+          </td>
+        </tr>
+        {{/each}}
+     </tbody>
+    </table>
+  </div>
+</div> 
