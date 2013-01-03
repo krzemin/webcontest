@@ -322,7 +322,7 @@ Gui = (function() {
     var codeWidget, opts;
     opts = {
       mode: 'text/x-c++src',
-      theme: 'monokai',
+      theme: 'vibrant-ink',
       lineNumbers: true,
       indentUnit: 4
     };

@@ -172,7 +172,7 @@ class Gui
   _initCodeView: (codeText) =>
     opts = {
       mode: 'text/x-c++src'
-      theme: 'monokai'
+      theme: 'vibrant-ink'
       lineNumbers: true
       indentUnit: 4
     }

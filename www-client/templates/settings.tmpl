@@ -1,3 +1,100 @@
-<h1>Settings</h1>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <form class="form-horizontal">
+      <fieldset>
+        <legend>Settings</legend>
+        <div class="alert alert-success" id="save-info" style="display: none;">
+          <strong>Saved</strong> <br />
+          Changes have been saved.
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="email">E-mail</label>
+          <div class="controls">
+            <input type="text" id="email" value="pio.krzeminski@gmail.com" />
+          </div>
+        </div>
+ 
+        <div class="control-group">
+          <label class="control-label" for="name">Display name</label>
+          <div class="controls">
+            <input type="text" id="name" value="Piotr Krzemiński" />
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label" for="password">Change password</label>
+          <div class="controls">
+            <input type="password" id="password" />
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label" for="password_r">Repeat password</label>
+          <div class="controls">
+            <input type="password" id="password_r" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="language">Default language</label>
+          <div class="controls">
+            <select id="language">
+              <optgroup label="C">
+                <option value="1">gcc 4.7.2</option>
+                <option value="2">clang 3.1</option>
+              </optgroup>
+              <optgroup label="C++">
+                <option value="3">g++ 4.7.2</option>
+                <option value="4">clang++ 3.1</option>
+              </optgroup>
+              <optgroup label="Java">
+                <option value="5">OpenJDK 1.7.0_09</option>
+                <option value="6">Oracle JDK 1.7.0_11</option>
+              </optgroup>
+              <optgroup label="Python">
+                <option value="7">python 2.7</option>
+                <option value="8">python 3.2</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="editor-theme">Editor theme</label>
+          <div class="controls">
+            <select id="editor-theme">
+              <option>default</option>
+              <option>ambiance</option>
+              <option>blackboard</option>
+              <option>cobalt</option>
+              <option>eclipse</option>
+              <option>elegant</option>
+              <option>erlang-dark</option>
+              <option>lesser-dark</option>
+              <option>monokai</option>
+              <option>neat</option>
+              <option>night</option>
+              <option>rubyblue</option>
+              <option>solarized dark</option>
+              <option>solarized light</option>
+              <option>twilight</option>
+              <option selected>vibrant-ink</option>
+              <option>xq-dark</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-primary" id="submit">
+            <i class="icon-upload"></i>
+            Save changes
+          </button>
+          <button type="reset" class="btn" id="reset">Reset</button>
+        </div>
+      </fieldset>
+    </form> 
+  </div>
+</div>
+
+
+
 
 
