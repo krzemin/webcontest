@@ -29,7 +29,7 @@ a:hover {
   position: absolute;
   top: 0;
   right: 22px;
-  opacity: 0.5;
+  opacity: 0.25;
   z-index: 100;
 }
 
@@ -43,6 +43,10 @@ a:hover {
 
 .CodeMirror {
   height: 100%;
+}
+
+.submission-progress {
+  margin-bottom: 0;
 }
 
 

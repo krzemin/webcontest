@@ -66,71 +66,184 @@ Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum l
 
               <div class="btn-toolbar">
                 <div class="btn-group">
-                  <button class="btn btn-primary">New</button>
+                  <button class="btn btn-primary"><i class="icon-file"></i> New</button>
                 </div>
                 <div class="btn-group">
-                  <button class="btn btn-success">Run all</button>
-                  <button class="btn btn-danger">Run failed</button>
+                  <button class="btn btn-success"><i class="icon-play"></i> Run all</button>
+                  <button class="btn btn-danger"><i class="icon-repeat"></i> Run failed</button>
                 </div>
               </div>
 
-              <table class="table">
+              <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>No</th>
-                    <th>Input</th>
-                    <th>Expected output</th>
+                    <th>Test</th>
                     <th>Actions</th>
-                    <th>Output</th>
                     <th>Status</th>
+                    <th>Performance</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>#1</td>
-                    <td><span class="input-medium uneditable-input">2 5 7 3</span></td>
-                    <td><span class="input-medium uneditable-input">2 3</span></td>
                     <td>
                       <button class="btn btn-success"><i class="icon-play-circle"></i></button>
-                      <button class="btn btn-danger"><i class="icon-trash"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
                     </td>
-                    <td><span class="input-medium uneditable-input">2 1</span></td>
                     <td><span class="label label-success">Passed</span></td>
+                    <td>0.23s 2563kb</td>
                   </tr>
                   <tr>
                     <td>#2</td>
-                    <td><span class="input-medium uneditable-input">28 7 62 31 423 212</span></td>
-                    <td><span class="input-medium uneditable-input">24 23</span></td>
                     <td>
                       <button class="btn btn-success"><i class="icon-play-circle"></i></button>
-                      <button class="btn btn-danger"><i class="icon-trash"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
                     </td>
-                    <td><span class="input-medium uneditable-input">233 33 3 3 3 3 331</span></td>
                     <td><span class="label label-success">Passed</span></td>
+                    <td>0.25s 2681kb</td>
                   </tr>
                   <tr>
                     <td>#3</td>
-                    <td><span class="input-medium uneditable-input">21 2 3 4 5</span></td>
-                    <td><span class="input-medium uneditable-input">2 459 239 48 434 5</span></td>
                     <td>
                       <button class="btn btn-success"><i class="icon-play-circle"></i></button>
-                      <button class="btn btn-danger"><i class="icon-trash"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
                     </td>
-                    <td><span class="input-medium uneditable-input">2 1</span></td>
-                    <td><span class="label label-success">Passed</span></td>
+                    <td><span class="label label-info">&nbsp;?&nbsp;</span></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>#3</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-warning">Wrong answer</span></td>
+                    <td>1.23s 2842kb</td>
                   </tr>
                   <tr>
                     <td>#4</td>
-                    <td><span class="input-medium uneditable-input">2444 444 444</span></td>
-                    <td><span class="input-medium uneditable-input">2 444 45 543 656</span></td>
                     <td>
                       <button class="btn btn-success"><i class="icon-play-circle"></i></button>
-                      <button class="btn btn-danger"><i class="icon-trash"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
                     </td>
-                    <td><span class="input-medium uneditable-input">2 1 9 8 34 234 33</span></td>
-                    <td><span class="label label-success">Passed</span></td>
+                    <td><span class="label label-important">Time limit exceeded</span></td>
+                    <td>4563kb</td>
                   </tr>
-
+                  <tr>
+                    <td>#5</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-success">Passed</span></td>
+                    <td>5.10s 7231kb</td>
+                  </tr>
+                  <tr>
+                    <td>#6</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-important">Runtime error</span></td>
+                    <td>0.11s 2463kb</td>
+                  </tr>
+                  <tr>
+                    <td>#7</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-important">Memory limit exceeded</span></td>
+                    <td>0.83s</td>
+                  </tr>
+                 <tr>
+                    <td>#1</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-success">Passed</span></td>
+                    <td>0.23s 2563kb</td>
+                  </tr>
+                  <tr>
+                    <td>#2</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-success">Passed</span></td>
+                    <td>0.25s 2681kb</td>
+                  </tr>
+                  <tr>
+                    <td>#3</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-info">&nbsp;?&nbsp;</span></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>#3</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-warning">Wrong answer</span></td>
+                    <td>1.23s 2842kb</td>
+                  </tr>
+                  <tr>
+                    <td>#4</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-important">Time limit exceeded</span></td>
+                    <td>4563kb</td>
+                  </tr>
+                  <tr>
+                    <td>#5</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-success">Passed</span></td>
+                    <td>5.10s 7231kb</td>
+                  </tr>
+                  <tr>
+                    <td>#6</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-important">Runtime error!</span></td>
+                    <td>0.11s 2463kb</td>
+                  </tr>
+                  <tr>
+                    <td>#7</td>
+                    <td>
+                      <button class="btn btn-success"><i class="icon-play-circle"></i></button>
+                      <button class="btn"><i class="icon-pencil"></i></button>
+                      <button class="btn"><i class="icon-trash"></i></button>
+                    </td>
+                    <td><span class="label label-important">Memory limit exceeded</span></td>
+                    <td>0.83s</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -144,7 +257,7 @@ Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum l
             <div class="row-fluid">
               <form class="form-horizontal">
                 <fieldset>
-                  <legend>Submit from a file</legend>
+                  <legend>Submit a file</legend>
                   <div class="alert alert-error" id="submit-error" style="display: none;">
                     <strong>Error!</strong> <br />
                     File not submitted! You have to select proper programming language.
@@ -204,8 +317,52 @@ Lorem ipsum dolor sit amet turpis cursus magna. Vestibulum ornare velit rutrum l
 
           <div class="container-fluid">
             <div class="row-fluid">
-              <h2>My submissions</h2>
-
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Submission</th>
+                    <th>Status</th>
+                    <th>Performance</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a nohref="">2013-01-03 20:59:21</a></td>
+                    <td>
+                      <div class="progress progress-striped active submission-progress">
+                        <div class="bar" style="width: 70%;">Running...</div>
+                      </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><a nohref="">2013-01-03 20:55:08</a></td>
+                    <td><span class="label label-success">Passed</span></td>
+                    <td>4.12s 22368kb</td>
+                    <td>25.00 pts</td>
+                  </tr>
+                  <tr>
+                    <td><a nohref="">2013-01-03 20:51:21</a></td>
+                    <td><span class="label label-important">Runtime error</span></td>
+                    <td>1.02s 3668kb</td>
+                    <td></td>
+                  </tr>
+                   <tr>
+                    <td><a nohref="">2013-01-03 20:03:29</a></td>
+                    <td><span class="label label-warning">Wrong answer</span></td>
+                    <td>4.12s 22368kb</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><a nohref="">2013-01-03 19:26</a></td>
+                    <td><span class="label label-important">Time limit exceeded</span></td>
+                    <td>22368kb</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
