@@ -134,6 +134,14 @@ templates['ranking.tmpl'] = template(function (Handlebars,depth0,helpers,partial
 
 function program1(depth0,data) {
   
+  var buffer = "";
+  buffer += "\n          <th>";
+  depth0 = typeof depth0 === functionType ? depth0() : depth0;
+  buffer += escapeExpression(depth0) + "</th>\n	  ";
+  return buffer;}
+
+function program3(depth0,data) {
+  
   var buffer = "", stack1, foundHelper;
   buffer += "\n        <tr>\n          <td>";
   foundHelper = helpers.no;
@@ -147,24 +155,50 @@ function program1(depth0,data) {
   foundHelper = helpers.score;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "</td>\n          <td>\n            ";
-  stack1 = depth0.solved;
-  stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(2, program2, data)});
+  buffer += escapeExpression(stack1) + "</td>\n	  ";
+  stack1 = depth0.problems;
+  stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(4, program4, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n          </td>\n        </tr>\n        ";
+  buffer += "\n        </tr>\n        ";
   return buffer;}
-function program2(depth0,data) {
+function program4(depth0,data) {
   
-  var buffer = "";
-  buffer += "\n            <span class=\"badge badge-success\">";
-  depth0 = typeof depth0 === functionType ? depth0() : depth0;
-  buffer += escapeExpression(depth0) + "</span>\n            ";
+  var buffer = "", stack1;
+  buffer += "\n          <td>\n            ";
+  stack1 = depth0.solved;
+  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data)});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n          </td>\n          ";
+  return buffer;}
+function program5(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "\n            <span class=\"label label-success\">";
+  foundHelper = helpers.points;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.points; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "</span>\n            ";
   return buffer;}
 
-  buffer += "<div class=\"container-fluid\">\n  <div class=\"row-fluid\">\n    <table class=\"table table-hover\">\n      <thead>\n        <tr>\n          <th>No</th>\n          <th>Name</th>\n          <th>Score</th>\n          <th>Solved</th>\n        </tr>\n      </thead>\n      <tbody>\n        ";
-  stack1 = helpers.each.call(depth0, depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
+function program7(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "\n            <span class=\"label\">";
+  foundHelper = helpers.points;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.points; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "</span>\n	    ";
+  return buffer;}
+
+  buffer += "<div class=\"container-fluid\">\n  <div class=\"row-fluid\">\n    <table class=\"table table-hover\">\n      <thead>\n        <tr>\n          <th>No</th>\n          <th>Name</th>\n          <th>Score</th>\n	  ";
+  stack1 = depth0.problems;
+  stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n     </tbody>\n    </table>\n  </div>\n</div> \n";
+  buffer += "\n        </tr>\n      </thead>\n      <tbody>\n        ";
+  stack1 = depth0.ranking;
+  stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n     </tbody>\n    </table>\n  </div>\n</div>\n";
   return buffer;});
 templates['settings.tmpl'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;

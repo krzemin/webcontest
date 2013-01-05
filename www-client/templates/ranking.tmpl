@@ -6,23 +6,29 @@
           <th>No</th>
           <th>Name</th>
           <th>Score</th>
-          <th>Solved</th>
+	  {{#each problems}}
+          <th>{{this}}</th>
+	  {{/each}}
         </tr>
       </thead>
       <tbody>
-        {{#each this}}
+        {{#each ranking}}
         <tr>
           <td>{{no}}</td>
           <td>{{name}}</td>
           <td>{{score}}</td>
+	  {{#each problems}}
           <td>
-            {{#each solved}}
-            <span class="badge badge-success">{{this}}</span>
-            {{/each}}
+            {{#if solved}}
+            <span class="label label-success">{{points}}</span>
+            {{else}}
+            <span class="label">{{points}}</span>
+	    {{/if}}
           </td>
+          {{/each}}
         </tr>
         {{/each}}
      </tbody>
     </table>
   </div>
-</div> 
+</div>
