@@ -162,33 +162,109 @@ int main()
   contestResponse: (contest) =>
     
   getRanking: (contest_id) =>
-    ranking = [
-      {no: "1.", name: "Piotr Krzemiński", score: "549.42", solved: ['Problem easy','Stones in my passway','Brilliant room','Driving towards the daylight','Gem']}
-      {no: "2.", name: "Tomek Czajka", score: "541.55", solved: ['Problem easy','Stones in my passway','Brilliant room','Driving towards the daylight','Planet welfare']}
-      {no: "3.", name: "Zenek Dupiński", score: "540.23", solved: ['Problem easy','Stones in my passway','Brilliant room','Planet welfare','Gem']}
-      {no: "4.", name: "Adam Kowalski", score: "540.11", solved: ['Stones in my passway','Brilliant room','Driving towards the daylight','Planet welfare','Gem']}
-      {no: "5.", name: "Jacek Nowak", score: "523.92", solved: ['Problem easy','Stones in my passway','Brilliant room','Driving towards the daylight','Planet welfare']}
-      {no: "6.", name: "Piotr Kaczor", score: "518.59", solved: ['Problem easy','Stones in my passway','Brilliant room','Driving towards the daylight']}
-      {no: "7.", name: "Marcin Zupełny", score: "511.20", solved: ['Problem easy','Stones in my passway','Brilliant room','Gem']}
-      {no: "8.", name: "Grzegorz Dębski", score: "507.02", solved: ['Problem easy','Brilliant room','Driving towards the daylight','Gem']}
-      {no: "9.", name: "Jakub Klimek", score: "505.28", solved: ['Problem easy','Brilliant room','Driving towards the daylight','Gem']}
-      {no: "10.", name: "Domink Wąs", score: "503.29", solved: ['Stones in my passway','Brilliant room','Driving towards the daylight','Planet welfare']}
-      {no: "11.", name: "Jarosław Kibel", score: "473.12", solved: ['Problem easy','Stones in my passway','Planet welfare']}
-      {no: "12.", name: "Zbigniew Czarnecki", score: "438.49", solved: ['Problem easy','Stones in my passway','Driving towards the daylight']}
-      {no: "13.", name: "Piotr Jacek", score: "431.18", solved: ['Problem easy','Stones in my passway','Brilliant room']}
-      {no: "14.", name: "Marian Jurek", score: "405.32", solved: ['Problem easy','Driving towards the daylight','Gem']}
-      {no: "15.", name: "Tadeusz Stopka", score: "404.44", solved: ['Problem easy','Stones in my passway','Gem']}
-      {no: "16.", name: "Joe Bonamassa", score: "400.21", solved: ['Brilliant room','Driving towards the daylight','Gem']}
-      {no: "17.", name: "Eric Johnson", score: "399.95", solved: ['Problem easy','Stones in my passway','Gem']}
-      {no: "18.", name: "Jimmy Page", score: "379.85", solved: ['Problem easy','Brilliant room','Driving towards the daylight']}
-      {no: "19.", name: "Jimi Hendrix", score: "318.73", solved: ['Problem easy','Stones in my passway']}
-      {no: "20.", name: "Eric Clapton", score: "309.21", solved: ['Problem easy','Stones in my passway']}
-      {no: "21.", name: "John Paul Jones", score: "302.27", solved: ['Stones in my passway','Gem']}
-      {no: "22.", name: "Ernest Young", score: "295.48", solved: ['Problem easy','Stones in my passway']}
-      {no: "23.", name: "Dariusz Koza", score: "253.31", solved: ['Problem easy','Stones in my passway']}
-      {no: "24.", name: "Piotr Kolec", score: "204.48", solved: ['Problem easy']}
-      {no: "25.", name: "Bartosz Krzykowski", score: "152.70", solved: ['Problem easy']}
-    ]
+    ranking = {
+      problems: [
+        'Problem easy'
+        'Stones in my passway'
+        'Brilliant room'
+        'Driving towards the daylight'
+        'Planet Welfare'
+        'Gem'
+      ]
+      board: [
+        {
+          no: "1."
+          name: "Piotr Krzemiński"
+          score: "549.42"
+          problems: [
+            {solved: true, points: '96.89', attempts: 0}
+            {solved: true, points: '130.04', attempts: 0}
+            {solved: true, points: '128.22', attempts: 2}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: true, points: '163.12', attempts: 1}
+            {solved: true, points: '111.23', attempts: 5}
+          ]
+        }
+        {
+          no: "2."
+          name: "Tomek Czajka"
+          score: "541.55"
+          problems: [
+            {solved: true, points: '86.29', attempts: 0}
+            {solved: true, points: '127.24', attempts: 0}
+            {solved: true, points: '164.31', attempts: 0}
+            {solved: true, points: '152.21', attempts: 2}
+            {solved: true, points: '123.12', attempts: 4}
+            {solved: false, points: '0.00', attempts: 2}
+          ]
+        }
+        {
+          no: "3."
+          name: "Joe Bonamassa"
+          score: "400.21"
+          problems: [
+            {solved: true, points: '88.29', attempts: 1}
+            {solved: true, points: '127.24', attempts: 0}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: true, points: '122.21', attempts: 1}
+            {solved: true, points: '113.12', attempts: 3}
+            {solved: false, points: '0.00', attempts: 2}
+          ]
+        }
+        {
+          no: "4."
+          name: "Eric Johnson"
+          score: "329.95"
+          problems: [
+            {solved: true, points: '81.20', attempts: 2}
+            {solved: true, points: '121.29', attempts: 0}
+            {solved: true, points: '99.20', attempts: 10}
+            {solved: true, points: '118.73', attempts: 2}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: false, points: '0.00', attempts: 0}
+          ]
+        }
+        {
+          no: "5."
+          name: "Jimmy Page"
+          score: "309.85"
+          problems: [
+            {solved: true, points: '81.20', attempts: 2}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: true, points: '99.20', attempts: 4}
+            {solved: true, points: '138.73', attempts: 1}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: false, points: '0.00', attempts: 0}
+          ]
+        }
+        {
+          no: "6."
+          name: "Jimi Hendrix"
+          score: "218.73"
+          problems: [
+            {solved: true, points: '78.53', attempts: 2}
+            {solved: true, points: '142.00', attempts: 0}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: false, points: '0.00', attempts: 0}
+          ]
+        }
+        {
+          no: "7."
+          name: "Eric Clapton"
+          score: "189.21"
+          problems: [
+            {solved: true, points: '78.01', attempts: 2}
+            {solved: true, points: '89.20', attempts: 5}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: false, points: '0.00', attempts: 0}
+            {solved: false, points: '0.00', attempts: 0}
+          ]
+        }
+      ]
+    }
     setTimeout( (=> @rankingResponse(ranking)), 1200)
 
   rankingResponse: (ranking) =>
