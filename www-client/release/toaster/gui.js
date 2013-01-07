@@ -82,7 +82,7 @@ Gui = (function() {
     console.log('template = ' + template);
     template = Handlebars.templates[template];
     html = template(data);
-    return $(target).hide().html(html).fadeIn(200);
+    return $(target).html(html);
   };
 
   Gui.prototype._setLayout = function(layout) {
@@ -281,6 +281,11 @@ Gui = (function() {
   Gui.prototype.showProblem = function(problem, user) {
     var _this = this;
     this._render('problem.tmpl', '#main', problem);
+    this._render('problem-description.tmpl', '#problem-description', problem);
+    this._render('problem-tab-code.tmpl', '#tab-code', problem);
+    this._render('problem-tab-tests.tmpl', '#tab-tests', problem);
+    this._render('problem-tab-submit.tmpl', '#tab-submit', problem);
+    this._render('problem-tab-my-submissions.tmpl', '#tab-my-submissions', problem);
     this._resizeFixedHeightContainer();
     this._initProblemPageLayout();
     $(window).on('resize', function() {

@@ -8,6 +8,10 @@
   text-align: center;
 }
 
+.success-text {
+  color: green;
+}
+
 a:hover {
   cursor: pointer;
 }

@@ -10,7 +10,8 @@ class Gui
     console.log('template = ' + template)
     template = Handlebars.templates[template]
     html = template(data)
-    $(target).hide().html(html).fadeIn(200)
+    $(target).html(html)
+#    $(target).hide().html(html).fadeIn(200)
 
   _setLayout: (layout) =>
     @_render("layout-#{layout}.tmpl", 'body', {})
@@ -137,6 +138,11 @@ class Gui
 
   showProblem: (problem, user) =>
     @_render('problem.tmpl', '#main', problem)
+    @_render('problem-description.tmpl', '#problem-description', problem)
+    @_render('problem-tab-code.tmpl', '#tab-code', problem)
+    @_render('problem-tab-tests.tmpl', '#tab-tests', problem)
+    @_render('problem-tab-submit.tmpl', '#tab-submit', problem)
+    @_render('problem-tab-my-submissions.tmpl', '#tab-my-submissions', problem)
     @_resizeFixedHeightContainer()
     @_initProblemPageLayout()
     $(window).on('resize', => @_resizeFixedHeightContainer())

@@ -1,0 +1,21 @@
+<h1>{{name}}</h1>
+<p>{{description}}</p>
+<h2>Input specification</h2>
+<p>{{input_specification}}</p>
+<h2>Output specification</h2>
+<p>{{output_specification}}</p>
+<h2>Example testcases</h2>
+{{#each testcases}}
+  <div class="row-fluid">
+    <div class="span6">
+      <h4>Input</h4>
+      <pre>{{input}}</pre>
+    </div>
+    <div class="span6">
+      <h4>Output</h4>
+      <pre>{{output}}</pre>
+    </div>
+  </div>
+{{/each}}
+{{testcases_explanation}}
+
