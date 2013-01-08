@@ -349,7 +349,11 @@ Gui = (function() {
   Gui.prototype.codeChanged = function(newText) {};
 
   Gui.prototype.showStatus = function(status) {
-    return this._render('status.tmpl', '#main', status);
+    var _this = this;
+    this._render('status.tmpl', '#main', status);
+    return $('.open-problem').click(function(obj) {
+      return _this.problemClicked($(obj).attr('id'));
+    });
   };
 
   Gui.prototype.showRanking = function(ranking) {

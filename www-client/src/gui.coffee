@@ -195,15 +195,28 @@ class Gui
 
   codeChanged: (newText) =>
 
+  # status view
+
   showStatus: (status) =>
     @_render('status.tmpl', '#main', status)
+    $('.open-problem').click( (obj) => @problemClicked($(obj).attr('id')))
+
+  # ranking view
+
   showRanking: (ranking) =>
     console.log(ranking)
     @_render('ranking.tmpl', '#main', ranking)
+
+  # messages view
+
   showMessages: (messages) =>
     @_render('messages.tmpl', '#main', messages)
+
+  # settings view
+
   showSettingsForm: (settings) =>
     @_render('settings.tmpl', '#main', settings)
+
   signOut: =>
     @start()
 
