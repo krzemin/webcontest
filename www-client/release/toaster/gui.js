@@ -16,6 +16,12 @@ Gui = (function() {
 
     this.codeChanged = __bind(this.codeChanged, this);
 
+    this.newTestCase = __bind(this.newTestCase, this);
+
+    this.showNewTestForm = __bind(this.showNewTestForm, this);
+
+    this.showTestsTab = __bind(this.showTestsTab, this);
+
     this._saveCodeCallback = __bind(this._saveCodeCallback, this);
 
     this._initCodeView = __bind(this._initCodeView, this);
@@ -283,7 +289,7 @@ Gui = (function() {
     this._render('problem.tmpl', '#main', problem);
     this._render('problem-description.tmpl', '#problem-description', problem);
     this._render('problem-tab-code.tmpl', '#tab-code', problem);
-    this._render('problem-tab-tests.tmpl', '#tab-tests', problem);
+    this.showTestsTab(problem);
     this._render('problem-tab-submit.tmpl', '#tab-submit', problem);
     this._render('problem-tab-my-submissions.tmpl', '#tab-my-submissions', problem);
     this._resizeFixedHeightContainer();
@@ -324,7 +330,8 @@ Gui = (function() {
   };
 
   Gui.prototype._initCodeView = function(codeText) {
-    var codeWidget, opts;
+    var codeWidget, opts,
+      _this = this;
     opts = {
       mode: 'text/x-c++src',
       theme: 'vibrant-ink',
@@ -335,7 +342,9 @@ Gui = (function() {
     this.cm = CodeMirror.fromTextArea(codeWidget, opts);
     this.cm.setValue(codeText);
     this.cm.markClean();
-    return setTimeout(this._saveCodeCallback, this.saveCodeEvery * 1000);
+    return CodeMirror.on(this.cm, "change", function(instance, chObj) {
+      return _this.codeChanged(instance.getValue());
+    });
   };
 
   Gui.prototype._saveCodeCallback = function() {
@@ -346,12 +355,40 @@ Gui = (function() {
     return setTimeout(this._saveCodeCallback, this.saveCodeEvery * 1000);
   };
 
+  Gui.prototype.showTestsTab = function(problem) {
+    var _this = this;
+    this._render('problem-tab-tests.tmpl', '#tab-tests', problem);
+    return $('#new-testcase').click(function() {
+      return _this.showNewTestForm();
+    });
+  };
+
+  Gui.prototype.showNewTestForm = function() {
+    var _this = this;
+    this._render('edit-test.tmpl', '#tab-tests', {});
+    $('#testcase-discard').click(function() {
+      return _this.showTestsTab();
+    });
+    return $('#testcase-save').click(function() {
+      var expectedOutput, input;
+      input = $('textarea#input').val();
+      expectedOutput = $('textarea#expectedOutput').val();
+      return _this.newTestCase(input, expectedOutput);
+    });
+  };
+
+  Gui.prototype.newTestCase = function(input, expectedOutput) {
+    return this.showTestsTab();
+  };
+
   Gui.prototype.codeChanged = function(newText) {};
 
   Gui.prototype.showStatus = function(status) {
     var _this = this;
     this._render('status.tmpl', '#main', status);
     return $('.open-problem').click(function(obj) {
+      console.log(obj);
+      console.log($(obj).attr('id'));
       return _this.problemClicked($(obj).attr('id'));
     });
   };

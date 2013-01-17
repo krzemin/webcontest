@@ -4,6 +4,8 @@ var UseCase,
 UseCase = (function() {
 
   function UseCase() {
+    this.newTestCase = __bind(this.newTestCase, this);
+
     this.codeChanged = __bind(this.codeChanged, this);
 
     this.initCodeView = __bind(this.initCodeView, this);
@@ -40,6 +42,7 @@ UseCase = (function() {
     this.user = {};
     this.contest_list = [];
     this.contest = {};
+    this.ranking = [];
   }
 
   UseCase.prototype.start = function() {};
@@ -70,6 +73,10 @@ UseCase = (function() {
   UseCase.prototype.problem = function(id) {};
 
   UseCase.prototype.getProblem = function(id) {
+    console.log(id);
+    console.log(this.contest.problems.find({
+      id: id
+    }));
     return this.contest.problems.find({
       id: id
     });
@@ -92,6 +99,8 @@ UseCase = (function() {
   UseCase.prototype.initCodeView = function() {};
 
   UseCase.prototype.codeChanged = function(newText) {};
+
+  UseCase.prototype.newTestCase = function(input, expectedOutput) {};
 
   return UseCase;
 

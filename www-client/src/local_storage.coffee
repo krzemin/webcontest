@@ -160,7 +160,29 @@ int main()
     setTimeout( (=> @contestResponse(contest)), 800)
 
   contestResponse: (contest) =>
-    
+
+  _generateRanking: (names, problems) =>
+    generatedBoard = names.map (name) => {
+      name: name,
+      problems: problems.map (name) => {
+        solved: Number.random(0,1) == 0
+        points: Number.random(0, 50000) / 100
+        attemts: Number.random(0, 5)
+      }
+    }
+    generatedBoard = generatedBoard.map (row) =>
+      row.score = row.problems.sum('points')
+      row
+    generatedBoard = generatedBoard.sortBy('points')
+    i = 1
+    generatedBoard = generatedBoard.map (row) =>
+      row.no = i + "."
+      i += 1
+      row
+
+    { problems: problems, board: generatedBoard }
+
+
   getRanking: (contest_id) =>
     ranking = {
       problems: [
@@ -265,6 +287,24 @@ int main()
         }
       ]
     }
+    problems = [
+      'Problem easy'
+      'Stones in my passway'
+      'Brilliant room'
+      'Driving towards the daylight'
+      'Planet Welfare'
+      'Gem'
+    ]
+    names = [
+      'Piotr Krzemiński'
+      'Tomek Czajka'
+      'Eric Clapton'
+      'Eric Johnson'
+      'Joe Bonamassa'
+      'Twoja Stara'
+    ]
+
+    ranking = @_generateRanking(names, problems)
     setTimeout( (=> @rankingResponse(ranking)), 1200)
 
   rankingResponse: (ranking) =>

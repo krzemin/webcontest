@@ -3,6 +3,7 @@ class UseCase
     @user = {}
     @contest_list = []
     @contest = {}
+    @ranking = []
 
   start: =>
     # temporary, for faster contest area loading
@@ -28,8 +29,10 @@ class UseCase
 
   problem: (id) =>
   getProblem: (id) =>
+    console.log(id)
+    console.log(@contest.problems.find({id: id}))
     @contest.problems.find({id: id})
-
+  
   status: =>
   ranking: =>
   messages: =>
@@ -41,5 +44,8 @@ class UseCase
   initCodeView: =>
      
   codeChanged: (newText) =>
+
+  newTestCase: (input, expectedOutput) =>
+
 
    

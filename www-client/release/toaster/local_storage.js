@@ -9,6 +9,8 @@ LocalStorage = (function() {
 
     this.getRanking = __bind(this.getRanking, this);
 
+    this._generateRanking = __bind(this._generateRanking, this);
+
     this.contestResponse = __bind(this.contestResponse, this);
 
     this.getContest = __bind(this.getContest, this);
@@ -210,8 +212,40 @@ LocalStorage = (function() {
 
   LocalStorage.prototype.contestResponse = function(contest) {};
 
+  LocalStorage.prototype._generateRanking = function(names, problems) {
+    var generatedBoard, i,
+      _this = this;
+    generatedBoard = names.map(function(name) {
+      return {
+        name: name,
+        problems: problems.map(function(name) {
+          return {
+            solved: Number.random(0, 1) === 0,
+            points: Number.random(0, 50000) / 100,
+            attemts: Number.random(0, 5)
+          };
+        })
+      };
+    });
+    generatedBoard = generatedBoard.map(function(row) {
+      row.score = row.problems.sum('points');
+      return row;
+    });
+    generatedBoard = generatedBoard.sortBy('points');
+    i = 1;
+    generatedBoard = generatedBoard.map(function(row) {
+      row.no = i + ".";
+      i += 1;
+      return row;
+    });
+    return {
+      problems: problems,
+      board: generatedBoard
+    };
+  };
+
   LocalStorage.prototype.getRanking = function(contest_id) {
-    var ranking,
+    var names, problems, ranking,
       _this = this;
     ranking = {
       problems: ['Problem easy', 'Stones in my passway', 'Brilliant room', 'Driving towards the daylight', 'Planet Welfare', 'Gem'],
@@ -436,6 +470,9 @@ LocalStorage = (function() {
         }
       ]
     };
+    problems = ['Problem easy', 'Stones in my passway', 'Brilliant room', 'Driving towards the daylight', 'Planet Welfare', 'Gem'];
+    names = ['Piotr Krzemiński', 'Tomek Czajka', 'Eric Clapton', 'Eric Johnson', 'Joe Bonamassa', 'Twoja Stara'];
+    ranking = this._generateRanking(names, problems);
     return setTimeout((function() {
       return _this.rankingResponse(ranking);
     }), 1200);

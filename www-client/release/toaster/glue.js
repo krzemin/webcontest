@@ -53,6 +53,7 @@ Glue = (function() {
     After(this.useCase, 'settings', function() {
       return _this.gui.showSettingsForm({});
     });
+    After(this.gui, 'newTestCase', this.useCase.newTestCase);
   }
 
   return Glue;

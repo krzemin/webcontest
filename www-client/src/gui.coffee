@@ -140,7 +140,7 @@ class Gui
     @_render('problem.tmpl', '#main', problem)
     @_render('problem-description.tmpl', '#problem-description', problem)
     @_render('problem-tab-code.tmpl', '#tab-code', problem)
-    @_render('problem-tab-tests.tmpl', '#tab-tests', problem)
+    @showTestsTab(problem)
     @_render('problem-tab-submit.tmpl', '#tab-submit', problem)
     @_render('problem-tab-my-submissions.tmpl', '#tab-my-submissions', problem)
     @_resizeFixedHeightContainer()
@@ -186,12 +186,33 @@ class Gui
     @cm = CodeMirror.fromTextArea(codeWidget, opts)
     @cm.setValue(codeText)
     @cm.markClean()
-    setTimeout(@_saveCodeCallback, @saveCodeEvery * 1000)
+    #setTimeout(@_saveCodeCallback, @saveCodeEvery * 1000)
+    CodeMirror.on(@cm, "change", (instance, chObj) => @codeChanged(instance.getValue()))
 
   _saveCodeCallback: =>
     @codeChanged(@cm.getValue()) unless @cm.isClean()
     @cm.markClean()
     setTimeout(@_saveCodeCallback, @saveCodeEvery * 1000)
+
+
+  # problem view -> test tab
+
+  showTestsTab: (problem) =>
+    @_render('problem-tab-tests.tmpl', '#tab-tests', problem)
+    $('#new-testcase').click( => @showNewTestForm() )
+  
+  showNewTestForm: =>
+    @_render('edit-test.tmpl', '#tab-tests', {})
+    $('#testcase-discard').click( => @showTestsTab() )
+    $('#testcase-save').click( =>
+      input = $('textarea#input').val()
+      expectedOutput = $('textarea#expectedOutput').val()
+      @newTestCase(input, expectedOutput)
+    )
+
+  newTestCase: (input, expectedOutput) =>
+    @showTestsTab()
+
 
   codeChanged: (newText) =>
 
@@ -199,7 +220,11 @@ class Gui
 
   showStatus: (status) =>
     @_render('status.tmpl', '#main', status)
-    $('.open-problem').click( (obj) => @problemClicked($(obj).attr('id')))
+    $('.open-problem').click( (obj) => 
+        console.log(obj)
+        console.log($(obj).attr('id'))
+        @problemClicked($(obj).attr('id'))
+    )
 
   # ranking view
 
@@ -219,6 +244,3 @@ class Gui
 
   signOut: =>
     @start()
-
-
-

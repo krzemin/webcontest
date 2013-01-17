@@ -27,6 +27,8 @@ class Glue
     After(@useCase, 'messages', => @gui.showMessages([]))
     After(@useCase, 'settings', => @gui.showSettingsForm({}))
 
+    After(@gui, 'newTestCase', @useCase.newTestCase)
+
     # codemirror stuff
     #After(@useCase, 'initCodeView', => @gui.initCodeView(@storage.getCode()))
     #After(@gui, 'codeChanged', (newText) => @useCase.codeChanged(newText))
