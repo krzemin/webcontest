@@ -17,7 +17,22 @@ class LocalStorage
 
   # prefetching all the stuff
   loadAllRequest: =>
-    data = {}
+    data = {
+      problem: {
+        limits: {
+          time: '3s'
+          memory: '32768kb'
+        }
+        content: '<p>This is simple HTML problem content</p>'
+        input: '<p>This is simple HTML problem input specification</p>'
+        output: '<p>This is simple HTML problem output specification</p>'
+        exam
+
+      }
+
+
+
+    }
     setTimeout( (=> @loadAllResponse(data)), 1000)
   loadAllResponse: (data) =>
 
