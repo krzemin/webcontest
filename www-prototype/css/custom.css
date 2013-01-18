@@ -17,3 +17,14 @@ a:hover {
   overflow-y: hidden;
   overflow-x: auto;
 }
+
+.progress {
+  margin-bottom: 0;
+}
+
+.submission-status { font-weight: bold; }
+.submission-passed { color: green; }
+.submission-wa { color: orange; }
+.submission-re { color: purple;}
+.submission-tle { color: red; }
+.submission-mle { color: peru;}
