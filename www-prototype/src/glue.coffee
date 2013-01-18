@@ -11,7 +11,7 @@ class Glue
     # initiation & starting an application
     After(@useCase, 'start', @gui.start)
     After(@useCase, 'loadAll', @storage.loadAllRequest)
-    After(@useCase, 'loadAllResponse', (data) => @useCase.data = data; @gui.loadAll(data))
+    After(@storage, 'loadAllResponse', (data) => @useCase.data = data; @gui.loadAll(data))
     # saving code to a remote storage
     After(@gui, 'saveCode', (code) => @useCase.saveCode(code))
     After(@useCase, 'saveCode', (code) => @storage.saveCodeRequest(code))

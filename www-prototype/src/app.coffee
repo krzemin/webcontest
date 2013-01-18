@@ -9,8 +9,7 @@ class App
     useCase      = new UseCase()
     gui          = new Gui()
     localStorage = new LocalStorage("webcontest")
-    websocket    = new WebSocket()
-    glue         = new Glue(useCase, gui, localStorage, websocket)
+    glue         = new Glue(useCase, gui, localStorage)
     
     useCase.start()
 

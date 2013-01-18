@@ -15,6 +15,7 @@ class Gui
   
   loadAll: (data) =>
     # init stuff when data is loaded
+    @_render('main.tmpl', '#main', data)
   
   saveCode: (code) =>
     # triggered when user wants to save code buffer in editor

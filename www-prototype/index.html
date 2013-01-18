@@ -5,6 +5,9 @@
     <title>Web Programming Contest</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
     <script src="vendors/jquery.min.js"></script>
     <script src="vendors/jquery.enterKey.js"></script>
     <script src="vendors/bootstrap.min.js"></script>
@@ -22,5 +25,26 @@
   </head>
   
   <body>
+    
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Contest demo</a>
+          <ul class="nav">
+            <li class="active"><a href="#problem">Problem</a></li>
+            <li><a href="#code">Code</a></li>
+            <li><a href="#submissions">Submissions</a></li>
+            <li><a href="#ranking">Ranking</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row" id="main">
+        <h2>Loading data...</h2>
+      </div>
+    </div>
+
   </body>
 </html>
