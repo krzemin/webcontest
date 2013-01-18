@@ -1,6 +1,12 @@
 class Gui
   
   constructor: ->
+    @codemirror_opts = {
+      mode: 'text/x-c++src'
+      theme: 'elegant'
+      lineNumbers: true
+      indentUnit: 4
+    }
 
   # utils
 
@@ -17,6 +23,15 @@ class Gui
     # init stuff when data is loaded
     @_render('main.tmpl', '#main', data)
     $('body').scrollspy('refresh')
+    @_initCodeMirror()
+    $('#toggle-messages').click( => $('#messages').toggle() )
+
+
+  _initCodeMirror: =>
+    codewidget = document.getElementById('codemirror')
+    @codemirror = CodeMirror.fromTextArea(codewidget, @codemirror_opts)
+    @codemirror.setValue("// code here\n\n\n\n\n\n\n\n\n\n\n\n")
+    @codemirror.markClean()
 
 
   saveCode: (code) =>

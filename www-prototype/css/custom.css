@@ -4,3 +4,16 @@
     padding-bottom: 42px;
   }
 }
+a:hover {
+  cursor: pointer;
+}
+
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
+
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
