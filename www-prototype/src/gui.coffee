@@ -25,13 +25,35 @@ class Gui
     $('body').scrollspy('refresh')
     @_initCodeMirror(data.code)
     $('#toggle-messages').click( => $('#messages').toggle() )
-
+    $('#fullscreen').click( => @_setFullScreen(!@_isFullScreen()))
 
   _initCodeMirror: (code) =>
     codewidget = document.getElementById('codemirror')
     @codemirror_opts.mode = code.mode
     @codemirror = CodeMirror.fromTextArea(codewidget, @codemirror_opts)
     @codemirror.markClean()
+    CodeMirror.on(window, "resize", =>
+      showing = document.body.getElementsByClassName("CodeMirror-fullscreen")[0]
+      return unless showing
+      showing.CodeMirror.getWrapperElement().style.height = @_winHeight() + "px"
+    )
+  _isFullScreen: =>
+    /\bCodeMirror-fullscreen\b/.test(@codemirror.getWrapperElement().className)
+  _winHeight: =>
+    window.innerHeight || (document.documentElement || document.body).clientHeight
+  _setFullScreen: (fullscreen) =>
+    wrap = @codemirror.getWrapperElement()
+    if fullscreen
+      wrap.className += " CodeMirror-fullscreen"
+      wrap.style.height = @_winHeight() + "px"
+      document.documentElement.style.overflow = "hidden"
+    else
+      wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "")
+      wrap.style.height = ""
+      document.documentElement.style.overflow = ""
+    @codemirror.refresh()
+    
+
 
 
   saveCode: (code) =>
