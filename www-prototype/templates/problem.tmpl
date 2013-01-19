@@ -1,0 +1,46 @@
+<h1>{{name}}</h1>
+
+<div class="pull-right">
+  <dl class="dl-horizontal">
+    <dt>Time limit</dt>
+    <dd>{{limits.time}}</dd>
+	<dt>Memory limit</dt>
+	<dd>{{limits.memory}}</dd>
+  </dl>
+</div>
+
+{{{content}}}
+
+<section id="input">
+  <h3>Input</h3>
+  {{{input}}}
+</section>
+
+<section id="output">
+  <h3>Output</h3>
+  {{{output}}}
+</section>
+
+<section id="examples">
+  <h3>Examples</h3>
+  <div class="container">
+	{{#each examples}}
+	<h4>{{name}}</h4>
+	<div class="row">
+	  <div class="span6">
+	  	<h5>Sample input</h5>
+	  	<pre class="pre-scrollable">{{input}}</pre>
+	  </div>
+	  <div class="span6">
+	  	<h5>Sample output</h5>
+	  	<pre class="pre-scrollable">{{output}}</pre>
+	  </div>
+	</div>
+	
+	{{#if explanation}}
+	<p>{{explanation}}</p>
+	{{/if}}
+
+	{{/each}}
+  </div>
+</section>

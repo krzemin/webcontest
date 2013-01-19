@@ -65,6 +65,7 @@ class Gui
       wrap.className += " CodeMirror-fullscreen"
       wrap.style.height = @_winHeight() + "px"
       document.documentElement.style.overflow = "hidden"
+      $(window).scrollTop(0);
     else
       wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "")
       wrap.style.height = ""
@@ -73,11 +74,13 @@ class Gui
     
   start: =>
     @_initHandlebarsHelpers()
-    # init stuff here, before loading any data
   
   loadAll: (data) =>
-    # init stuff when data is loaded
     @_render('main.tmpl', '#main', data)
+    @_render('problem.tmpl', '#problem', data.problem)
+    @_render('code.tmpl', '#code', data.code)
+    @_render('submissions.tmpl', '#submissions', data.submissions)
+    @_render('ranking.tmpl', '#ranking', data.ranking)
     @_refreshScrollSpy()
     @_initCodeMirror(data.code)
     @_bindUIControls()

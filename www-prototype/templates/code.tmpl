@@ -1,0 +1,23 @@
+<h2>Code</h2>
+
+<div class="container">
+  <div class="row">
+
+    <div class="btn-toolbar">
+      <button class="btn"><i class="icon-hdd"></i> Save</button>
+      <button class="btn"><i class="icon-cog"></i> Compile</button>
+      {{!<button class="btn"><i class="icon-check"></i> Test</button>}}
+      <button class="btn btn-primary"><i class="icon-upload"></i> Submit</button>
+      <button class="btn pull-right" id="fullscreen"><i class="icon-fullscreen"></i> Fulscreen</button>
+    </div>
+  </div>
+
+  <section class="row" id="code-editor">
+    <textarea id="codemirror">{{text}}</textarea>
+  </section>
+
+  <section class="row" id="code-messages">
+    <a nohref id="toggle-messages">Show/Hide messages</a>
+    <pre id="messages" class="pre-scrollable">Saving code...</pre>
+  </section>
+</div>

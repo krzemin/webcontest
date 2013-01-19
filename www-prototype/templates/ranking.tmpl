@@ -1,0 +1,25 @@
+<h2>Ranking</h2>
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Name</th>
+      <th>Score</th>
+      {{#each problems}}
+      	<th class="hidden-phone">{{this}}</th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+  	{{#each board}}
+  	<tr>
+  		<td>{{no}}</td>
+  		<td>{{name}}</td>
+  		<td>{{score}}</td>
+  		{{#each problems}}
+      	<td class="hidden-phone">{{this}}</td>
+      {{/each}}
+  	</tr>
+  	{{/each}}
+ </tbody>
+</table>
