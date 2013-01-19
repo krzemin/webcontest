@@ -1,7 +1,132 @@
 class LocalStorage
   constructor: (@namespace) ->
     unless @get('code')
-      @set('code',"""
+      @set('code', @example_code)
+
+  set: (key, value) =>
+    $.jStorage.set("#{@namespace}/#{key}", value)
+
+  get: (key) =>
+    $.jStorage.get("#{@namespace}/#{key}")
+
+  remove: (key) =>
+    $.jStorage.deleteKey("#{@namespace}/#{key}")
+
+  flush: =>
+    for key in $.jStorage.index()
+      if key.match("^#{@namespace}")
+        $.jStorage.deleteKey(key)
+
+  _generateRanking: (problems, names) =>
+    board = names.map (name) => {
+      name: name,
+      problems: problems.map (name) =>
+        solved = Number.random(0,1) == 0
+        return 0 unless solved
+        return Number.random(0, 50000) / 100
+    }
+    board = board.map (row) =>
+      row.score = parseFloat(row.problems.sum()).toFixed(2)
+      row.problems = row.problems.map (score) => parseFloat(score).toFixed(2)
+      row
+    board = board.sortBy( (x) -> parseFloat(x.score)).reverse()
+    i = 1
+    board = board.map (row) =>
+      row.no = i + "."
+      i += 1
+      row
+    { problems: problems, board: board }
+
+  # prefetching all the stuff
+  loadAllRequest: =>
+    data = {
+      problem: {
+        name: 'Name of the problem'
+        limits: {
+          time: '3s'
+          memory: '32768kb'
+        }
+        content: '<p>This is simple HTML problem content</p>'
+        input: '<p>This is simple HTML problem input specification</p>'
+        output: '<p>This is simple HTML problem output specification</p>'
+        examples: [
+          {
+            name: 'Example #1'
+            input: '1 2 3 4 5 6 7 8'
+            output: '2 3 4 5 6 7 8 9'
+            explanation: 'This test bla bla bla'
+          }
+          {
+            name: 'Example #2'
+            input: '1 1 1 1 1 1 1 1 1 1'
+            output: '2 2 2 2 2 2 2 2 2 2'
+            explanation: ''
+          }
+        ]
+      }
+      code: {
+        language: 'c++'
+        mode: 'text/x-c++src'
+        text: @get('code')
+      }
+      submissions: @example_submissions
+      ranking: @_generateRanking ['A', 'B', 'C', 'D'], ['Piotr Krzemiński', 'Joe Bonamassa', 'Eric Johnson', 'Jimi Hendrix', 'Eric Clapton', 'Jimi Page', 'George Harrison', 'Ritchie Blackmore', 'Buddy Guy', 'Eddie Van Halen', 'Steve Vai', 'John Petrucci']
+    }
+    setTimeout( (=> @loadAllResponse(data)), 1000)
+  loadAllResponse: (data) =>
+
+  # saving code
+  saveCodeRequest: (code) =>
+    # async saving code, result randomized
+    @set('code', code)
+    result = Number.random(0,1) == 0
+    setTimeout( (=> @saveCodeResponse(result)), 1000)
+  saveCodeResponse: (result) =>
+
+  # compiling code
+  compileCodeRequest: (data) =>
+    result1 = Number.random(0,2) != 0
+    setTimeout( (=> @compileCodeResponse(result1)), 1000)
+    if result1
+      if Number.random(0,1) == 0
+        result2 = { status: 'error', messages: 'bla bla bla' }
+      else
+        result2 = { status: 'success', messages: 'OK' }
+      setTimeout( (=> @compileCodeIndication(result2)), 5000)
+  compileCodeResponse: (result) =>
+    # boolean result determining whether compilation has beed successfully queued
+  compileCodeIndication: (result) => # websocket
+    # indicated by websocket channel when compilation is finished
+
+  # submitting code
+  submitCodeRequest: (code) =>
+    result1 = true
+    setTimeout( (=> @submitCodeResponse(result1)), 1000)
+    result2 = { status: 'waiting' }
+    setTimeout( (=> @submitCodeIndication(result2)), 2000)
+    result3 = { status: 'compiling' }
+    setTimeout( (=> @submitCodeIndication(result3)), 4000)
+    result4 = { status: 'running', progress: '10%' }
+    setTimeout( (=> @submitCodeIndication(result4)), 6000)
+    result5 = { status: 'running', progress: '70%' }
+    setTimeout( (=> @submitCodeIndication(result5)), 8000)
+    result6 = {
+                status: 'finished', progress: '100%', code: 'passed',
+                performance: { time: '3.26s', memory: '19325kb'},
+                score: '315.23'
+              }
+    setTimeout( (=> @submitCodeIndication(result6)), 10000)
+  submitCodeResponse: (result) =>
+    # boolean result determining whether submission has been successfully received
+  submitCodeIndication: (result) => # websocket
+    # compilation status & progress update
+
+  # async update of ranking
+  rankingUpdateIndication: (ranking) =>
+
+    
+
+  example_code: """
 /*
  * Piotr Krzemiński
  * Web Programming Contest demo (2012-12-24)
@@ -70,75 +195,10 @@ int main()
     }
 
     return 0;
-}""")
+}"""
 
-  set: (key, value) =>
-    $.jStorage.set("#{@namespace}/#{key}", value)
 
-  get: (key) =>
-    $.jStorage.get("#{@namespace}/#{key}")
-
-  remove: (key) =>
-    $.jStorage.deleteKey("#{@namespace}/#{key}")
-
-  flush: =>
-    for key in $.jStorage.index()
-      if key.match("^#{@namespace}")
-        $.jStorage.deleteKey(key)
-
-  _generateRanking: (problems, names) =>
-    board = names.map (name) => {
-      name: name,
-      problems: problems.map (name) =>
-        solved = Number.random(0,1) == 0
-        return 0 unless solved
-        return Number.random(0, 50000) / 100
-    }
-    board = board.map (row) =>
-      row.score = parseFloat(row.problems.sum()).toFixed(2)
-      row.problems = row.problems.map (score) => parseFloat(score).toFixed(2)
-      row
-    board = board.sortBy( (x) -> parseFloat(x.score)).reverse()
-    i = 1
-    board = board.map (row) =>
-      row.no = i + "."
-      i += 1
-      row
-    { problems: problems, board: board }
-
-  # prefetching all the stuff
-  loadAllRequest: =>
-    data = {
-      problem: {
-        name: 'Name of the problem'
-        limits: {
-          time: '3s'
-          memory: '32768kb'
-        }
-        content: '<p>This is simple HTML problem content</p>'
-        input: '<p>This is simple HTML problem input specification</p>'
-        output: '<p>This is simple HTML problem output specification</p>'
-        examples: [
-          {
-            name: 'Example #1'
-            input: '1 2 3 4 5 6 7 8'
-            output: '2 3 4 5 6 7 8 9'
-            explanation: 'This test bla bla bla'
-          }
-          {
-            name: 'Example #2'
-            input: '1 1 1 1 1 1 1 1 1 1'
-            output: '2 2 2 2 2 2 2 2 2 2'
-            explanation: ''
-          }
-        ]
-      }
-      code: {
-        language: 'c++'
-        mode: 'text/x-c++src'
-        text: @get('code')
-      }
-      submissions: [
+  example_submissions: [
         {
           id: 6
           timestamp: '2013-01-03 20:59:21'
@@ -191,58 +251,3 @@ int main()
           score: '0.00'
         }
       ]
-      ranking: @_generateRanking ['A', 'B', 'C', 'D'], ['Piotr Krzemiński', 'Joe Bonamassa', 'Eric Johnson', 'Jimi Hendrix', 'Eric Clapton', 'Jimi Page', 'George Harrison', 'Ritchie Blackmore', 'Buddy Guy', 'Eddie Van Halen', 'Steve Vai', 'John Petrucci']
-    }
-    setTimeout( (=> @loadAllResponse(data)), 1000)
-  loadAllResponse: (data) =>
-
-  # saving code
-  saveCodeRequest: (code) =>
-    # async saving code, result randomized
-    @set('code', code)
-    result = Number.random(0,1) == 0
-    setTimeout( (=> @saveCodeResponse(result)), 1000)
-  saveCodeResponse: (result) =>
-
-  # compiling code
-  compileCodeRequest: (data) =>
-    result1 = Number.random(0,2) != 0
-    setTimeout( (=> @compileCodeResponse(result1)), 1000)
-    if result1
-      if Number.random(0,1) == 0
-        result2 = { status: 'error', messages: 'bla bla bla' }
-      else
-        result2 = { status: 'success', messages: 'OK' }
-      setTimeout( (=> @compileCodeIndication(result2)), 5000)
-  compileCodeResponse: (result) =>
-    # boolean result determining whether compilation has beed successfully queued
-  compileCodeIndication: (result) => # websocket
-    # indicated by websocket channel when compilation is finished
-
-  # submitting code
-  submitCodeRequest: (code) =>
-    result1 = true
-    setTimeout( (=> @submitCodeResponse(result1)), 1000)
-    result2 = { status: 'waiting' }
-    setTimeout( (=> @submitCodeIndication(result2)), 2000)
-    result3 = { status: 'compiling' }
-    setTimeout( (=> @submitCodeIndication(result3)), 4000)
-    result4 = { status: 'running', progress: '10%' }
-    setTimeout( (=> @submitCodeIndication(result4)), 6000)
-    result5 = { status: 'running', progress: '70%' }
-    setTimeout( (=> @submitCodeIndication(result5)), 8000)
-    result6 = {
-                status: 'finished', progress: '100%', code: 'passed',
-                performance: { time: '3.26s', memory: '19325kb'},
-                score: '315.23'
-              }
-    setTimeout( (=> @submitCodeIndication(result6)), 10000)
-  submitCodeResponse: (result) =>
-    # boolean result determining whether submission has been successfully received
-  submitCodeIndication: (result) => # websocket
-    # compilation status & progress update
-
-  # async update of ranking
-  rankingUpdateIndication: (ranking) =>
-    
-
