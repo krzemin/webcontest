@@ -1,76 +1,41 @@
 <section id="problem">
-	<h1>Problem title</h1>
-	<div class="well">
-		Time limit: 3s<br/>
-		Memory limit: 32768kb
+	<h1>{{problem.name}}</h1>
+	<div class="pull-right">
+		<dl class="dl-horizontal">
+		  <dt>Time limit</dt>
+		  <dd>{{problem.limits.time}}</dd>
+		  <dt>Memory limit</dt>
+		  <dd>{{problem.limits.memory}}</dd>
+		</dl>
 	</div>
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet leo sit amet ipsum malesuada cursus. Nulla id dui nulla, at lobortis velit. Vivamus sit amet est ut mauris tempus egestas. Curabitur imperdiet interdum purus id convallis. Vestibulum neque nisi, pellentesque elementum elementum id, gravida at enim. Ut at lectus leo. Etiam id erat ut eros malesuada imperdiet. Suspendisse iaculis varius vehicula. Integer orci massa, mattis ut semper faucibus, facilisis id sapien.</p>
-	<p>Curabitur diam nunc, tincidunt varius pretium id, vehicula eget lorem. Proin sodales vestibulum pharetra. Praesent aliquet, sapien semper tristique pellentesque, erat dui accumsan turpis, eu ultrices metus sapien non velit. Maecenas at leo non dui tincidunt imperdiet. Morbi et orci lacus. Nulla lobortis odio ut purus commodo rhoncus vel id odio. Aliquam tempus, ligula eu euismod imperdiet, mauris nisl commodo ligula, a aliquam ipsum arcu id velit. Nulla vestibulum dui ac turpis eleifend ut tincidunt mauris gravida. Etiam pretium accumsan placerat. Aenean in nibh sit amet diam condimentum pretium ut id sapien. In lobortis lectus quis augue malesuada pulvinar. Vivamus blandit justo sed est tincidunt sit amet venenatis sapien tincidunt. Vivamus ut metus id est facilisis fermentum. Phasellus at libero ut felis molestie condimentum et eu dolor. Cras vitae nisl orci.</p>
-	<p>Donec a urna metus, ornare lobortis nisi. Quisque condimentum eleifend pulvinar. In faucibus eros ut ligula ornare ac porta lectus euismod. Nunc adipiscing purus ac metus gravida congue. In sollicitudin suscipit ligula sit amet mattis. Nullam ut sapien nec nisi tincidunt dignissim ac commodo metus. Sed auctor aliquam congue. Quisque erat erat, pellentesque et accumsan ut, ultrices ac felis. Maecenas felis lorem, commodo sit amet mattis nec, fringilla sit amet purus. Nulla facilisi. Maecenas sed leo risus, ut porttitor elit. Cras ultrices tortor sit amet lectus adipiscing sed faucibus ipsum venenatis. Etiam eu eros sit amet arcu gravida eleifend. Etiam molestie, mi sed faucibus faucibus, lacus diam placerat metus, ac dapibus nibh eros id dolor. Nunc quis massa purus.</p>
+	{{{problem.content}}}
 	<section id="input">
 	<h3>Input</h3>
-	<p>Vivamus sit amet tortor eu ante volutpat suscipit sed non mi. Pellentesque sit amet convallis ipsum. Fusce vitae turpis sed elit porta posuere nec quis augue. Etiam volutpat ultrices condimentum. Duis mauris nibh, molestie eget dictum a, hendrerit eget ante. Nullam rhoncus aliquet diam, a mollis diam cursus id. Nam scelerisque turpis quis purus eleifend ac convallis quam congue. Fusce congue justo a lacus venenatis pharetra. Mauris sodales mollis lectus, vel congue arcu vestibulum ac. Proin sed ante lectus, et accumsan lorem. Nunc hendrerit iaculis imperdiet. Donec sed quam fringilla quam hendrerit bibendum sit amet at eros.</p>
+	{{{problem.input}}}
 	</section>
 	<section id="output">
 	<h3>Output</h3>
-	<p>Integer dignissim metus et arcu iaculis pulvinar iaculis diam iaculis. Quisque placerat auctor vulputate. Quisque sit amet purus at neque aliquam ullamcorper nec ac mauris. Donec gravida, felis in pharetra lobortis, enim ante volutpat mi, imperdiet sagittis nibh nunc quis magna. Curabitur in erat metus. Quisque in dui at orci egestas congue a nec dolor. Ut eu semper dolor. Duis condimentum enim non lacus pellentesque imperdiet sollicitudin dolor consectetur. In laoreet sem varius odio tincidunt ac laoreet elit imperdiet. Phasellus ligula nulla, commodo eu facilisis in, luctus et nisl. Duis id porta urna. Ut dictum tempor sodales. Nulla fermentum ullamcorper tortor nec laoreet. Donec quis sapien eros.</p>
+	{{{problem.output}}}
 	</section>
 	<section id="examples">
 	<h3>Examples</h3>
 	<div class="container">
-		<h4>Example #1</h4>
+		{{#each problem.examples}}
+		<h4>{{name}}</h4>
 		<div class="row">
 		  <div class="span6">
-		  	<h5>Input</h5>
-		  	<pre class="pre-scrollable">15
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-</pre>
+		  	<h5>Sample input</h5>
+		  	<pre class="pre-scrollable">{{input}}</pre>
 		  </div>
 		  <div class="span6">
-		  	<h5>Output</h5>
-		  	<pre class="pre-scrollable">51 23 55</pre>
+		  	<h5>Sample output</h5>
+		  	<pre class="pre-scrollable">{{output}}</pre>
 		  </div>
 		</div>
-		<h4>Example #2</h4>
-		<div class="row">
-		  <div class="span6">
-		  	<h5>Input</h5>
-		  	<pre class="pre-scrollable">5 1 5 2 5 3</pre>
-		  </div>
-		  <div class="span6">
-		  	<h5>Output</h5>
-		  	<pre class="pre-scrollable">51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 51 23 55 </pre>
-		  </div>
-		</div>
+		{{#if explanation}}
+		<p>{{explanation}}</p>
+		{{/if}}
+		{{/each}}
 	</div>
 	</section>
 </section>
@@ -84,7 +49,7 @@
 	    <button class="btn pull-right"><i class="icon-fullscreen"></i> Fulscreen</button>
 	</div>
 	<section id="code-editor">
-		<textarea id="codemirror"></textarea>
+		<textarea id="codemirror">{{code.text}}</textarea>
 	</section>
 	<section id="code-messages">
 		<a nohref id="toggle-messages">Show/Hide messages</a>
@@ -131,7 +96,7 @@
           </td>
           <td></td>
         </tr>
-         <tr>
+        <tr>
           <td><a nohref="">2013-01-03 20:03:29</a></td>
           <td><span class="submission-status submission-wa">Wrong answer</span></td>
           <td>

@@ -23,14 +23,14 @@ class Gui
     # init stuff when data is loaded
     @_render('main.tmpl', '#main', data)
     $('body').scrollspy('refresh')
-    @_initCodeMirror()
+    @_initCodeMirror(data.code)
     $('#toggle-messages').click( => $('#messages').toggle() )
 
 
-  _initCodeMirror: =>
+  _initCodeMirror: (code) =>
     codewidget = document.getElementById('codemirror')
+    @codemirror_opts.mode = code.mode
     @codemirror = CodeMirror.fromTextArea(codewidget, @codemirror_opts)
-    @codemirror.setValue("// code here\n\n\n\n\n\n\n\n\n\n\n\n")
     @codemirror.markClean()
 
 
