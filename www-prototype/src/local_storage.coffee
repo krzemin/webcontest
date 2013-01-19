@@ -15,6 +15,26 @@ class LocalStorage
       if key.match("^#{@namespace}")
         $.jStorage.deleteKey(key)
 
+  _generateRanking: (problems, names) =>
+    board = names.map (name) => {
+      name: name,
+      problems: problems.map (name) =>
+        solved = Number.random(0,1) == 0
+        return 0 unless solved
+        return Number.random(0, 50000) / 100
+    }
+    board = board.map (row) =>
+      row.score = parseFloat(row.problems.sum()).toFixed(2)
+      row.problems = row.problems.map (score) => parseFloat(score).toFixed(2)
+      row
+    board = board.sortBy( (x) -> parseFloat(x.score)).reverse()
+    i = 1
+    board = board.map (row) =>
+      row.no = i + "."
+      i += 1
+      row
+    { problems: problems, board: board }
+
   # prefetching all the stuff
   loadAllRequest: =>
     data = {
@@ -117,9 +137,59 @@ int main()
 }"""
       }
       submissions: [
+        {
+          id: 6
+          timestamp: '2013-01-03 20:59:21'
+          status: 'running'
+          progress: '70%'
+        }
+        {
+          id: 5
+          timestamp: '2013-01-03 20:55:08'
+          status: 'finished'
+          progress: '100%'
+          code: 'passed'
+          performance: { time: '4.12', memory: '22368kb'}
+          score: '315.23'
+        }
+        {
+          id: 4
+          timestamp: '2013-01-03 20:51:21'
+          status: 'finished'
+          progress: '10%'
+          code: 're'
+          performance: { time: '1.02s', memory: '31337kb'}
+          score: '0.00'
+        }
+        {
+          id: 3
+          timestamp: '2013-01-03 20:03:29'
+          status: 'finished'
+          progress: '40%'
+          code: 'wa'
+          performance: { time: '4.77s', memory: '21356kb'}
+          score: '0.00'
+        }
+        {
+          id: 2
+          timestamp: '2013-01-03 19:26:11'
+          status: 'finished'
+          progress: '90%'
+          code: 'tle'
+          performance: { memory: '22368kb'}
+          score: '0.00'
+        }
+        {
+          id: 1
+          timestamp: '2013-01-03 19:26:11'
+          status: 'finished'
+          progress: '60%'
+          code: 'mle'
+          performance: { time: '2.11s' }
+          score: '0.00'
+        }
       ]
-      ranking: [
-      ]
+      ranking: @_generateRanking ['A', 'B', 'C', 'D'], ['Piotr Krzemiński', 'Joe Bonamassa', 'Eric Johnson', 'Jimi Hendrix', 'Eric Clapton', 'Jimi Page', 'George Harrison', 'Ritchie Blackmore', 'Buddy Guy', 'Eddie Van Halen', 'Steve Vai', 'John Petrucci']
     }
     setTimeout( (=> @loadAllResponse(data)), 1000)
   loadAllResponse: (data) =>

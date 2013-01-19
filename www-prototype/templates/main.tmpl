@@ -68,55 +68,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td><a nohref="">2013-01-03 20:59:21</a></td>
+      	{{#each submissions}}
+      	<tr data-id="{{id}}">
+          <td><a nohref="">{{timestamp}}</a></td>
+          <td>{{submission_status this}}</td>
           <td>
-            <div class="progress progress-striped active submission-progress">
-              <div class="bar" style="width: 70%;">Running...</div>
-            </div>
+          	{{#if performance.time}}
+        		<i class="icon-time"></i> {{performance.time}} &nbsp;
+        	{{/if}}
+        	{{#if performance.memory}}
+          		<i class="icon-tasks"></i> {{performance.memory}}
+          	{{/if}}
           </td>
-          <td></td>
-          <td></td>
+          <td>{{score}}</td>
         </tr>
-        <tr>
-          <td><a nohref="">2013-01-03 20:55:08</a></td>
-          <td><span class="submission-status submission-passed">Passed</span></td>
-          <td>
-        	<i class="icon-time"></i> 4.12s &nbsp;
-          	<i class="icon-tasks"></i> 22368kb
-          </td>
-          <td>25.00 pts</td>
-        </tr>
-        <tr>
-          <td><a nohref="">2013-01-03 20:51:21</a></td>
-          <td><span class="submission-status submission-re">Runtime error</span></td>
-          <td>
-        	<i class="icon-time"></i> 1.02s &nbsp;
-          	<i class="icon-tasks"></i> 31337kb
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><a nohref="">2013-01-03 20:03:29</a></td>
-          <td><span class="submission-status submission-wa">Wrong answer</span></td>
-          <td>
-        	<i class="icon-time"></i> 4.77s &nbsp;
-          	<i class="icon-tasks"></i> 21356kb
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><a nohref="">2013-01-03 19:26:11</a></td>
-          <td><span class="submission-status submission-tle">Time limit exceeded</span></td>
-          <td><i class="icon-tasks"></i> 22368kb</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><a nohref="">2013-01-03 19:26:11</a></td>
-          <td><span class="submission-status submission-mle">Memory limit exceeded</span></td>
-          <td><i class="icon-time"></i> 2.11s</td>
-          <td></td>
-        </tr>
+      	{{/each}}
       </tbody>
     </table>
 </section>
@@ -128,31 +94,22 @@
           <th>No</th>
           <th>Name</th>
           <th>Score</th>
-          <th><b>A</b></th>
-          <th><b>B</b></th>
-          <th><b>C</b></th>
-          <th><b>D</b></th>
+          {{#each ranking.problems}}
+          	<th>{{this}}</th>
+          {{/each}}
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1.</td>
-          <td>Piotr Krzemiński</td>
-          <td>241.23</td>
-          <td>124.22</td>
-          <td>51.64</td>
-          <td>26.11</td>
-          <td>0.00</td>
-        </tr>
-        <tr>
-          <td>2.</td>
-          <td>Joe Bonamassa</td>
-          <td>241.23</td>
-          <td>124.22</td>
-          <td>51.64</td>
-          <td>26.11</td>
-          <td>0.00</td>
-        </tr>
+      	{{#each ranking.board}}
+      	<tr>
+      		<td>{{no}}</td>
+      		<td>{{name}}</td>
+      		<td>{{score}}</td>
+      		{{#each problems}}
+          		<td>{{this}}</td>
+          	{{/each}}
+      	</tr>
+      	{{/each}}
      </tbody>
     </table>
 </section>

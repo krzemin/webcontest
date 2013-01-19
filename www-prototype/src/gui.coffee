@@ -15,15 +15,33 @@ class Gui
     template = Handlebars.templates[template]
     html = template(data)
     $(target).html(html)
- 
-  start: =>
-    # init stuff here, before loading any data
-  
-  loadAll: (data) =>
-    # init stuff when data is loaded
-    @_render('main.tmpl', '#main', data)
+
+  _initHandlebarsHelpers: =>
+    Handlebars.registerHelper 'submission_status', (submission) ->
+      if submission.status == 'finished'
+        code = 'Passed' if submission.code == 'passed'
+        code = 'Runtime error' if submission.code == 're'
+        code = 'Wrong answer' if submission.code == 'wa'
+        code = 'Time limit exceeded' if submission.code == 'tle'
+        code = 'Memory limit exceeded' if submission.code == 'mle'
+        return new Handlebars.SafeString """
+          <span class="submission-status submission-#{submission.code}">
+            #{code}
+          </span>
+        """
+      else
+        return new Handlebars.SafeString """
+          <div class="progress progress-striped active  submission-progress">
+            <div class="bar" style="width: #{submission.progress}%;">
+              Running...
+            </div>
+          </div>
+        """
+
+  _refreshScrollSpy: =>
     $('body').scrollspy('refresh')
-    @_initCodeMirror(data.code)
+    
+  _bindUIControls: =>
     $('#toggle-messages').click( => $('#messages').toggle() )
     $('#fullscreen').click( => @_setFullScreen(!@_isFullScreen()))
 
@@ -53,8 +71,16 @@ class Gui
       document.documentElement.style.overflow = ""
     @codemirror.refresh()
     
-
-
+  start: =>
+    @_initHandlebarsHelpers()
+    # init stuff here, before loading any data
+  
+  loadAll: (data) =>
+    # init stuff when data is loaded
+    @_render('main.tmpl', '#main', data)
+    @_refreshScrollSpy()
+    @_initCodeMirror(data.code)
+    @_bindUIControls()
 
   saveCode: (code) =>
     # triggered when user wants to save code buffer in editor
