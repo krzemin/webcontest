@@ -15,6 +15,6 @@ npm-debug.log
 
 .*.swp
 Session.vim
-www-*/release/*
 *.sublime-project
 *.sublime-workspace
+www-*/release/*
