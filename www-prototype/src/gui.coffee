@@ -45,6 +45,7 @@ class Gui
     $('#toggle-messages').click( => $('#messages').toggle() )
     $('#save').click( => @saveCode(@codemirror.getValue()) )
     $('#compile').click( => @compileCode(@codemirror.getValue()) )
+    $('#submit').click( => @submitCode(@codemirror.getValue()) )
     $('#fullscreen').click( => @_setFullScreen(!@_isFullScreen()))
     
 
@@ -131,10 +132,20 @@ class Gui
 
 
   submitCode: (code) =>
+    $('#submit').button('loading')
 
-  submissionPosted: =>
+  submissionPosted: (result) =>
+    $('#submit').button('reset')
+    if result
+      console.log(result)
+    else
+      opts = { type: 'error', title: 'Error', text: 'An error has occured while trying submit a code. Try again.'}
+      @_render('alert.tmpl', '#code-alert-container', opts)
+      $('#code-alert-container .alert').fadeOut(5000, 'easeInExpo')
+
 
   submissionResultUpdated: (result) =>
+    console.log(result)
 
   rankingUpdated: (ranking) =>
 

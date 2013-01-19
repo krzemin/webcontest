@@ -26,7 +26,7 @@ class Glue
     # submit code
     After(@gui, 'submitCode', (code) => @useCase.submitCode(code))
     After(@useCase, 'submitCode', (code) => @storage.submitCodeRequest(code))
-    After(@storage, 'submitCodeResponse', (result) => @useCase.submissionPosted() if result)
+    After(@storage, 'submitCodeResponse', (result) => @useCase.submissionPosted(result))
     After(@useCase, 'submissionPosted', @gui.submissionPosted)
     After(@storage, 'submitCodeIndication', (result) => @useCase.submissionResultUpdated(result))
     After(@useCase, 'submissionResultUpdated', (result) => @gui.submissionResultUpdated(result))

@@ -17,7 +17,7 @@ class UseCase
 
   submitCode: (code) =>
 
-  submissionPosted: =>
+  submissionPosted: (result) =>
 
   submissionResultUpdated: (result) =>
 

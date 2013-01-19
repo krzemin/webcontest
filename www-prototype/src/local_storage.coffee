@@ -100,22 +100,25 @@ class LocalStorage
 
   # submitting code
   submitCodeRequest: (code) =>
-    result1 = true
+    result1 = Number.random(0,1) == 0
+    result1 = { id: 76, timestamp: '2013-01-20 00:21:22' } if result1
     setTimeout( (=> @submitCodeResponse(result1)), 1000)
-    result2 = { status: 'waiting' }
-    setTimeout( (=> @submitCodeIndication(result2)), 2000)
-    result3 = { status: 'compiling' }
-    setTimeout( (=> @submitCodeIndication(result3)), 4000)
-    result4 = { status: 'running', progress: '10%' }
-    setTimeout( (=> @submitCodeIndication(result4)), 6000)
-    result5 = { status: 'running', progress: '70%' }
-    setTimeout( (=> @submitCodeIndication(result5)), 8000)
-    result6 = {
-                status: 'finished', progress: '100%', code: 'passed',
-                performance: { time: '3.26s', memory: '19325kb'},
-                score: '315.23'
-              }
-    setTimeout( (=> @submitCodeIndication(result6)), 10000)
+    if result1
+      result2 = { id: 76, status: 'waiting' }
+      setTimeout( (=> @submitCodeIndication(result2)), 2000)
+      result3 = { id: 76, status: 'compiling' }
+      setTimeout( (=> @submitCodeIndication(result3)), 4000)
+      result4 = { id: 76, status: 'running', progress: '10%' }
+      setTimeout( (=> @submitCodeIndication(result4)), 6000)
+      result5 = { id: 76, status: 'running', progress: '70%' }
+      setTimeout( (=> @submitCodeIndication(result5)), 8000)
+      result6 = {
+                  id: 76, status: 'finished',
+                  progress: '100%', code: 'passed',
+                  performance: { time: '3.26s', memory: '19325kb'},
+                  score: '315.23'
+                }
+      setTimeout( (=> @submitCodeIndication(result6)), 10000)
   submitCodeResponse: (result) =>
     # boolean result determining whether submission has been successfully received
   submitCodeIndication: (result) => # websocket
@@ -124,7 +127,7 @@ class LocalStorage
   # async update of ranking
   rankingUpdateIndication: (ranking) =>
 
-    
+
 
   example_code: """
 /*
