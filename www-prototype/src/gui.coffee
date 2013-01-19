@@ -43,7 +43,10 @@ class Gui
     
   _bindUIControls: =>
     $('#toggle-messages').click( => $('#messages').toggle() )
+    $('#save').click( => @saveCode(@codemirror.getValue()) )
+    $('#compile').click( => @compileCode(@codemirror.getValue()) )
     $('#fullscreen').click( => @_setFullScreen(!@_isFullScreen()))
+    
 
   _initCodeMirror: (code) =>
     codewidget = document.getElementById('codemirror')
@@ -74,6 +77,12 @@ class Gui
     
   start: =>
     @_initHandlebarsHelpers()
+    $.extend($.easing, {
+      def: 'easeInExpo'
+      easeInExpo: (x, t, b, c, d) =>
+        return b if t == 0
+        c * Math.pow(2, 10 * (t/d - 1)) + b
+    })
   
   loadAll: (data) =>
     @_render('main.tmpl', '#main', data)
@@ -86,16 +95,40 @@ class Gui
     @_bindUIControls()
 
   saveCode: (code) =>
-    # triggered when user wants to save code buffer in editor
-    # to persistent storage
+    $('#code-alert-container').html('')
+    $('#save').button('loading')
+
+  codeSaved: (result) =>
+    $('#save').button('reset')
+    if result
+      opts = { type: 'error', title: 'Error', text: 'An error has occured while saving the code to the server. Try again.'}
+      @_render('alert.tmpl', '#code-alert-container', opts)
+    else
+      opts = { type: 'success', title: 'Code saved!', text: 'Code was successfully saved to the server'}
+      @_render('alert.tmpl', '#code-alert-container', opts)
+    $('#code-alert-container .alert').fadeOut(5000, 'easeInExpo')
+
 
   compileCode: (code) =>
-    # compilation request also should save code remotely, so we
-    # doesn't need to save code before compilation
+    $('#code-alert-container').html('')
+    $('#compile').button('loading')
 
-  codeCompilationStarted: =>
+  codeCompilationStarted: (result) =>
+    unless result
+      $('#compile').button('reset')
+      opts = { type: 'error', title: 'Error', text: 'An error has occured while trying to send compilation request. Try again.'}
+      @_render('alert.tmpl', '#code-alert-container', opts)
+      $('#code-alert-container .alert').fadeOut(5000, 'easeInExpo')
 
   codeCompilationFinished: (result) =>
+    $('#compile').button('reset')
+    if result.status == 'error'
+      $('#messages').addClass('messages-compilation-error')
+    else
+      $('#messages').removeClass('messages-compilation-error')
+    $('#messages').text(result.messages).show()
+
+
 
   submitCode: (code) =>
 

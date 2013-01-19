@@ -37,3 +37,5 @@ a:hover {
 .submission-re { color: purple;}
 .submission-tle { color: red; }
 .submission-mle { color: peru;}
+
+.messages-compilation-error { color: maroon; }

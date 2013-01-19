@@ -1,71 +1,7 @@
 class LocalStorage
   constructor: (@namespace) ->
-
-  set: (key, value) =>
-    $.jStorage.set("#{@namespace}/#{key}", value)
-
-  get: (key) =>
-    $.jStorage.get("#{@namespace}/#{key}")
-
-  remove: (key) =>
-    $.jStorage.deleteKey("#{@namespace}/#{key}")
-
-  flush: =>
-    for key in $.jStorage.index()
-      if key.match("^#{@namespace}")
-        $.jStorage.deleteKey(key)
-
-  _generateRanking: (problems, names) =>
-    board = names.map (name) => {
-      name: name,
-      problems: problems.map (name) =>
-        solved = Number.random(0,1) == 0
-        return 0 unless solved
-        return Number.random(0, 50000) / 100
-    }
-    board = board.map (row) =>
-      row.score = parseFloat(row.problems.sum()).toFixed(2)
-      row.problems = row.problems.map (score) => parseFloat(score).toFixed(2)
-      row
-    board = board.sortBy( (x) -> parseFloat(x.score)).reverse()
-    i = 1
-    board = board.map (row) =>
-      row.no = i + "."
-      i += 1
-      row
-    { problems: problems, board: board }
-
-  # prefetching all the stuff
-  loadAllRequest: =>
-    data = {
-      problem: {
-        name: 'Name of the problem'
-        limits: {
-          time: '3s'
-          memory: '32768kb'
-        }
-        content: '<p>This is simple HTML problem content</p>'
-        input: '<p>This is simple HTML problem input specification</p>'
-        output: '<p>This is simple HTML problem output specification</p>'
-        examples: [
-          {
-            name: 'Example #1'
-            input: '1 2 3 4 5 6 7 8'
-            output: '2 3 4 5 6 7 8 9'
-            explanation: 'This test bla bla bla'
-          }
-          {
-            name: 'Example #2'
-            input: '1 1 1 1 1 1 1 1 1 1'
-            output: '2 2 2 2 2 2 2 2 2 2'
-            explanation: ''
-          }
-        ]
-      }
-      code: {
-        language: 'c++'
-        mode: 'text/x-c++src'
-        text: """
+    unless @get('code')
+      @set('code',"""
 /*
  * Piotr Krzemiński
  * Web Programming Contest demo (2012-12-24)
@@ -134,7 +70,73 @@ int main()
     }
 
     return 0;
-}"""
+}""")
+
+  set: (key, value) =>
+    $.jStorage.set("#{@namespace}/#{key}", value)
+
+  get: (key) =>
+    $.jStorage.get("#{@namespace}/#{key}")
+
+  remove: (key) =>
+    $.jStorage.deleteKey("#{@namespace}/#{key}")
+
+  flush: =>
+    for key in $.jStorage.index()
+      if key.match("^#{@namespace}")
+        $.jStorage.deleteKey(key)
+
+  _generateRanking: (problems, names) =>
+    board = names.map (name) => {
+      name: name,
+      problems: problems.map (name) =>
+        solved = Number.random(0,1) == 0
+        return 0 unless solved
+        return Number.random(0, 50000) / 100
+    }
+    board = board.map (row) =>
+      row.score = parseFloat(row.problems.sum()).toFixed(2)
+      row.problems = row.problems.map (score) => parseFloat(score).toFixed(2)
+      row
+    board = board.sortBy( (x) -> parseFloat(x.score)).reverse()
+    i = 1
+    board = board.map (row) =>
+      row.no = i + "."
+      i += 1
+      row
+    { problems: problems, board: board }
+
+  # prefetching all the stuff
+  loadAllRequest: =>
+    data = {
+      problem: {
+        name: 'Name of the problem'
+        limits: {
+          time: '3s'
+          memory: '32768kb'
+        }
+        content: '<p>This is simple HTML problem content</p>'
+        input: '<p>This is simple HTML problem input specification</p>'
+        output: '<p>This is simple HTML problem output specification</p>'
+        examples: [
+          {
+            name: 'Example #1'
+            input: '1 2 3 4 5 6 7 8'
+            output: '2 3 4 5 6 7 8 9'
+            explanation: 'This test bla bla bla'
+          }
+          {
+            name: 'Example #2'
+            input: '1 1 1 1 1 1 1 1 1 1'
+            output: '2 2 2 2 2 2 2 2 2 2'
+            explanation: ''
+          }
+        ]
+      }
+      code: {
+        language: 'c++'
+        mode: 'text/x-c++src'
+        text: @get('code')
       }
       submissions: [
         {
@@ -196,17 +198,22 @@ int main()
 
   # saving code
   saveCodeRequest: (code) =>
-    # async saving code, result ok
-    result = true
+    # async saving code, result randomized
+    @set('code', code)
+    result = Number.random(0,1) == 0
     setTimeout( (=> @saveCodeResponse(result)), 1000)
   saveCodeResponse: (result) =>
 
   # compiling code
   compileCodeRequest: (data) =>
-    result1 = true
+    result1 = Number.random(0,2) != 0
     setTimeout( (=> @compileCodeResponse(result1)), 1000)
-    result2 = { status: 'error', message: 'bla bla bla' }
-    setTimeout( (=> @compileCodeIndication(result2)), 5000)
+    if result1
+      if Number.random(0,1) == 0
+        result2 = { status: 'error', messages: 'bla bla bla' }
+      else
+        result2 = { status: 'success', messages: 'OK' }
+      setTimeout( (=> @compileCodeIndication(result2)), 5000)
   compileCodeResponse: (result) =>
     # boolean result determining whether compilation has beed successfully queued
   compileCodeIndication: (result) => # websocket
@@ -238,7 +245,4 @@ int main()
   # async update of ranking
   rankingUpdateIndication: (ranking) =>
     
-
-
-
 

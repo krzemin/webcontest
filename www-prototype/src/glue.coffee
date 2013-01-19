@@ -15,11 +15,11 @@ class Glue
     # saving code to a remote storage
     After(@gui, 'saveCode', (code) => @useCase.saveCode(code))
     After(@useCase, 'saveCode', (code) => @storage.saveCodeRequest(code))
-    #After(@storage, 'saveCodeResponse', (result) => ... )
+    After(@storage, 'saveCodeResponse', (result) => @gui.codeSaved(result) )
     # compile code
     After(@gui, 'compileCode', (code) => @useCase.compileCode(code))
     After(@useCase, 'compileCode', (code) => @storage.compileCodeRequest(code))
-    After(@storage, 'compileCodeResponse', (result) => @useCase.codeCompilationStarted() if result)
+    After(@storage, 'compileCodeResponse', (result) => @useCase.codeCompilationStarted(result))
     After(@useCase, 'codeCompilationStarted', @gui.codeCompilationStarted)
     After(@storage, 'compileCodeIndication', (result) => @useCase.codeCompilationFinished(result))
     After(@useCase, 'codeCompilationFinished', @gui.codeCompilationFinished)
@@ -34,4 +34,3 @@ class Glue
     After(@storage, 'rankingUpdateIndication', (ranking) => @useCase.rankingUpdated(ranking))
     After(@useCase, 'rankingUpdated', (ranking) => @gui.rankingUpdated(ranking))
 
- 
