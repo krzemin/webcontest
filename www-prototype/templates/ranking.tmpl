@@ -4,10 +4,10 @@
     <tr>
       <th>No</th>
       <th>Name</th>
-      <th>Score</th>
       {{#each problems}}
       	<th class="hidden-phone">{{this}}</th>
       {{/each}}
+      <th>Total</th>
     </tr>
   </thead>
   <tbody>
@@ -15,10 +15,10 @@
   	<tr>
   		<td>{{no}}</td>
   		<td>{{name}}</td>
-  		<td>{{score}}</td>
   		{{#each problems}}
       	<td class="hidden-phone">{{this}}</td>
       {{/each}}
+      <td><b>{{score}}</b></td>
   	</tr>
   	{{/each}}
  </tbody>

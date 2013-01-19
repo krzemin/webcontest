@@ -4,8 +4,8 @@
     <tr>
       <th>Submission</th>
       <th>Status</th>
-      <th>Performance</th>
       <th>Score</th>
+      <th class="hidden-phone" colspan="2">Performance</th>
     </tr>
   </thead>
   <tbody>
@@ -13,15 +13,17 @@
   	<tr data-id="{{id}}">
       <td><a nohref="">{{timestamp}}</a></td>
       <td>{{submission_status this}}</td>
-      <td>
-      	{{#if performance.time}}
-    		<i class="icon-time"></i> {{performance.time}} &nbsp;
-    	{{/if}}
-    	{{#if performance.memory}}
-      		<i class="icon-tasks"></i> {{performance.memory}}
-      	{{/if}}
-      </td>
       <td>{{score}}</td>
+      <td class="hidden-phone">
+      {{#if performance.time}}
+    		<nobr><i class="icon-time"></i> {{performance.time}}</nobr> &nbsp;
+    	{{/if}}
+      </td>
+      <td class="hidden-phone">
+    	{{#if performance.memory}}
+      	<nobr><i class="icon-tasks"></i> {{performance.memory}}</nobr>
+      {{/if}}
+      </td>
     </tr>
   	{{/each}}
   </tbody>
