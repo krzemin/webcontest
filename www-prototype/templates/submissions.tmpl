@@ -1,5 +1,5 @@
 <h2>Submissions</h2>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered" id="submissions-table">
   <thead>
     <tr>
       <th>Submission</th>
@@ -11,15 +11,15 @@
   <tbody>
   	{{#each this}}
   	<tr data-id="{{id}}">
-      <td><a nohref="">{{timestamp}}</a></td>
-      <td>{{submission_status this}}</td>
-      <td>{{score}}</td>
-      <td class="hidden-phone">
+      <td class="submission-timestamp"><a nohref="">{{timestamp}}</a></td>
+      <td class="submission-status">{{submission_status this}}</td>
+      <td class="submission-score">{{score}}</td>
+      <td class="submission-performance-time hidden-phone">
       {{#if performance.time}}
     		<nobr><i class="icon-time"></i> {{performance.time}}</nobr> &nbsp;
     	{{/if}}
       </td>
-      <td class="hidden-phone">
+      <td class="submission-performance-memory hidden-phone">
     	{{#if performance.memory}}
       	<nobr><i class="icon-tasks"></i> {{performance.memory}}</nobr>
       {{/if}}

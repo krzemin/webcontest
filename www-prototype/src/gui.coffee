@@ -25,18 +25,19 @@ class Gui
         code = 'Time limit exceeded' if submission.code == 'tle'
         code = 'Memory limit exceeded' if submission.code == 'mle'
         return new Handlebars.SafeString """
-          <span class="submission-status submission-#{submission.code}">
+          <span class="submission-#{submission.code}">
             #{code}
           </span>
         """
-      else
+      else if submission.status
         return new Handlebars.SafeString """
-          <div class="progress progress-striped active  submission-progress">
-            <div class="bar" style="width: #{submission.progress}%;">
-              Running...
+          <div class="progress progress-striped active submission-progress">
+            <div class="bar" style="width: #{submission.progress || 100}%;">
+              #{submission.status.capitalize()}...
             </div>
           </div>
         """
+      else "WTF???"
 
   _refreshScrollSpy: =>
     $('body').scrollspy('refresh')
@@ -46,8 +47,7 @@ class Gui
     $('#save').click( => @saveCode(@codemirror.getValue()) )
     $('#compile').click( => @compileCode(@codemirror.getValue()) )
     $('#submit').click( => @submitCode(@codemirror.getValue()) )
-    $('#fullscreen').click( => @_setFullScreen(!@_isFullScreen()))
-    
+    $('#fullscreen').click( => @_setFullScreen(!@_isFullScreen()) )
 
   _initCodeMirror: (code) =>
     codewidget = document.getElementById('codemirror')
@@ -109,7 +109,6 @@ class Gui
       @_render('alert.tmpl', '#code-alert-container', opts)
     $('#code-alert-container .alert').fadeOut(5000, 'easeInExpo')
 
-
   compileCode: (code) =>
     $('#code-alert-container').html('')
     $('#compile').button('loading')
@@ -129,15 +128,31 @@ class Gui
       $('#messages').removeClass('messages-compilation-error')
     $('#messages').text(result.messages).show()
 
-
-
   submitCode: (code) =>
+    $('#code-alert-container').html('')
     $('#submit').button('loading')
 
   submissionPosted: (result) =>
     $('#submit').button('reset')
     if result
       console.log(result)
+      status = Handlebars.helpers['submission_status'](result).toString()
+
+      row = $('<tr>').attr('data-id', result.id).append(
+        $('<td>').addClass('submission-timestamp').append(
+          $('<a>').attr('nohref', '').append(result.timestamp)
+        )
+      ).append(
+        $('<td>').addClass('submission-status').html(status)
+      ).append(
+        $('<td>').addClass('submission-score')
+      ).append(
+        $('<td>').addClass('submission-performance-time').addClass('hidden-phone')
+      ).append(
+        $('<td>').addClass('submission-performance-memory').addClass('hidden-phone')
+      )
+
+      $('table#submissions-table > tbody > tr:first').before(row)
     else
       opts = { type: 'error', title: 'Error', text: 'An error has occured while trying submit a code. Try again.'}
       @_render('alert.tmpl', '#code-alert-container', opts)
@@ -146,9 +161,21 @@ class Gui
 
   submissionResultUpdated: (result) =>
     console.log(result)
+    status_html = Handlebars.helpers['submission_status'](result).toString()
+    tr = $('table#submissions-table > tbody > tr[data-id="'+result.id+'"]')
+    tr.find('td.submission-status').html(status_html)
+    if result.score
+      tr.find('td.submission-score').text(result.score)
+    if result.performance
+      if result.performance.time
+        console.log(result.performance.time)
+        tr.find('td.submission-performance-time').html(
+          """<nobr><i class="icon-time"></i> #{result.performance.time}</nobr> &nbsp;"""
+        )
+      if result.performance.memory
+        console.log(result.performance.memory)
+        tr.find('td.submission-performance-memory').html(
+          """<nobr><i class="icon-tasks"></i> #{result.performance.memory}</nobr>"""
+        )
 
   rankingUpdated: (ranking) =>
-
-
-
-

@@ -101,24 +101,34 @@ class LocalStorage
   # submitting code
   submitCodeRequest: (code) =>
     result1 = Number.random(0,1) == 0
-    result1 = { id: 76, timestamp: '2013-01-20 00:21:22' } if result1
+    subId = Number.random(10, 1000)
+    result1 = { id: subId, timestamp: '2013-01-20 00:21:22', status: 'waiting' } if result1
     setTimeout( (=> @submitCodeResponse(result1)), 1000)
     if result1
-      result2 = { id: 76, status: 'waiting' }
+      result2 = { id: subId, status: 'waiting' }
       setTimeout( (=> @submitCodeIndication(result2)), 2000)
-      result3 = { id: 76, status: 'compiling' }
+      result3 = { id: subId, status: 'compiling' }
       setTimeout( (=> @submitCodeIndication(result3)), 4000)
-      result4 = { id: 76, status: 'running', progress: '10%' }
+      result4 = { id: subId, status: 'running', progress: 20 }
       setTimeout( (=> @submitCodeIndication(result4)), 6000)
-      result5 = { id: 76, status: 'running', progress: '70%' }
+      result5 = { id: subId, status: 'running', progress: 40 }
       setTimeout( (=> @submitCodeIndication(result5)), 8000)
-      result6 = {
-                  id: 76, status: 'finished',
-                  progress: '100%', code: 'passed',
-                  performance: { time: '3.26s', memory: '19325kb'},
-                  score: '315.23'
+      result6 = { id: subId, status: 'running', progress: 50 }
+      setTimeout( (=> @submitCodeIndication(result6)), 8500)
+      result7 = { id: subId, status: 'running', progress: 70 }
+      setTimeout( (=> @submitCodeIndication(result7)), 9000)
+      result8 = { id: subId, status: 'running', progress: 90 }
+      setTimeout( (=> @submitCodeIndication(result8)), 9500)
+      result9 = {
+                  id: subId, status: 'finished'
+                  progress: 100, code: 'passed'
+                  performance: {
+                    time: parseFloat(Number.random(50, 600) / 100).toFixed(2) + 's'
+                    memory: Number.random(4000, 30000) + 'kb'
+                  }
+                  score: parseFloat(Number.random(10000, 50000) / 100).toFixed(2)
                 }
-      setTimeout( (=> @submitCodeIndication(result6)), 10000)
+      setTimeout( (=> @submitCodeIndication(result9)), 10000)
   submitCodeResponse: (result) =>
     # boolean result determining whether submission has been successfully received
   submitCodeIndication: (result) => # websocket
@@ -202,17 +212,17 @@ int main()
 
 
   example_submissions: [
-        {
-          id: 6
-          timestamp: '2013-01-03 20:59:21'
-          status: 'running'
-          progress: '70%'
-        }
+        #{
+        #  id: 6
+        #  timestamp: '2013-01-03 20:59:21'
+        #  status: 'running'
+        #  progress: 70
+        #}
         {
           id: 5
           timestamp: '2013-01-03 20:55:08'
           status: 'finished'
-          progress: '100%'
+          progress: 100
           code: 'passed'
           performance: { time: '4.12', memory: '22368kb'}
           score: '315.23'
@@ -221,7 +231,7 @@ int main()
           id: 4
           timestamp: '2013-01-03 20:51:21'
           status: 'finished'
-          progress: '10%'
+          progress: 10
           code: 're'
           performance: { time: '1.02s', memory: '31337kb'}
           score: '0.00'
@@ -230,7 +240,7 @@ int main()
           id: 3
           timestamp: '2013-01-03 20:03:29'
           status: 'finished'
-          progress: '40%'
+          progress: 40
           code: 'wa'
           performance: { time: '4.77s', memory: '21356kb'}
           score: '0.00'
@@ -239,7 +249,7 @@ int main()
           id: 2
           timestamp: '2013-01-03 19:26:11'
           status: 'finished'
-          progress: '90%'
+          progress: 90
           code: 'tle'
           performance: { memory: '22368kb'}
           score: '0.00'
@@ -248,7 +258,7 @@ int main()
           id: 1
           timestamp: '2013-01-03 19:26:11'
           status: 'finished'
-          progress: '60%'
+          progress: 60
           code: 'mle'
           performance: { time: '2.11s' }
           score: '0.00'
