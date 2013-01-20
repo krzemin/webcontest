@@ -100,9 +100,9 @@ class LocalStorage
 
   # submitting code
   submitCodeRequest: (code) =>
-    result1 = Number.random(0,1) == 0
+    result1 = Number.random(0,4) != 0
     subId = Number.random(10, 1000)
-    result1 = { id: subId, timestamp: '2013-01-20 00:21:22', status: 'waiting' } if result1
+    result1 = { id: subId, timestamp: Date.create().format('{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}'), status: 'waiting' } if result1
     setTimeout( (=> @submitCodeResponse(result1)), 1000)
     if result1
       result2 = { id: subId, status: 'waiting' }
@@ -119,15 +119,7 @@ class LocalStorage
       setTimeout( (=> @submitCodeIndication(result7)), 9000)
       result8 = { id: subId, status: 'running', progress: 90 }
       setTimeout( (=> @submitCodeIndication(result8)), 9500)
-      result9 = {
-                  id: subId, status: 'finished'
-                  progress: 100, code: 'passed'
-                  performance: {
-                    time: parseFloat(Number.random(50, 600) / 100).toFixed(2) + 's'
-                    memory: Number.random(4000, 30000) + 'kb'
-                  }
-                  score: parseFloat(Number.random(10000, 50000) / 100).toFixed(2)
-                }
+      result9 = @_generateFinishedSubmissionStatus(subId)
       setTimeout( (=> @submitCodeIndication(result9)), 10000)
   submitCodeResponse: (result) =>
     # boolean result determining whether submission has been successfully received
@@ -137,7 +129,23 @@ class LocalStorage
   # async update of ranking
   rankingUpdateIndication: (ranking) =>
 
-
+  _generateFinishedSubmissionStatus: (id) =>
+    c = Number.random(0,6)
+    code = 'mle' if c == 6
+    code = 'tle' if c == 5
+    code = 'wa' if c == 4
+    code = 're' if c == 3
+    code = 'passed' if c <= 2
+    performance = {}
+    performance.time = parseFloat(Number.random(50, 600) / 100).toFixed(2) + 's' if c != 5
+    performance.memory = Number.random(4000, 30000) + 'kb' if c != 6
+    {
+      id: id
+      status: 'finished'
+      code: code
+      score: parseFloat(if c <= 2 then Number.random(10000, 50000) / 100 else 0).toFixed(2)
+      performance: performance
+    }
 
   example_code: """
 /*
