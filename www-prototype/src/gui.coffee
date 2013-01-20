@@ -179,3 +179,5 @@ class Gui
         )
 
   rankingUpdated: (ranking) =>
+    console.log(ranking)
+    @_render('ranking.tmpl', '#ranking', ranking)

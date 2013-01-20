@@ -2,6 +2,8 @@ class LocalStorage
   constructor: (@namespace) ->
     unless @get('code')
       @set('code', @example_code)
+    @ranking = { problems: [], board: []}
+    setTimeout( (=> @_rankingUpdateCauser()), 5000)
 
   set: (key, value) =>
     $.jStorage.set("#{@namespace}/#{key}", value)
@@ -16,26 +18,6 @@ class LocalStorage
     for key in $.jStorage.index()
       if key.match("^#{@namespace}")
         $.jStorage.deleteKey(key)
-
-  _generateRanking: (problems, names) =>
-    board = names.map (name) => {
-      name: name,
-      problems: problems.map (name) =>
-        solved = Number.random(0,1) == 0
-        return 0 unless solved
-        return Number.random(0, 50000) / 100
-    }
-    board = board.map (row) =>
-      row.score = parseFloat(row.problems.sum()).toFixed(2)
-      row.problems = row.problems.map (score) => parseFloat(score).toFixed(2)
-      row
-    board = board.sortBy( (x) -> parseFloat(x.score)).reverse()
-    i = 1
-    board = board.map (row) =>
-      row.no = i + "."
-      i += 1
-      row
-    { problems: problems, board: board }
 
   # prefetching all the stuff
   loadAllRequest: =>
@@ -105,15 +87,15 @@ class LocalStorage
     result1 = { id: subId, timestamp: Date.create().format('{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}'), status: 'waiting' } if result1
     setTimeout( (=> @submitCodeResponse(result1)), 1000)
     if result1
-      result2 = { id: subId, status: 'waiting' }
-      setTimeout( (=> @submitCodeIndication(result2)), 2000)
-      result3 = { id: subId, status: 'compiling' }
+      result2 = { id: subId, status: 'compiling' }
+      setTimeout( (=> @submitCodeIndication(result2)), 3000)
+      result3 = { id: subId, status: 'running', progress: 20 }
       setTimeout( (=> @submitCodeIndication(result3)), 4000)
-      result4 = { id: subId, status: 'running', progress: 20 }
+      result4 = { id: subId, status: 'running', progress: 40 }
       setTimeout( (=> @submitCodeIndication(result4)), 6000)
-      result5 = { id: subId, status: 'running', progress: 40 }
+      result5 = { id: subId, status: 'running', progress: 50 }
       setTimeout( (=> @submitCodeIndication(result5)), 8000)
-      result6 = { id: subId, status: 'running', progress: 50 }
+      result6 = { id: subId, status: 'running', progress: 60 }
       setTimeout( (=> @submitCodeIndication(result6)), 8500)
       result7 = { id: subId, status: 'running', progress: 70 }
       setTimeout( (=> @submitCodeIndication(result7)), 9000)
@@ -128,6 +110,46 @@ class LocalStorage
 
   # async update of ranking
   rankingUpdateIndication: (ranking) =>
+
+  _rankingUpdateCauser: =>
+    index = Number.random(0, @ranking.board.length - 1)
+    problems = @ranking.board[index].problems
+    pindex = Number.random(0, problems.length - 1)
+    if (problems[pindex] == '0.00')
+      problems[pindex] = parseFloat(Number.random(0, 50000) / 100).toFixed(2)
+      total = (problems.map parseFloat).sum()
+      @ranking.board[index].score = parseFloat(total).toFixed(2)
+      @ranking.board = @ranking.board.sortBy( (x) -> parseFloat(x.score)).reverse()
+      i = 1
+      @ranking.board = @ranking.board.map (row) =>
+        row.no = i + "."
+        i += 1
+        row
+      @rankingUpdateIndication(@ranking)
+      setTimeout((=> @_rankingUpdateCauser()), Number.random(5000, 15000))
+    else
+      setTimeout((=> @_rankingUpdateCauser()), Number.random(1000, 6000))
+
+  _generateRanking: (problems, names) =>
+    board = names.map (name) => {
+      name: name,
+      problems: problems.map (name) =>
+        solved = Number.random(0,3) == 0
+        return 0 unless solved
+        return Number.random(0, 50000) / 100
+    }
+    board = board.map (row) =>
+      row.score = parseFloat(row.problems.sum()).toFixed(2)
+      row.problems = row.problems.map (score) => parseFloat(score).toFixed(2)
+      row
+    board = board.sortBy( (x) -> parseFloat(x.score)).reverse()
+    i = 1
+    board = board.map (row) =>
+      row.no = i + "."
+      i += 1
+      row
+    @ranking = { problems: problems, board: board }
+    @ranking
 
   _generateFinishedSubmissionStatus: (id) =>
     c = Number.random(0,6)
