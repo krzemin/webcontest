@@ -113,22 +113,24 @@ class LocalStorage
 
   _rankingUpdateCauser: =>
     index = Number.random(0, @ranking.board.length - 1)
-    problems = @ranking.board[index].problems
+    row = @ranking.board[index]
+    problems = row.problems
     pindex = Number.random(0, problems.length - 1)
     if (problems[pindex] == '0.00')
       problems[pindex] = parseFloat(Number.random(0, 50000) / 100).toFixed(2)
       total = (problems.map parseFloat).sum()
       @ranking.board[index].score = parseFloat(total).toFixed(2)
       @ranking.board = @ranking.board.sortBy( (x) -> parseFloat(x.score)).reverse()
+      @ranking.change = [1+@ranking.board.findIndex((x) -> x == row)]
       i = 1
       @ranking.board = @ranking.board.map (row) =>
-        row.no = i + "."
+        row.no = i
         i += 1
         row
       @rankingUpdateIndication(@ranking)
-      setTimeout((=> @_rankingUpdateCauser()), Number.random(5000, 15000))
+      setTimeout((=> @_rankingUpdateCauser()), Number.random(3000, 6000))
     else
-      setTimeout((=> @_rankingUpdateCauser()), Number.random(1000, 6000))
+      setTimeout((=> @_rankingUpdateCauser()), Number.random(1000, 3000))
 
   _generateRanking: (problems, names) =>
     board = names.map (name) => {
@@ -145,7 +147,7 @@ class LocalStorage
     board = board.sortBy( (x) -> parseFloat(x.score)).reverse()
     i = 1
     board = board.map (row) =>
-      row.no = i + "."
+      row.no = i
       i += 1
       row
     @ranking = { problems: problems, board: board }

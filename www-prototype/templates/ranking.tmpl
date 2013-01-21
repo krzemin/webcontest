@@ -12,8 +12,8 @@
   </thead>
   <tbody>
   	{{#each board}}
-  	<tr>
-  		<td>{{no}}</td>
+  	<tr data-no="{{no}}">
+  		<td>{{no}}.</td>
   		<td>{{name}}</td>
   		{{#each problems}}
       	<td class="hidden-phone">{{this}}</td>

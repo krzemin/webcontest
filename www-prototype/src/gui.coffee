@@ -181,3 +181,6 @@ class Gui
   rankingUpdated: (ranking) =>
     console.log(ranking)
     @_render('ranking.tmpl', '#ranking', ranking)
+    $('#ranking > table > tbody > tr[data-no="'+ranking.change[0]+'"]').css('background-color', 'green')
+
+
