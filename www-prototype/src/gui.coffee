@@ -1,11 +1,20 @@
 class Gui
   
   constructor: ->
-    @codemirror_opts = {
+    @codeMirrorOpts = {
       mode: 'text/x-c++src'
       theme: 'elegant'
       lineNumbers: true
       indentUnit: 4
+    }
+    @rankingUpdateOptions = {
+      duration: [1000, 0, 500, 0, 500]
+      animationSettings: {
+          up: { left: -25, backgroundColor: '#88FF88' }
+          down: { left: 25, backgroundColor: '#FF8888' }
+          fresh: { left: 0, backgroundColor: '#FFFF33' }
+          drop: { left: 0, backgroundColor: '#FF88FF' }
+      }
     }
 
   # utils
@@ -51,8 +60,8 @@ class Gui
 
   _initCodeMirror: (code) =>
     codewidget = document.getElementById('codemirror')
-    @codemirror_opts.mode = code.mode
-    @codemirror = CodeMirror.fromTextArea(codewidget, @codemirror_opts)
+    @codeMirrorOpts.mode = code.mode
+    @codemirror = CodeMirror.fromTextArea(codewidget, @codeMirrorOpts)
     @codemirror.markClean()
     CodeMirror.on(window, "resize", =>
       showing = document.body.getElementsByClassName("CodeMirror-fullscreen")[0]
@@ -114,7 +123,10 @@ class Gui
     $('#compile').button('loading')
 
   codeCompilationStarted: (result) =>
-    unless result
+    if result
+      $('#messages').text('Compiling...').show()
+      $('#messages').removeClass('messages-compilation-error')
+    else
       $('#compile').button('reset')
       opts = { type: 'error', title: 'Error', text: 'An error has occured while trying to send compilation request. Try again.'}
       @_render('alert.tmpl', '#code-alert-container', opts)
@@ -123,10 +135,15 @@ class Gui
   codeCompilationFinished: (result) =>
     $('#compile').button('reset')
     if result.status == 'error'
+      $('#messages').text(result.messages).show()
       $('#messages').addClass('messages-compilation-error')
     else
+      if result.messages
+        $('#messages').text(result.messages + '\nCompilation finished.').show()
+      else
+        $('#messages').text('Compilation finished.').show()
       $('#messages').removeClass('messages-compilation-error')
-    $('#messages').text(result.messages).show()
+    
 
   submitCode: (code) =>
     $('#code-alert-container').html('')
@@ -168,12 +185,10 @@ class Gui
       tr.find('td.submission-score').text(result.score)
     if result.performance
       if result.performance.time
-        console.log(result.performance.time)
         tr.find('td.submission-performance-time').html(
           """<nobr><i class="icon-time"></i> #{result.performance.time}</nobr> &nbsp;"""
         )
       if result.performance.memory
-        console.log(result.performance.memory)
         tr.find('td.submission-performance-memory').html(
           """<nobr><i class="icon-tasks"></i> #{result.performance.memory}</nobr>"""
         )
@@ -183,29 +198,6 @@ class Gui
     newRankingMarkup = Handlebars.templates['ranking.tmpl'](ranking)
     newRanking = $(document.createElement()).html(newRankingMarkup)
     newTable = $(newRanking).find('table#ranking-table')
-
-    @rankingUpdateOptions = {
-      duration: [1000, 0, 500, 0, 500], # ms to do each phase and the delay between them
-      animationSettings: {
-          up: {
-              left: -25, # Move left
-              backgroundColor: '#88FF88' # Dullish green
-          },
-          down: {
-              left: 25, # Move right
-              backgroundColor: '#FF8888' # Dullish red
-          },
-          fresh: {
-              left: 0, #Stay put in first stage.
-              backgroundColor: '#FFFF33' # Yellow
-          },
-          drop: {
-              left: 0, #Stay put in first stage.
-              backgroundColor: '#FF88FF' # Purple
-          }
-      }
-    }
-
     $('table#ranking-table').rankingTableUpdate(newTable, @rankingUpdateOptions)
 
 
