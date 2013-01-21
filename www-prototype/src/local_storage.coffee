@@ -121,7 +121,6 @@ class LocalStorage
       total = (problems.map parseFloat).sum()
       @ranking.board[index].score = parseFloat(total).toFixed(2)
       @ranking.board = @ranking.board.sortBy( (x) -> parseFloat(x.score)).reverse()
-      @ranking.change = [1+@ranking.board.findIndex((x) -> x == row)]
       i = 1
       @ranking.board = @ranking.board.map (row) =>
         row.no = i

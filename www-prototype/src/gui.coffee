@@ -180,7 +180,32 @@ class Gui
 
   rankingUpdated: (ranking) =>
     console.log(ranking)
-    @_render('ranking.tmpl', '#ranking', ranking)
-    $('#ranking > table > tbody > tr[data-no="'+ranking.change[0]+'"]').css('background-color', 'green')
+    newRankingMarkup = Handlebars.templates['ranking.tmpl'](ranking)
+    newRanking = $(document.createElement()).html(newRankingMarkup)
+    newTable = $(newRanking).find('table#ranking-table')
+
+    @rankingUpdateOptions = {
+      duration: [1000, 0, 500, 0, 500], # ms to do each phase and the delay between them
+      animationSettings: {
+          up: {
+              left: -25, # Move left
+              backgroundColor: '#88FF88' # Dullish green
+          },
+          down: {
+              left: 25, # Move right
+              backgroundColor: '#FF8888' # Dullish red
+          },
+          fresh: {
+              left: 0, #Stay put in first stage.
+              backgroundColor: '#FFFF33' # Yellow
+          },
+          drop: {
+              left: 0, #Stay put in first stage.
+              backgroundColor: '#FF88FF' # Purple
+          }
+      }
+    }
+
+    $('table#ranking-table').rankingTableUpdate(newTable, @rankingUpdateOptions)
 
 

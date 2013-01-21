@@ -1,18 +1,18 @@
 <h2>Ranking</h2>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered" id="ranking-table">
   <thead>
     <tr>
-      <th>No</th>
-      <th>Name</th>
+      <th class="anim:pos">No</th>
+      <th class="anim:id">Name</th>
       {{#each problems}}
-      	<th class="hidden-phone">{{this}}</th>
+      	<th class="hidden-phone anim:update">{{this}}</th>
       {{/each}}
-      <th>Total</th>
+      <th class="anim:update">Total</th>
     </tr>
   </thead>
   <tbody>
   	{{#each board}}
-  	<tr data-no="{{no}}">
+  	<tr>
   		<td>{{no}}.</td>
   		<td>{{name}}</td>
   		{{#each problems}}
