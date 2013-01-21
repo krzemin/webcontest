@@ -128,12 +128,12 @@ class LocalStorage
         i += 1
         row
       @rankingUpdateIndication(@ranking)
-      setTimeout((=> @_rankingUpdateCauser()), Number.random(3000, 6000))
+      setTimeout((=> @_rankingUpdateCauser()), Number.random(3000, 10000))
       @internalCounter = 0
     else
       @internalCounter += 1
       if @internalCounter < 20
-        setTimeout((=> @_rankingUpdateCauser()), Number.random(100, 200))
+        setTimeout((=> @_rankingUpdateCauser()), Number.random(100, 500))
 
   _generateRanking: (problems, names) =>
     board = names.map (name) => {
@@ -181,69 +181,88 @@ class LocalStorage
  * Problem easy
  */
 
-#include <cstdio>
-#include <cstring>
-#include <algorithm>
-#include <functional>
+#include<iostream>
+#include<string>
 
 using namespace std;
 
-int T, C, R, max_d = 0;
-bool BOARD[1000][1000];
-bool VISITED[1000][1000];
-char line[1001];
-pair<int, int> start;
+bool op_hi(char op) { return op == '/' || op == '*'; }
+bool op_lo(char op) { return op == '+' || op == '-'; }
+bool is_op(char op) { return op_hi(op) || op_lo(op); }
 
-int dfs(int row, int col)
-{
-    if(row < 0 || row >= R || col < 0 || col >= C) return 0;
-    if(VISITED[row][col]) return 0;
-    if(!BOARD[row][col]) return 0;
-    VISITED[row][col] = true;
-
-    int t[4];
-    t[0] = dfs(row, col - 1);
-    t[1] = dfs(row - 1, col);
-    t[2] = dfs(row, col + 1);
-    t[3] = dfs(row + 1, col);
-
-    partial_sort(t, t + 2, t + 4, greater<int>());
-
-    if(t[0] + t[1] + 1 > max_d)
-        max_d = t[0] + t[1] + 1;
-
-    return 1 + t[0];
+bool can_omit(char inop, char leop, char riop) {
+  if(op_lo(inop) && (op_hi(leop) || op_hi(riop))) return false;
+  if(leop == '-' && op_lo(inop)) return false;
+  if(leop == '/' && op_hi(inop)) return false;
+  return true;
 }
 
-int main()
-{
-    scanf("%d", &T);
+char find_inop(const string & s) {
+  int f = -1, p = 0;
+  for(int i = 0; i < s.size(); ++i) {
+    if(s[i] == '(') ++p;
+    else if(s[i] == ')') --p;
+    else if(p == 1 && op_lo(s[i])) f = i;
+  }
+  if(f != -1) return s[f];
+  for(int i = 0; i < s.size(); ++i) {
+    if(s[i] == '(') ++p;
+    else if(s[i] == ')') --p;
+    else if(p == 1 && op_hi(s[i])) f = i;
+  }
+  return s[f];
+}
 
-    while(T--)
-    {
-        memset(BOARD, 0, 1000000);
-        memset(VISITED, 0, 1000000);
-        max_d = 0;
-        scanf("%d %d\\n", &C, &R);
-        for(int r = 0; r < R; ++r)
-        {
-            scanf("%s\\n", line);
-            for(int c = 0; c < C; ++c)
-            {
-                BOARD[r][c] = (line[c] != '#');
-                if(BOARD[r][c])
-                {
-                    start.first = r;
-                    start.second = c;
-                }
-            }
-        }
-        max_d = max(max_d, dfs(start.first, start.second));
-        printf("Maximum rope length is %d.\\n", max_d - 1);
+string simplify(const string & s) {
+  if(s.find('(') == string::npos) return s;
+  int i = 0, N = s.size();
+  bool omit[N];
+  for(int i = 0; i < N; omit[i++] = false);
+  while(i < N) {
+    i = s.find('(', i);
+    if(i == string::npos) break;
+    int p,j;
+    for(p = 1, j = i+1; p>0; ++j) {
+      if(s[j] == '(') ++p;
+      else if(s[j] == ')') --p;
     }
+    --j;
 
-    return 0;
-}"""
+    int le = i-1, ri = j+1;
+    char c_le, c_ri;
+    while(le >= 0 && omit[le]) --le;
+    if(is_op(s[le])) c_le = s[le]; else c_le = '(';
+    while(ri < N && omit[ri]) ++ri;
+    if(is_op(s[ri])) c_ri = s[ri]; else c_ri = ')';
+    char c_in = find_inop(s.substr(i,j-i+1));
+
+    if(can_omit(c_in,c_le,c_ri)) {
+      omit[i] = omit[j] = true;
+    }
+    ++i;
+  }
+
+
+  string r;
+  for(int i = 0; i < N; ++i) {
+    if(omit[i]) continue;
+    r += s[i];
+  }
+  return r;
+}
+
+int main() {
+  int n;
+  string s;
+  cin >> n;
+  while(n--) {
+    cin >> s;
+    cout << simplify(s) << endl;
+  }
+  return 0;
+}
+
+"""
 
 
   example_submissions: [

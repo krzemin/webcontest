@@ -1,11 +1,16 @@
 class Gui
   
   constructor: ->
+    _gui = @
     @codeMirrorOpts = {
       mode: 'text/x-c++src'
       theme: 'elegant'
       lineNumbers: true
       indentUnit: 4
+      extraKeys: {
+        "F11": (cm) -> _gui._setFullScreen(!_gui._isFullScreen())
+        "Esc": (cm) -> _gui._setFullScreen(false) if _gui._isFullScreen()
+      }
     }
     @rankingUpdateOptions = {
       duration: [1000, 0, 500, 0, 500]
@@ -79,10 +84,12 @@ class Gui
       wrap.style.height = @_winHeight() + "px"
       document.documentElement.style.overflow = "hidden"
       $(window).scrollTop(0);
+      $('.CodeMirror-scroll').css('overflow-y', 'auto')
     else
       wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "")
       wrap.style.height = ""
       document.documentElement.style.overflow = ""
+      $('.CodeMirror-scroll').css('overflow-y', 'hidden')
     @codemirror.refresh()
     
   start: =>
