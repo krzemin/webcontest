@@ -14,12 +14,12 @@ class WebContestTest < Test::Unit::TestCase
   end
 
   def new_problem
-    Problem.new(:name => 'Easy game',
+    Problem.new :name => 'Easy game',
                 :content => 'Problem content',
                 :input => 'Input specification',
                 :output => 'Output specification',
                 :examples => [{ name: 'Test #1', input: '1 2 3', output: '6' }],
-                :limits => { time: 3, memory: 8192 })
+                :limits => { time: 3, memory: 8192 }
   end
 
   def new_judge
@@ -28,6 +28,21 @@ class WebContestTest < Test::Unit::TestCase
 
   def new_submission
     Submission.new
+  end
+
+  def new_env
+    competitor = new_competitor
+    problem = new_problem
+    judge = new_judge
+    submission = competitor.create_submission problem, 'c++', 'code'
+    contest = new_contest
+    {
+      competitor: competitor,
+      problem: problem,
+      judge: judge,
+      submission: submission,
+      contest: contest
+    }
   end
 
   def test_competitor_has_name
@@ -81,13 +96,23 @@ class WebContestTest < Test::Unit::TestCase
     assert_equal judge, contest.judges[0]
   end
 
-  def test_contest_submit
-    contest = new_contest
-    submission = new_submission
+  def test_submission_properties
+    problem = new_problem
+    competitor = new_competitor
+    submission = competitor.create_submission(problem, 'c++', 'code')
 
-    contest.submit(submission)
-    assert_equal 1, contest.submissions.size
-    assert_equal submission, contest.submissions[0]
+    assert_equal competitor, submission.competitor
+    assert_equal problem, submission.problem
+    assert_equal 'c++', submission.language
+    assert_equal 'code', submission.source_code
+  end
+
+  def test_contest_submit
+    env = new_env
+
+    env[:contest].submit(env[:submission])
+    assert_equal 1, env[:contest].submissions.size
+    assert_equal env[:submission], env[:contest].submissions[0]
   end
 
 

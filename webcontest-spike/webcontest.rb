@@ -2,8 +2,16 @@ module WebContest
   
   class Competitor
     attr_reader :name
+    
     def initialize(name)
       @name = name
+    end
+    
+    def create_submission(problem, language, source_code)
+      Submission.new :competitor => self,
+                     :problem => problem,
+                     :language => language,
+                     :source_code => source_code
     end
   end
 
@@ -48,6 +56,13 @@ module WebContest
   end
 
   class Submission
+    attr_reader :competitor, :problem, :language, :source_code
+    def initialize(opts)
+      @competitor = opts[:competitor]
+      @problem = opts[:problem]
+      @language = opts[:language]
+      @source_code = opts[:source_code]
+    end
   end
 
   class Judge
