@@ -112,6 +112,16 @@ class LocalStorage
   # async update of ranking
   rankingUpdateIndication: (ranking) =>
 
+  _sortRanking: (ranking) =>
+    ranking.sort((a,b) ->
+      if parseFloat(a.score) > parseFloat(b.score)
+        return -1
+      else if a.score == b.score
+        return if a.name < b.name then -1 else 1
+      else
+        return 1
+    )
+
   _rankingUpdateCauser: =>
     index = Number.random(0, @ranking.board.length - 1)
     row = @ranking.board[index]
@@ -121,7 +131,7 @@ class LocalStorage
       problems[pindex] = parseFloat(Number.random(0, 50000) / 100).toFixed(2)
       total = (problems.map parseFloat).sum()
       @ranking.board[index].score = parseFloat(total).toFixed(2)
-      @ranking.board = @ranking.board.sortBy( (x) -> parseFloat(x.score)).reverse()
+      @ranking.board = @_sortRanking(@ranking.board)
       i = 1
       @ranking.board = @ranking.board.map (row) =>
         row.no = i
@@ -147,7 +157,7 @@ class LocalStorage
       row.score = parseFloat(row.problems.sum()).toFixed(2)
       row.problems = row.problems.map (score) => parseFloat(score).toFixed(2)
       row
-    board = board.sortBy( (x) -> parseFloat(x.score)).reverse()
+    board = @_sortRanking(board)
     i = 1
     board = board.map (row) =>
       row.no = i
