@@ -23,7 +23,7 @@ class LocalStorage
   loadAllRequest: =>
     data = {
       problem: {
-        name: 'Compilated Expressions'
+        name: 'Complicated Expressions'
         limits: {
           time: '5s'
           memory: '32768kb'
