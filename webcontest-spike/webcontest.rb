@@ -8,7 +8,7 @@ module WebContest
   end
 
   class Contest
-    attr_reader :name, :registrants, :problems
+    attr_reader :name, :registrants, :problems, :judges
     def initialize(name)
       @name = name
       @registrants = []
@@ -24,6 +24,10 @@ module WebContest
     
     def add_problem(problem)
       @problems << problem
+    end
+
+    def add_judge(judge)
+      @judges << judge
     end
   end
 

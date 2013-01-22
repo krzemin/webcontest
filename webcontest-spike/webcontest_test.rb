@@ -22,6 +22,10 @@ class WebContestTest < Test::Unit::TestCase
                 :limits => { time: 3, memory: 8192 })
   end
 
+  def new_judge
+    Judge.new
+  end
+
   def test_competitor_has_name
     assert_equal 'Piotr', new_competitor.name
   end
@@ -62,6 +66,15 @@ class WebContestTest < Test::Unit::TestCase
     contest.add_problem(problem)
     assert_equal 1, contest.problems.size
     assert_equal problem, contest.problems[0]
+  end
+
+  def test_add_judge_to_contest
+    contest = new_contest
+    judge = new_judge
+
+    contest.add_judge(judge)
+    assert_equal 1, contest.judges.size
+    assert_equal judge, contest.judges[0]
   end
 
 end
