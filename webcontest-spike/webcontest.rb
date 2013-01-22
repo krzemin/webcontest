@@ -15,7 +15,7 @@ module WebContest
       @problems = []
       @judges = []
       @submissions = []
-      @ranking = []
+      @ranking = Ranking.new
     end
 
     def register(contestant)
@@ -24,6 +24,15 @@ module WebContest
   end
 
   class Problem
+    attr_reader :name, :content, :input, :output, :examples, :limits
+    def initialize(opts)
+      @name = opts[:name] || ''
+      @content = opts[:content] || ''
+      @input = opts[:input] || ''
+      @output = opts[:output] || ''
+      @examples = opts[:examples] || []
+      @limits = opts[:limits] || { time: 0, memory: 0 }
+    end
   end
 
   class Submission

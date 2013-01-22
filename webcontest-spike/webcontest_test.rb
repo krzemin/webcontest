@@ -13,6 +13,15 @@ class WebContestTest < Test::Unit::TestCase
     Competitor.new('Piotr')
   end
 
+  def new_problem
+    Problem.new(:name => 'Easy game',
+                :content => 'Problem content',
+                :input => 'Input specification',
+                :output => 'Output specification',
+                :examples => [{ name: 'Test #1', input: '1 2 3', output: '6' }],
+                :limits => { time: 3, memory: 8192 })
+  end
+
   def test_competitor_has_name
     assert_equal 'Piotr', new_competitor.name
   end
@@ -29,6 +38,24 @@ class WebContestTest < Test::Unit::TestCase
     contest.register(competitor)
     assert_equal 1, contest.registrants.size
     assert_equal competitor, contest.registrants[0]
+  end
+
+  def test_problem_properties
+    p = new_problem
+
+    assert_equal 'Easy game', p.name
+    assert_equal 'Problem content', p.content
+    assert_equal 'Input specification', p.input
+    assert_equal 'Output specification', p.output
+    assert_equal 1, p.examples.size
+    assert_equal 'Test #1', p.examples[0][:name]
+    assert_equal '1 2 3', p.examples[0][:input]
+    assert_equal '6', p.examples[0][:output]
+    assert_equal 3, p.limits[:time]
+    assert_equal 8192, p.limits[:memory]
+  end
+
+  def todo_test_add_problem
   end
 
 end
