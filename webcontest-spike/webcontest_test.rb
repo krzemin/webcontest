@@ -55,7 +55,13 @@ class WebContestTest < Test::Unit::TestCase
     assert_equal 8192, p.limits[:memory]
   end
 
-  def todo_test_add_problem
+  def test_add_problem_to_contest
+    contest = new_contest
+    problem = new_problem
+
+    contest.add_problem(problem)
+    assert_equal 1, contest.problems.size
+    assert_equal problem, contest.problems[0]
   end
 
 end
