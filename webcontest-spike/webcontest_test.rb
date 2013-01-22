@@ -26,6 +26,10 @@ class WebContestTest < Test::Unit::TestCase
     Judge.new
   end
 
+  def new_submission
+    Submission.new
+  end
+
   def test_competitor_has_name
     assert_equal 'Piotr', new_competitor.name
   end
@@ -76,6 +80,16 @@ class WebContestTest < Test::Unit::TestCase
     assert_equal 1, contest.judges.size
     assert_equal judge, contest.judges[0]
   end
+
+  def test_contest_submit
+    contest = new_contest
+    submission = new_submission
+
+    contest.submit(submission)
+    assert_equal 1, contest.submissions.size
+    assert_equal submission, contest.submissions[0]
+  end
+
 
 end
 
