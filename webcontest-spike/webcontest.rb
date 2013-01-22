@@ -48,7 +48,7 @@ module WebContest
     end
   end
 
- class Problem
+  class Problem
     attr_reader :name, :content, :input, :output, :examples, :limits
     def initialize(opts)
       @name = opts[:name] || ''

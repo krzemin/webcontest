@@ -133,10 +133,7 @@ class LocalStorage
       @ranking.board[index].score = parseFloat(total).toFixed(2)
       @ranking.board = @_sortRanking(@ranking.board)
       i = 1
-      @ranking.board = @ranking.board.map (row) =>
-        row.no = i
-        i += 1
-        row
+      @ranking.board.each (row) => row.no = i; i += 1
       @rankingUpdateIndication(@ranking)
       setTimeout((=> @_rankingUpdateCauser()), Number.random(3000, 10000))
       @internalCounter = 0

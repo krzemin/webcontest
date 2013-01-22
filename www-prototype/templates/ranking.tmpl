@@ -5,18 +5,18 @@
       <th class="anim:pos">No</th>
       <th class="anim:id">Name</th>
       {{#each problems}}
-      	<th class="hidden-phone anim:update">{{this}}</th>
+      	<th class="hidden-phone anim:constant">{{this}}</th>
       {{/each}}
-      <th class="anim:update">Total</th>
+      <th class="anim:constant">Total</th>
     </tr>
   </thead>
   <tbody>
   	{{#each board}}
   	<tr>
-  		<td>{{no}}.</td>
-  		<td>{{name}}</td>
-  		{{#each problems}}
-      	<td class="hidden-phone">{{this}}</td>
+  	  <td>{{no}}.</td>
+  	  <td>{{name}}</td>
+  	  {{#each problems}}
+        <td class="hidden-phone">{{ranking_points_passed this}}</td>
       {{/each}}
       <td><b>{{score}}</b></td>
   	</tr>

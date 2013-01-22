@@ -15,8 +15,8 @@ class Gui
     @rankingUpdateOptions = {
       duration: [1000, 0, 500, 0, 500]
       animationSettings: {
-          up: { left: -25, backgroundColor: '#88FF88' }
-          down: { left: 25, backgroundColor: '#FF8888' }
+          up: { left: -25, backgroundColor: '#AAFFAA' }
+          down: { left: 25, backgroundColor: '#FFAAAA' }
           fresh: { left: 0, backgroundColor: '#FFFF33' }
           drop: { left: 0, backgroundColor: '#FF88FF' }
       }
@@ -52,6 +52,11 @@ class Gui
           </div>
         """
       else "WTF???"
+    Handlebars.registerHelper 'ranking_points_passed', (points) ->
+      if points != '0.00'
+        return new Handlebars.SafeString """<span class="ranking-points-passed">#{points}</span>"""
+      else
+        return new Handlebars.SafeString points
 
   _refreshScrollSpy: =>
     $('body').scrollspy('refresh')
