@@ -64,18 +64,18 @@ class WebContestTest < Test::Unit::TestCase
   end
 
   def test_problem_properties
-    p = new_problem
+    problem = new_problem
 
-    assert_equal 'Easy game', p.name
-    assert_equal 'Problem content', p.content
-    assert_equal 'Input specification', p.input
-    assert_equal 'Output specification', p.output
-    assert_equal 1, p.examples.size
-    assert_equal 'Test #1', p.examples[0][:name]
-    assert_equal '1 2 3', p.examples[0][:input]
-    assert_equal '6', p.examples[0][:output]
-    assert_equal 3, p.limits[:time]
-    assert_equal 8192, p.limits[:memory]
+    assert_equal 'Easy game', problem.name
+    assert_equal 'Problem content', problem.content
+    assert_equal 'Input specification', problem.input
+    assert_equal 'Output specification', problem.output
+    assert_equal 1, problem.examples.size
+    assert_equal 'Test #1', problem.examples[0][:name]
+    assert_equal '1 2 3', problem.examples[0][:input]
+    assert_equal '6', problem.examples[0][:output]
+    assert_equal 3, problem.limits[:time]
+    assert_equal 8192, problem.limits[:memory]
   end
 
   def test_add_problem_to_contest
@@ -83,6 +83,7 @@ class WebContestTest < Test::Unit::TestCase
     problem = new_problem
 
     contest.add_problem(problem)
+
     assert_equal 1, contest.problems.size
     assert_equal problem, contest.problems[0]
   end
@@ -92,6 +93,7 @@ class WebContestTest < Test::Unit::TestCase
     judge = new_judge
 
     contest.add_judge(judge)
+
     assert_equal 1, contest.judges.size
     assert_equal judge, contest.judges[0]
   end
@@ -110,11 +112,34 @@ class WebContestTest < Test::Unit::TestCase
   def test_contest_submit
     env = new_env
 
+    env[:contest].add_problem(env[:problem])
+    env[:contest].register(env[:competitor])
     env[:contest].submit(env[:submission])
+
     assert_equal 1, env[:contest].submissions.size
     assert_equal env[:submission], env[:contest].submissions[0]
   end
 
+  def test_contest_submit_no_such_problem
+    env = new_env
+    problem = Problem.new :name => 'Problem out of the contest'
+    submission = env[:competitor].create_submission(problem, 'c++', 'code')
+
+    assert_raises NoSuchProblem do
+      env[:contest].submit(submission)
+    end
+  end
+
+  def test_contest_submit_no_such_competitor
+    env = new_env
+    env[:contest].add_problem(env[:problem])
+    competitor = Competitor.new 'Not registered'
+    submission = competitor.create_submission(env[:problem], 'c++', 'code')
+
+    assert_raises NoSuchRegistrant do
+      env[:contest].submit(submission)
+    end
+  end
 
 end
 

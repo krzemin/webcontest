@@ -15,6 +15,9 @@ module WebContest
     end
   end
 
+  class NoSuchProblem < Exception; end
+  class NoSuchRegistrant < Exception; end
+
   class Contest
     attr_reader :name, :registrants, :problems, :judges, :submissions
     def initialize(name)
@@ -39,11 +42,13 @@ module WebContest
     end
     
     def submit(submission)
+      raise NoSuchProblem if not problems.include?(submission.problem)
+      raise NoSuchRegistrant if not registrants.include?(submission.competitor)
       @submissions << submission
     end
   end
 
-  class Problem
+ class Problem
     attr_reader :name, :content, :input, :output, :examples, :limits
     def initialize(opts)
       @name = opts[:name] || ''
