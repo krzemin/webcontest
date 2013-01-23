@@ -83,7 +83,13 @@ module WebContest
   end
 
   class Assessment
+    attr_accessor :status, :progress, :code, :score, :performance
     def initialize()
+      @status = 'waiting'
+      @progress = 0
+      @code = nil
+      @score = 0
+      @performance = { time: nil, memory: nil }
     end
   end
 
