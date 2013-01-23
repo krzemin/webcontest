@@ -60,6 +60,8 @@ module WebContest
     end
   end
 
+  class NoAssessment < Exception; end
+
   class Submission
     attr_reader :competitor, :problem, :language, :source_code
     def initialize(opts)
@@ -67,10 +69,30 @@ module WebContest
       @problem = opts[:problem]
       @language = opts[:language]
       @source_code = opts[:source_code]
+      @assessments = []
+    end
+
+    def add_assessment(assessment)
+      @assessments << assessment
+    end
+
+    def assessment
+      raise NoAssessment if @assessments.empty?
+      @assessments.last
+    end
+  end
+
+  class Assessment
+    def initialize()
     end
   end
 
   class Judge
+    def initialize()
+    end
+    def assess(submission)
+      submission.add_assessment Assessment.new
+    end
   end
 
   class Ranking

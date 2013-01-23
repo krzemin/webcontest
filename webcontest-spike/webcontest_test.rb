@@ -26,10 +26,6 @@ class WebContestTest < Test::Unit::TestCase
     Judge.new
   end
 
-  def new_submission
-    Submission.new
-  end
-
   def new_env
     competitor = new_competitor
     problem = new_problem
@@ -141,5 +137,20 @@ class WebContestTest < Test::Unit::TestCase
     end
   end
 
-end
+  def test_submission_assessment_no_assessments
+    env = new_env
 
+    assert_raises NoAssessment do
+      env[:submission].assessment()
+    end
+  end
+
+  def test_submission_assessment
+    env = new_env
+    
+    env[:judge].assess(env[:submission])
+    assert_not_nil env[:submission].assessment()
+  end
+
+
+end
