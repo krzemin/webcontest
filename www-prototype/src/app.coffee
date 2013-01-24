@@ -2,6 +2,7 @@
 #<< local_storage
 #<< use_case
 #<< gui
+#<< websocket
 #<< glue
 
 class App
@@ -9,7 +10,8 @@ class App
     useCase      = new UseCase()
     gui          = new Gui()
     localStorage = new LocalStorage("webcontest")
-    glue         = new Glue(useCase, gui, localStorage)
+    websocket    = new WebSocket("http://localhost:3000/faye")
+    glue         = new Glue(useCase, gui, localStorage, websocket)
     
     useCase.start()
 
