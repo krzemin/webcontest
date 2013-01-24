@@ -97,7 +97,13 @@ module WebContest
     def initialize()
     end
     def assess(submission)
-      submission.add_assessment Assessment.new
+      assessment = Assessment.new
+      assessment.status = 'finished'
+      assessment.progress = 100
+      assessment.code = 'passed'
+      assessment.score = 375.0
+      assessment.performance = { time: 2.12, memory: 7992 }
+      submission.add_assessment assessment
     end
   end
 

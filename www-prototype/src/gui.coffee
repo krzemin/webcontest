@@ -155,7 +155,6 @@ class Gui
       else
         $('#messages').text('Compilation finished.').show()
       $('#messages').removeClass('messages-compilation-error')
-    
 
   submitCode: (code) =>
     $('#code-alert-container').html('')
@@ -187,7 +186,6 @@ class Gui
       @_render('alert.tmpl', '#code-alert-container', opts)
       $('#code-alert-container .alert').fadeOut(5000, 'easeInExpo')
 
-
   submissionResultUpdated: (result) =>
     console.log(result)
     status_html = Handlebars.helpers['submission_status'](result).toString()
@@ -211,5 +209,3 @@ class Gui
     newRanking = $(document.createElement()).html(newRankingMarkup)
     newTable = $(newRanking).find('table#ranking-table')
     $('table#ranking-table').rankingTableUpdate(newTable, @rankingUpdateOptions)
-
-
