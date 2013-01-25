@@ -18,3 +18,11 @@ Session.vim
 *.sublime-project
 *.sublime-workspace
 www-*/release/*
+
+sandbox/CMakeCache.txt
+sandbox/CMakeFiles*
+sandbox/CTestTestfile.cmake
+sandbox/Makefile
+sandbox/cmake_install.cmake
+sandbox/sandbox
+sandbox/sandbox_tests
