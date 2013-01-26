@@ -3,7 +3,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 ENABLE_TESTING(true)
 FIND_PACKAGE(GTest REQUIRED)
 INCLUDE_DIRECTORIES(include)
-ADD_DEFINITIONS(-O2 -std=c++11 -Wall)
+ADD_DEFINITIONS(-g -O2 -std=c++11 -Wall)
+
 
 SET(sandbox_sources
     src/main.cpp
@@ -16,15 +17,18 @@ SET(sandbox_sources
     src/syscallshandler.cpp
 )
 
-SET(sandbox_test_sources
-    test/example.cpp
+#ADD_EXECUTABLE(sandbox ${sandbox_sources})
+
+
+SET(gtest_gmock_libs gtest gtest_main gmock gmock_main pthread)
+
+SET(options_test_sources
+    src/options.cpp
+    test/options_test.cpp
 )
-
-ADD_EXECUTABLE(sandbox ${sandbox_sources})
-
-ADD_EXECUTABLE(sandbox_tests ${sandbox_test_sources})
-TARGET_LINK_LIBRARIES(sandbox_tests gtest gtest_main gmock gmock_main pthread)
-ADD_TEST(sandbox_tests sandbox_tests)
+ADD_EXECUTABLE(options_tests ${options_test_sources})
+TARGET_LINK_LIBRARIES(options_tests ${gtest_gmock_libs})
+ADD_TEST(options_tests options_tests)
 
 
 ADD_CUSTOM_TARGET (distclean @echo cleaning for source distribution)
@@ -48,5 +52,3 @@ ADD_CUSTOM_COMMAND(
   ARGS    -Rf CMakeTmp ${DISTCLEANED}
   TARGET  distclean
 )
-
-
