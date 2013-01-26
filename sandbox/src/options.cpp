@@ -26,7 +26,6 @@ options::options()
 {
 }
 
-#include <iostream>
 bool options::parse(int argc, const char * const argv[]) {
 	opterr = 0;
 	optind = 0;
@@ -44,7 +43,6 @@ bool options::parse(int argc, const char * const argv[]) {
 		int option = getopt_long(argc, argv_copy, getopt_str,
 								 long_options, &option_pointer);
 
-		//std::cout << "option = " << option << std::endl;
 		if(option == EOF) {
 			break;
 		}
@@ -73,7 +71,6 @@ bool options::parse(int argc, const char * const argv[]) {
 			break;
 			case 'i':
 				input_file = optarg;
-				//std::cout << "input_file = " << input_file << std::endl;
 			break;
 			case 'o':
 				output_file = optarg;

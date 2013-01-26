@@ -7,18 +7,18 @@ int main(int argc, char ** argv) {
 	auto options = make_shared<options>();
 
 	if(!options->parse(argc, argv)) {
-		printer::print_help();
+		std::cerr << printer::help();
 		return 1;
 	}
 
 	if(options->verbose) {
-		printer::print_options(options);
+		std::cerr << printer::options(options);
 	}
 
 	auto executable = make_shared<executable>();
 
 	if(!executable->prepare(options)) {
-		printer::print_error("")
+		std::cerr << printer::error("error preparing executable to run");
 		return 2;
 	}
 
@@ -26,7 +26,7 @@ int main(int argc, char ** argv) {
 
 	switch((child_pid = fork())) {
 		case -1:
-			Printer::print_internal_error("fork() failed");
+			std::cerr << printer::error("fork() failed");
 			return 3;
 		break;
 		case 0:
@@ -37,10 +37,10 @@ int main(int argc, char ** argv) {
 	}
 
 	if(options->verbose) {
-		printer::print_stats(executable->get_stats());
+		std::cerr << printer::stats(executable->get_stats());
 	}
 
-	printer::print_result(executable->get_result());
+	std::cerr << printer::result(executable->get_result());
 
 	return 0;
 }
