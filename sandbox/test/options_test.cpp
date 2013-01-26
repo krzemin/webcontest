@@ -115,6 +115,16 @@ TEST_F(options_test, test_time_limit_short) {
     ASSERT_EQ(2.5, sut->time_limit);
 }
 
+TEST_F(options_test, test_time_limit_error_zero) {
+    const char * const args[4] = { "argv[0]", "--time-limit", "0", "cmd" };
+    ASSERT_FALSE(sut->parse(4, args));
+}
+
+TEST_F(options_test, test_time_limit_error_ltzero) {
+    const char * const args[4] = { "argv[0]", "--time-limit", "-6.21", "cmd" };
+    ASSERT_FALSE(sut->parse(4, args));
+}
+
 TEST_F(options_test, test_memory_limit_long) {
     const char * const args[4] = { "argv[0]", "--memory-limit", "10249", "cmd" };
     std::vector<std::string> cmd = { "cmd" };
@@ -129,6 +139,16 @@ TEST_F(options_test, test_memory_limit_short) {
     ASSERT_TRUE(sut->parse(4, args));
     ASSERT_EQ(cmd, sut->command);
     ASSERT_EQ(10249, sut->memory_limit);
+}
+
+TEST_F(options_test, test_memory_limit_error_zero) {
+    const char * const args[4] = { "argv[0]", "--memory-limit", "0", "cmd" };
+    ASSERT_FALSE(sut->parse(4, args));
+}
+
+TEST_F(options_test, test_memory_limit_error_ltzero) {
+    const char * const args[4] = { "argv[0]", "--memory-limit", "-621", "cmd" };
+    ASSERT_FALSE(sut->parse(4, args));
 }
 
 TEST_F(options_test, test_secure) {
