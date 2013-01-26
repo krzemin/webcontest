@@ -26,9 +26,9 @@ SET(options_test_sources
     src/options.cpp
     test/options_test.cpp
 )
-ADD_EXECUTABLE(options_tests ${options_test_sources})
-TARGET_LINK_LIBRARIES(options_tests ${gtest_gmock_libs})
-ADD_TEST(options_tests options_tests)
+ADD_EXECUTABLE(options_test ${options_test_sources})
+TARGET_LINK_LIBRARIES(options_test ${gtest_gmock_libs})
+ADD_TEST(options_test options_test)
 
 
 ADD_CUSTOM_TARGET (distclean @echo cleaning for source distribution)
