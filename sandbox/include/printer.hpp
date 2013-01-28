@@ -3,6 +3,8 @@
 
 #include <string>
 #include "options.hpp"
+#include "stats.hpp"
+#include "results.hpp"
 
 class printer {
 public:

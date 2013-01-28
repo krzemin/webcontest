@@ -2,11 +2,12 @@
 #include <gtest/gtest.h>
 #include <array>
 #include "printer.hpp"
+#include "help.hpp"
 
 using namespace ::testing;
 
 TEST(printer_test, test_help) {
-    ASSERT_EQ("HELP TEXT\n", printer::help());
+    ASSERT_EQ(HELP_TEXT, printer::help());
 }
 
 TEST(printer_test, test_error) {

@@ -1,5 +1,5 @@
-#ifndef __OPTIONS_H__
-#define __OPTIONS_H__
+#ifndef __OPTIONS_HPP__
+#define __OPTIONS_HPP__
 
 #include <vector>
 #include <string>
@@ -18,4 +18,4 @@ struct options {
 	bool parse(int argc, const char * const argv[]);
 };
 
-#endif // __OPTIONS_H__
+#endif // __OPTIONS_HPP__

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include "options.hpp"
+#include "security.hpp"
 
 int main(int argc, char ** argv) {
 
@@ -11,14 +12,19 @@ int main(int argc, char ** argv) {
 		return 1;
 	}
 
+	std::shared_ptr<security_manager> security;
+
 	if(options->verbose) {
 		std::cerr << printer::options(options);
+		security = make_shared<linux_syscalls_security_manager>(options);
+	} else {
+		security = make_shared<dummy_security_manager>(options)
 	}
 
-	auto executable = make_shared<executable>();
+	auto executable = make_shared<executable>(options, security);
 
-	if(!executable->prepare(options)) {
-		std::cerr << printer::error("error preparing executable to run");
+	if(!executable->prepare()) {
+		std::cerr << printer::error("error preparing executable to run;");
 		return 2;
 	}
 
@@ -33,7 +39,7 @@ int main(int argc, char ** argv) {
 			executable->child_part();
 		break;
 		default:
-			executable->parent_part();
+			executable->parent_part(child_pid);
 	}
 
 	if(options->verbose) {

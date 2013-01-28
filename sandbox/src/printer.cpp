@@ -1,11 +1,10 @@
 #include <sstream>
-#include "printer.hpp"
 #include <numeric>
+#include "printer.hpp"
+#include "help.hpp"
 
 std::string printer::help() {
-    std::ostringstream os;
-    os << "HELP TEXT" << std::endl;
-    return os.str();
+    return std::string(HELP_TEXT);
 }
 
 std::string printer::error(const std::string & msg) {

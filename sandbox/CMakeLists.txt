@@ -39,6 +39,14 @@ ADD_EXECUTABLE(printer_test ${printer_test_sources})
 TARGET_LINK_LIBRARIES(printer_test ${gtest_gmock_libs})
 ADD_TEST(printer_test printer_test)
 
+SET(executable_test_sources
+    src/executable.cpp
+    test/executable_test.cpp
+)
+ADD_EXECUTABLE(executable_test ${executable_test_sources})
+TARGET_LINK_LIBRARIES(executable_test ${gtest_gmock_libs})
+ADD_TEST(executable_test executable_test)
+
 
 ADD_CUSTOM_TARGET (distclean @echo cleaning for source distribution)
 SET(DISTCLEANED
