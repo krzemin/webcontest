@@ -1,22 +1,22 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <memory>
-#include "executable.hpp"
 #include "options.hpp"
-#include "security_manager_mock.hpp"
+#include "executable.hpp"
+#include "mocks/security_manager_mock.hpp"
 
 using namespace ::testing;
 
 class executable_test : public ::testing::Test {
 protected:
-    std::shared_ptr<executable> sut;
-    std::shared_ptr<options> options;
+    std::shared_ptr<options> opts;
     std::shared_ptr<security_manager_mock> security;
+    std::shared_ptr<executable> sut;
 
     void SetUp() {
-        //options = std::make_shared<options>();
-        //security = std::make_shared<security_manager_mock>();
-        //sut = std::make_shared<executable>(options, security);
+        opts = std::make_shared<options>();
+        security = std::make_shared<security_manager_mock>(opts);
+        sut = std::make_shared<executable>(opts, security);
     }
     void TearDown() {}
 };

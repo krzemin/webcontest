@@ -10,7 +10,7 @@
 class executable {
 public:
 	executable(std::shared_ptr<options> opts, std::shared_ptr<security_manager> sm)
-		: options(opts), security(sm) {}
+		: opts(opts), security(sm) {}
 
 	~executable();
 
@@ -21,7 +21,7 @@ public:
 	results get_results();
 
 private:
-	std::shared_ptr<options> options;
+	std::shared_ptr<options> opts;
 	std::shared_ptr<security_manager> security;
 	
 };

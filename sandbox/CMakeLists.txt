@@ -3,7 +3,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 ENABLE_TESTING(true)
 FIND_PACKAGE(GTest REQUIRED)
 INCLUDE_DIRECTORIES(include)
-ADD_DEFINITIONS(-g -O2 -std=c++11 -Wall)
+ADD_DEFINITIONS(-O2 -std=c++11 -Wall)
 
 
 SET(sandbox_sources
@@ -24,7 +24,7 @@ SET(gtest_gmock_libs gtest gtest_main gmock gmock_main pthread)
 
 SET(options_test_sources
     src/options.cpp
-    test/options_test.cpp
+    test/unit/options_test.cpp
 )
 ADD_EXECUTABLE(options_test ${options_test_sources})
 TARGET_LINK_LIBRARIES(options_test ${gtest_gmock_libs})
@@ -33,15 +33,16 @@ ADD_TEST(options_test options_test)
 SET(printer_test_sources
     src/options.cpp
     src/printer.cpp
-    test/printer_test.cpp
+    test/unit/printer_test.cpp
 )
 ADD_EXECUTABLE(printer_test ${printer_test_sources})
 TARGET_LINK_LIBRARIES(printer_test ${gtest_gmock_libs})
 ADD_TEST(printer_test printer_test)
 
 SET(executable_test_sources
+    src/options.cpp
     src/executable.cpp
-    test/executable_test.cpp
+    test/unit/executable_test.cpp
 )
 ADD_EXECUTABLE(executable_test ${executable_test_sources})
 TARGET_LINK_LIBRARIES(executable_test ${gtest_gmock_libs})
