@@ -13,6 +13,8 @@ results
 
 npm-debug.log
 
+node-backend/node_modules
+
 .*.swp
 Session.vim
 *.sublime-project

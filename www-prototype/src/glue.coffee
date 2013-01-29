@@ -9,8 +9,8 @@ class Glue
     LogAll(@storage, 'Storage')
 
     # initiation & starting an application
-    After(@useCase, 'start', @gui.start)
-    #After(@useCase, 'start', @websocket.start)
+    #After(@useCase, 'start', @gui.start)
+    After(@useCase, 'start', @websocket.start)
     After(@useCase, 'loadAll', @storage.loadAllRequest)
     After(@storage, 'loadAllResponse', (data) => @useCase.data = data; @gui.loadAll(data))
     # saving code to a remote storage

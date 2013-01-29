@@ -3,7 +3,7 @@ class UseCase
     @data = {}
 
   start: =>
-    @loadAll()
+    #@loadAll()
 
   loadAll: =>
 
