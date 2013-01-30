@@ -1,5 +1,5 @@
 class Glue
-  constructor: (@useCase, @gui, @storage, @websocket) ->
+  constructor: (@useCase, @gui, @api, @storage, @websocket) ->
     # auto binding XyzClicked from @gui to Xyz in @useCase
     AutoBind(@gui, @useCase)
     
@@ -7,12 +7,13 @@ class Glue
     LogAll(@useCase, 'UseCase')
     LogAll(@gui, 'Gui')
     LogAll(@storage, 'Storage')
+    LogAll(@websocket, 'WebSocket')
 
     # initiation & starting an application
-    #After(@useCase, 'start', @gui.start)
+    After(@useCase, 'start', @gui.start)
     After(@useCase, 'start', @websocket.start)
     After(@useCase, 'loadAll', @storage.loadAllRequest)
-    After(@storage, 'loadAllResponse', (data) => @useCase.data = data; @gui.loadAll(data))
+    After(@storage, 'loadAllResponse', (data) => @useCase.setData(data); @gui.loadAll(data))
     # saving code to a remote storage
     After(@gui, 'saveCode', (code) => @useCase.saveCode(code))
     After(@useCase, 'saveCode', (code) => @storage.saveCodeRequest(code))

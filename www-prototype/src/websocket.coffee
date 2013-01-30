@@ -1,8 +1,8 @@
 class WebSocket
   constructor: (@url_base) ->
   	@faye_settings = {
-  	  timeout: 60
-  	  retry: 3
+  	  timeout: 20
+  	  retry: 5
   	}
 
   start: =>

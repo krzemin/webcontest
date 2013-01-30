@@ -2,6 +2,10 @@ class UseCase
   constructor: ->
     @data = {}
 
+  setData: (data) =>
+    @data = data
+
+
   start: =>
     #@loadAll()
 
@@ -22,3 +26,6 @@ class UseCase
   submissionResultUpdated: (result) =>
 
   rankingUpdated: (ranking) =>
+
+
+

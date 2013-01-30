@@ -7,11 +7,12 @@
 
 class App
   constructor: ->
-    useCase      = new UseCase()
-    gui          = new Gui()
-    localStorage = new LocalStorage("webcontest")
-    websocket    = new WebSocket("http://localhost:3000/faye")
-    glue         = new Glue(useCase, gui, localStorage, websocket)
+    useCase       = new UseCase()
+    gui           = new Gui()
+    local_storage = new LocalStorage("webcontest")
+    websocket     = new WebSocket("http://localhost:3000/faye")
+    api	   		  = new ApiClient("http://localhost:3000")
+    glue          = new Glue(useCase, gui, api, local_storage, websocket)
     
     useCase.start()
 
