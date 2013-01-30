@@ -122,7 +122,7 @@ class Gui
 
   codeSaved: (result) =>
     $('#save').button('reset')
-    if result
+    unless result
       opts = { type: 'error', title: 'Error', text: 'An error has occured while saving the code to the server. Try again.'}
       @_render('alert.tmpl', '#code-alert-container', opts)
     else

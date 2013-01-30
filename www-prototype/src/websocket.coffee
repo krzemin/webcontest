@@ -5,7 +5,7 @@ class WebSocket
   	  retry: 5
   	}
 
-  start: =>
+  init: =>
   	@faye = new Faye.Client(@url_base, @faye_settings)
   	@faye.bind('transport:down', => @transportDown())
   	@faye.bind('transport:up', => @transportUp())

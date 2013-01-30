@@ -1,5 +1,8 @@
 class StubData
-  all_data: ->
+  constructor: ->
+  	@code = @example_code
+
+  all_data: =>
   	{
       problem: {
         name: 'Complicated Expressions'
@@ -27,7 +30,7 @@ class StubData
       code: {
         language: 'c++'
         mode: 'text/x-c++src'
-        text: @example_code
+        text: @code
       }
       submissions: @example_submissions
       ranking: @_generateRanking ['A', 'B', 'C', 'D'], ['Piotr Krzemiński', 'Joe Bonamassa', 'Eric Johnson', 'Jimi Hendrix', 'Eric Clapton', 'Jimmy Page', 'George Harrison', 'Ritchie Blackmore', 'Buddy Guy', 'Eddie Van Halen', 'Steve Vai', 'John Petrucci']

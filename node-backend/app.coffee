@@ -30,6 +30,14 @@ app.get('/load-all', (req, res) ->
   res.json(data.all_data())
 )
 
+app.post('/save-code', (req, res) ->
+  if Number.random(0,4) != 0
+    data.code = req.body.code
+    res.json({status: true})
+  else
+    res.json({status: false})
+)
+
 app.get('/test', (req, res) ->
   bayeux.getClient().publish('/broadcast', {
     text: "kaka demona"

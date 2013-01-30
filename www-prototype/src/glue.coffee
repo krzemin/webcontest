@@ -12,13 +12,13 @@ class Glue
 
     # initiation & starting an application
     After(@useCase, 'start', @gui.start)
-    After(@useCase, 'start', @websocket.start)
+    After(@useCase, 'start', @websocket.init)
     After(@useCase, 'loadAll', @api.loadAllRequest)
     After(@api, 'loadAllResponse', (data) => @useCase.setData(data); @gui.loadAll(data))
     # saving code to a remote storage
     After(@gui, 'saveCode', (code) => @useCase.saveCode(code))
-    After(@useCase, 'saveCode', (code) => @storage.saveCodeRequest(code))
-    After(@storage, 'saveCodeResponse', (result) => @gui.codeSaved(result) )
+    After(@useCase, 'saveCode', (code) => @api.saveCodeRequest(code))
+    After(@api, 'saveCodeResponse', (result) => @gui.codeSaved(result) )
     # compile code
     After(@gui, 'compileCode', (code) => @useCase.compileCode(code))
     After(@useCase, 'compileCode', (code) => @storage.compileCodeRequest(code))
