@@ -3,6 +3,9 @@ express = require('express')
 http = require('http')
 path = require('path')
 faye = require('faye')
+sugar = require('sugar')
+stub_data = require('./stub_data')
+data = new stub_data.StubData()
 
 app = express()
 
@@ -16,18 +19,15 @@ app.configure( ->
   app.use(express.logger('dev'))
   app.use(express.bodyParser())
   app.use(express.methodOverride())
+  app.use(express.static(path.join(__dirname, '../www-prototype')))
 )
 
 app.configure('development', ->
   app.use(express.errorHandler())
 )
 
-app.get('/', (req, res) ->
-  res.end("raz\ndwa\ntrzycztery")
-)
-
 app.get('/load-all', (req, res) ->
-  res.json({type: 'hahaha'});
+  res.json(data.all_data())
 )
 
 app.get('/test', (req, res) ->

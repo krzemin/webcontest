@@ -6,14 +6,15 @@ class Glue
     # logging stuff for adapters
     LogAll(@useCase, 'UseCase')
     LogAll(@gui, 'Gui')
+    LogAll(@api, 'API')
     LogAll(@storage, 'Storage')
     LogAll(@websocket, 'WebSocket')
 
     # initiation & starting an application
     After(@useCase, 'start', @gui.start)
     After(@useCase, 'start', @websocket.start)
-    After(@useCase, 'loadAll', @storage.loadAllRequest)
-    After(@storage, 'loadAllResponse', (data) => @useCase.setData(data); @gui.loadAll(data))
+    After(@useCase, 'loadAll', @api.loadAllRequest)
+    After(@api, 'loadAllResponse', (data) => @useCase.setData(data); @gui.loadAll(data))
     # saving code to a remote storage
     After(@gui, 'saveCode', (code) => @useCase.saveCode(code))
     After(@useCase, 'saveCode', (code) => @storage.saveCodeRequest(code))

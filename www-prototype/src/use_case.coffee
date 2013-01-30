@@ -7,7 +7,7 @@ class UseCase
 
 
   start: =>
-    #@loadAll()
+    @loadAll()
 
   loadAll: =>
 
