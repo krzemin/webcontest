@@ -147,13 +147,13 @@ class Gui
   codeCompilationFinished: (result) =>
     $('#compile').button('reset')
     if result.status == 'error'
-      $('#messages').text(result.messages).show()
+      $('#messages').text(result.message).show()
       $('#messages').addClass('messages-compilation-error')
     else
-      if result.messages
-        $('#messages').text(result.messages + '\nCompilation finished.').show()
+      if result.message
+        $('#messages').text("#{result.message}\nCompilation finished in #{result.time}s.").show()
       else
-        $('#messages').text('Compilation finished.').show()
+        $('#messages').text("Compilation finished in #{result.time}s.").show()
       $('#messages').removeClass('messages-compilation-error')
 
   submitCode: (code) =>

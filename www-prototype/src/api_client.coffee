@@ -3,28 +3,36 @@ class ApiClient
 
   # prefetching
   loadAllRequest: =>
-  	$.ajax({
+  	$.ajax {
+      url: '/load-all'
   	  dataType: 'json'
-  	  url: '/load-all'
   	  success: @loadAllResponse
-  	})
+  	}
 
   loadAllResponse: (data) =>
-  	console.log(data)
 
   # saving code
-  saveCodeResponse: (result) =>
-    console.log(result)
-
   saveCodeRequest: (code) =>
-  	console.log(code)
-  	$.ajax({
+  	$.ajax {
+      type: 'POST'
+      url: '/save-code'
   	  dataType: 'json'
   	  data: { code: code }
-  	  type: 'POST'
-  	  url: '/save-code'
   	  success: (data) => @saveCodeResponse(data.status)
-  	})
+  	}
 
+  saveCodeResponse: (result) =>
+    console.log result
 
+  # compiling code
+  compileCodeRequest: (code) =>
+    $.ajax {
+      type: 'POST'
+      url: '/compile-code'
+      dataType: 'json'
+      data: { code: code }
+      success: (data) => @compileCodeResponse(data.status)
+    }
+
+  compileCodeResponse: (result) =>
 
