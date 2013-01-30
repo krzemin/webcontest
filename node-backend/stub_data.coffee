@@ -1,6 +1,7 @@
 class StubData
   constructor: ->
-  	@code = @example_code
+    @code = @example_code
+    @ranking = @_generateRanking ['A', 'B', 'C', 'D'], [ 'Piotr Krzemiński', 'Joe Bonamassa', 'Eric Johnson', 'Jimi Hendrix', 'Eric Clapton', 'Jimmy Page', 'George Harrison', 'Ritchie Blackmore', 'Buddy Guy', 'Eddie Van Halen', 'Steve Vai', 'John Petrucci' ]
 
   all_data: =>
   	{
@@ -33,8 +34,29 @@ class StubData
         text: @code
       }
       submissions: @example_submissions
-      ranking: @_generateRanking ['A', 'B', 'C', 'D'], ['Piotr Krzemiński', 'Joe Bonamassa', 'Eric Johnson', 'Jimi Hendrix', 'Eric Clapton', 'Jimmy Page', 'George Harrison', 'Ritchie Blackmore', 'Buddy Guy', 'Eddie Van Halen', 'Steve Vai', 'John Petrucci']
+      ranking: @ranking
     }
+
+  updateRanking: =>
+    index = Number.random(0, @ranking.board.length - 1)
+    row = @ranking.board[index]
+    problems = row.problems
+    pindex = Number.random(0, problems.length - 1)
+    if (problems[pindex] == '0.00')
+      problems[pindex] = parseFloat(Number.random(0, 50000) / 100).toFixed(2)
+      total = (problems.map parseFloat).sum()
+      @ranking.board[index].score = parseFloat(total).toFixed(2)
+      @ranking.board = @_sortRanking(@ranking.board)
+      i = 1
+      @ranking.board.each (row) => row.no = i; i += 1
+      @internalCounter = 0
+      return @ranking
+    else
+      @internalCounter += 1
+      if @internalCounter < 20
+        return @updateRanking() 
+      else
+        return @ranking
 
   _sortRanking: (ranking) =>
     ranking.sort((a,b) ->
@@ -68,12 +90,12 @@ class StubData
     @ranking
 
   _generateFinishedSubmissionStatus: (id) =>
-    c = Number.random(0,6)
-    code = 'mle' if c == 6
-    code = 'tle' if c == 5
-    code = 'wa' if c == 4
-    code = 're' if c == 3
-    code = 'passed' if c <= 2
+    c = Number.random(0,9)
+    code = 'mle' if c == 9
+    code = 'tle' if c == 8
+    code = 'wa' if c == 7
+    code = 're' if c == 6
+    code = 'passed' if c <= 5
     performance = {}
     performance.time = parseFloat(Number.random(50, 600) / 100).toFixed(2) + 's' if c != 5
     performance.memory = Number.random(4000, 30000) + 'kb' if c != 6

@@ -189,7 +189,7 @@ class Gui
   submissionResultUpdated: (result) =>
     console.log(result)
     status_html = Handlebars.helpers['submission_status'](result).toString()
-    tr = $('table#submissions-table > tbody > tr[data-id="'+result.id+'"]')
+    tr = $("""table#submissions-table > tbody > tr[data-id="#{result.id}"]""")
     tr.find('td.submission-status').html(status_html)
     if result.score
       tr.find('td.submission-score').text(result.score)

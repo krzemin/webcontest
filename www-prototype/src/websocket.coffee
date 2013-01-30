@@ -13,8 +13,6 @@ class WebSocket
   	@broadcast = @faye.subscribe('/broadcast', (message) =>
   					@broadcastReceived(message)
   	)
-  	#@broadcast.callback => console.log('broadcast callback')
-  	#@broadcast.errback (error) => console.log("ERR: "); console.log(error)
 
   transportDown: =>
     console.log "transport is down!!!"
@@ -25,6 +23,9 @@ class WebSocket
   broadcastReceived: (message) =>
     console.log message
     @compileCodeIndication(message.data) if message.type == 'compile-code-indication'
+    @submitCodeIndication(message.data) if message.type == 'submit-indication'
+    @rankingUpdateIndication(message.data) if message.type == 'ranking-indication'
 
   compileCodeIndication: (result) =>
-
+  submitCodeIndication: (result) =>
+  rankingUpdateIndication: (ranking) =>

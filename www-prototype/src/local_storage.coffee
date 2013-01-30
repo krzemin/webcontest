@@ -1,9 +1,6 @@
 class LocalStorage
   constructor: (@namespace) ->
-    unless @get('code')
-      @set('code', @example_code)
     @ranking = { problems: [], board: []}
-    #setTimeout( (=> @_rankingUpdateCauser()), 5000)
 
   set: (key, value) =>
     $.jStorage.set("#{@namespace}/#{key}", value)

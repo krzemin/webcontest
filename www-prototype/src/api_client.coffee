@@ -10,6 +10,7 @@ class ApiClient
   	}
 
   loadAllResponse: (data) =>
+    console.log data
 
   # saving code
   saveCodeRequest: (code) =>
@@ -19,6 +20,7 @@ class ApiClient
   	  dataType: 'json'
   	  data: { code: code }
   	  success: (data) => @saveCodeResponse(data.status)
+      error: => @saveCodeResponse(false)
   	}
 
   saveCodeResponse: (result) =>
@@ -32,7 +34,21 @@ class ApiClient
       dataType: 'json'
       data: { code: code }
       success: (data) => @compileCodeResponse(data.status)
+      error: => @compileCodeResponse(false)
     }
 
   compileCodeResponse: (result) =>
 
+  # submitting a solution
+  submitCodeRequest: (code) =>
+    $.ajax {
+      type: 'POST'
+      url: '/submit'
+      dataType: 'json'
+      data: { code: code }
+      success: (data) => if data.status then @submitCodeResponse(data) else @submitCodeResponse(false)
+      error: => @submitCodeResponse(false)
+    }
+
+  submitCodeResponse: (result) =>
+  
