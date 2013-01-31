@@ -65,6 +65,7 @@ app.post '/compile-code', (req, res) ->
     res.json {status: false}
 
 rankingIndication = ->
+  data.updateRanking()
   msg = {
     type: 'ranking-indication'
     data: data.updateRanking()
@@ -109,7 +110,7 @@ app.post '/submit', (req, res) ->
     res.json {status: false}
 
 app.get '/test', (req, res) ->
-  bayeux.getClient().publish '/broadcast', { text: "kaka demona" }
+  rankingIndication()
   res.json {type: 'OK'}
 
 ### listen HTTP ###

@@ -13,7 +13,7 @@ class Gui
       }
     }
     @rankingUpdateOptions = {
-      duration: [1000, 0, 500, 0, 500]
+      duration: [600, 50, 400, 50, 400]
       animationSettings: {
           up: { left: -25, backgroundColor: '#AAFFAA' }
           down: { left: 25, backgroundColor: '#FFAAAA' }
