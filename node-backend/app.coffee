@@ -36,7 +36,6 @@ app.post '/save-code', (req, res) ->
   else
     res.json {status: false}
 
-
 compilationIndication = (time) ->
   status = if Number.random(0,2) == 0 then 'error' else 'success'
   if status == 'error'
@@ -45,7 +44,6 @@ compilationIndication = (time) ->
     message = data.compilation_with_warning
   else
     message = ''
-
   msg = {
     type: 'compile-code-indication'
     data: {
@@ -57,7 +55,6 @@ compilationIndication = (time) ->
   console.log "bayeux: broadcasting " + msg.type
   bayeux.getClient().publish '/broadcast', msg
 
-
 app.post '/compile-code', (req, res) ->
   if Number.random(0,4) != 0
     data.code = req.body.code
@@ -66,7 +63,6 @@ app.post '/compile-code', (req, res) ->
     res.json {status: true}
   else
     res.json {status: false}
-
 
 rankingIndication = ->
   msg = {
@@ -85,7 +81,6 @@ submitIndication = (msg) ->
   bayeux.getClient().publish '/broadcast', msg
   if msg.data.status == 'finished' and msg.data.code == 'passed'
     rankingIndication()
-
 
 app.post '/submit', (req, res) ->
   if Number.random(0,4) != 0
@@ -112,8 +107,6 @@ app.post '/submit', (req, res) ->
     res.json result1
   else
     res.json {status: false}
-
-
 
 app.get '/test', (req, res) ->
   bayeux.getClient().publish '/broadcast', { text: "kaka demona" }

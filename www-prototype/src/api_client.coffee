@@ -3,25 +3,25 @@ class ApiClient
 
   # prefetching
   loadAllRequest: =>
-  	$.ajax {
+    $.ajax {
       url: '/load-all'
-  	  dataType: 'json'
-  	  success: @loadAllResponse
-  	}
+      dataType: 'json'
+      success: @loadAllResponse
+    }
 
   loadAllResponse: (data) =>
     console.log data
 
   # saving code
   saveCodeRequest: (code) =>
-  	$.ajax {
+    $.ajax {
       type: 'POST'
       url: '/save-code'
-  	  dataType: 'json'
-  	  data: { code: code }
-  	  success: (data) => @saveCodeResponse(data.status)
+      dataType: 'json'
+      data: { code: code }
+      success: (data) => @saveCodeResponse(data.status)
       error: => @saveCodeResponse(false)
-  	}
+    }
 
   saveCodeResponse: (result) =>
     console.log result
