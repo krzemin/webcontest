@@ -1,12 +1,12 @@
 class WebSocket
-  constructor: (@url_base) ->
+  constructor: (@url) ->
   	@faye_settings = {
   	  timeout: 20
   	  retry: 5
   	}
 
   init: =>
-  	@faye = new Faye.Client @url_base, @faye_settings
+  	@faye = new Faye.Client @url, @faye_settings
   	@faye.bind 'transport:down', => @transportDown()
   	@faye.bind 'transport:up', => @transportUp()
 

@@ -1,5 +1,5 @@
 class ApiClient
-  constructor: (@url_base) ->
+  constructor: ->
 
   # prefetching
   loadAllRequest: =>
