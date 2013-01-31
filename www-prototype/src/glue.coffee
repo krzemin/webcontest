@@ -11,8 +11,14 @@ class Glue
     # initiation & starting an application
     After @useCase, 'start', @gui.start
     After @useCase, 'start', @websocket.init
-    After @useCase, 'loadAll', @api.loadAllRequest
-    After @api, 'loadAllResponse', (data) => @useCase.setData(data); @gui.loadAll(data)
+    After @useCase, 'prefetchAll', @api.prefetchAllRequest
+    After @api, 'prefetchAllResponse', (data) => @useCase.prefetchingFinished(data)
+    Before @useCase, 'setData', (data) => @gui.showUIContainers(data)
+    Before @useCase, 'prefetchingErrored', (data) => @gui.showPrefetchingError(data)
+    After @useCase, 'setProblem', @gui.showProblem
+    After @useCase, 'setCode', @gui.showCode
+    After @useCase, 'setSubmissions', @gui.showSubmissions
+    After @useCase, 'setRanking', @gui.showRanking
     # saving code to a remote storage
     After @gui, 'saveCode', (code) => @useCase.saveCode(code)
     After @useCase, 'saveCode', (code) => @api.saveCodeRequest(code)
@@ -32,6 +38,12 @@ class Glue
     After @websocket, 'submitCodeIndication', (result) => @useCase.submissionResultUpdated(result)
     After @useCase, 'submissionResultUpdated', (result) => @gui.submissionResultUpdated(result)
     # ranking update
-    After @websocket, 'rankingUpdateIndication', (ranking) => @useCase.rankingUpdated(ranking)
-    After @useCase, 'rankingUpdated', (ranking) => @gui.rankingUpdated(ranking)
+    After @websocket, 'rankingUpdateIndication', (ranking) => @useCase.setRanking(ranking)
+    # gui updates
+    After @gui, 'showRanking', @gui.uiChanged
+    # AfterAll @gui, ['showProblem',
+    #                 'showCode',
+    #                 'showSubmissions',
+    #                 'showRanking',
+    #                 'submissionPosted'], => @gui.uiChanged()
 

@@ -26,7 +26,7 @@ app.configure 'development', ->
 
 ### API calls ###
 
-app.get '/load-all', (req, res) ->
+app.get '/prefetch-all', (req, res) ->
   res.json data.all_data()
 
 app.post '/save-code', (req, res) ->

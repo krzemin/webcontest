@@ -57,17 +57,7 @@ class Gui
         return new Handlebars.SafeString """<span class="ranking-points-passed">#{points}</span>"""
       else
         return new Handlebars.SafeString points
-
-  _refreshScrollSpy: =>
-    $('body').scrollspy('refresh')
     
-  _bindUIControls: =>
-    $('#toggle-messages').click( => $('#messages').toggle() )
-    $('#save').click( => @saveCode(@codemirror.getValue()) )
-    $('#compile').click( => @compileCode(@codemirror.getValue()) )
-    $('#submit').click( => @submitCode(@codemirror.getValue()) )
-    $('#fullscreen').click( => @_setFullScreen(!@_isFullScreen()) )
-
   _initCodeMirror: (code) =>
     codewidget = document.getElementById('codemirror')
     @codeMirrorOpts.mode = code.mode
@@ -96,7 +86,18 @@ class Gui
       document.documentElement.style.overflow = ""
       $('.CodeMirror-scroll').css('overflow-y', 'hidden')
     @codemirror.refresh()
-    
+
+  _bindCodeActions: =>
+    $('#toggle-messages').click( => $('#messages').toggle() )
+    $('#save').click( => @saveCode(@codemirror.getValue()) )
+    $('#compile').click( => @compileCode(@codemirror.getValue()) )
+    $('#submit').click( => @submitCode(@codemirror.getValue()) )
+    $('#fullscreen').click( => @_setFullScreen(!@_isFullScreen()) )
+
+  uiChanged: =>
+    console.log '--------- UI CHANGED ----------'
+    $('body').scrollspy('refresh')
+
   start: =>
     @_initHandlebarsHelpers()
     $.extend($.easing, {
@@ -105,16 +106,33 @@ class Gui
         return b if t == 0
         c * Math.pow(2, 10 * (t/d - 1)) + b
     })
+
+  showPrefetchingError: =>
+    opts = { type: 'error', title: 'Error', text: 'An error has occured during prefetching the data.'}
+    @_render('alert.tmpl', '#main', opts)
   
-  loadAll: (data) =>
-    @_render('main.tmpl', '#main', data)
-    @_render('problem.tmpl', '#problem', data.problem)
-    @_render('code.tmpl', '#code', data.code)
-    @_render('submissions.tmpl', '#submissions', data.submissions)
-    @_render('ranking.tmpl', '#ranking', data.ranking)
-    @_refreshScrollSpy()
-    @_initCodeMirror(data.code)
-    @_bindUIControls()
+  showUIContainers: =>
+    @_render('main.tmpl', '#main', {})
+
+  showProblem: (problem) =>
+    @_render('problem.tmpl', '#problem', problem)
+
+  showCode: (code) =>
+    @_render('code.tmpl', '#code', code)
+    @_initCodeMirror(code)
+    @_bindCodeActions()
+
+  showSubmissions: (submissions) =>
+    @_render('submissions.tmpl', '#submissions', submissions)
+
+  showRanking: (ranking) =>
+    if $('#ranking > table#ranking-table').size() == 0
+      @_render('ranking.tmpl', '#ranking', ranking)
+    else
+      newRankingMarkup = Handlebars.templates['ranking.tmpl'](ranking)
+      newRanking = $(document.createElement()).html(newRankingMarkup)
+      newTable = $(newRanking).find('table#ranking-table')
+      $('table#ranking-table').rankingTableUpdate(newTable, @rankingUpdateOptions)
 
   saveCode: (code) =>
     $('#code-alert-container').html('')
@@ -203,9 +221,3 @@ class Gui
           """<nobr><i class="icon-tasks"></i> #{result.performance.memory}</nobr>"""
         )
 
-  rankingUpdated: (ranking) =>
-    console.log(ranking)
-    newRankingMarkup = Handlebars.templates['ranking.tmpl'](ranking)
-    newRanking = $(document.createElement()).html(newRankingMarkup)
-    newTable = $(newRanking).find('table#ranking-table')
-    $('table#ranking-table').rankingTableUpdate(newTable, @rankingUpdateOptions)

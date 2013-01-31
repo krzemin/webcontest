@@ -1,17 +1,40 @@
 class UseCase
   constructor: ->
-    @data = {}
+    @problem = {}
+    @code = {}
+    @submissions = []
+    @ranking = {}
 
   setData: (data) =>
-    @data = data
+    @setProblem(data.problem)
+    @setCode(data.code)
+    @setSubmissions(data.submissions)
+    @setRanking(data.ranking)
 
+  setProblem: (problem) =>
+    @problem = problem
+  setCode: (code) =>
+    @code = code
+  setSubmissions: (submissions) =>
+    @submissions = submissions
+  setRanking: (ranking) =>
+    @ranking = ranking
 
   start: =>
-    @loadAll()
+    @prefetchAll()
 
-  loadAll: =>
+  prefetchAll: =>
+
+  prefetchingFinished: (data) =>
+    if data
+      @setData(data)
+    else
+      @prefetchingErrored()
+
+  prefetchingErrored: =>
 
   saveCode: (code) =>
+    @code.text = code
 
   compileCode: (code) =>
 
@@ -24,8 +47,3 @@ class UseCase
   submissionPosted: (result) =>
 
   submissionResultUpdated: (result) =>
-
-  rankingUpdated: (ranking) =>
-
-
-

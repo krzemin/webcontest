@@ -2,15 +2,16 @@ class ApiClient
   constructor: ->
 
   # prefetching
-  loadAllRequest: =>
+  prefetchAllResponse: (data) =>
+    console.log data
+  prefetchAllRequest: =>
     $.ajax {
-      url: '/load-all'
+      url: '/prefetch-all'
       dataType: 'json'
-      success: @loadAllResponse
+      success: @prefetchAllResponse
+      error: => @prefetchAllResponse(false)
     }
 
-  loadAllResponse: (data) =>
-    console.log data
 
   # saving code
   saveCodeRequest: (code) =>
@@ -46,7 +47,11 @@ class ApiClient
       url: '/submit'
       dataType: 'json'
       data: { code: code }
-      success: (data) => if data.status then @submitCodeResponse(data) else @submitCodeResponse(false)
+      success: (data) =>
+        if data.status
+          @submitCodeResponse(data)
+        else
+          @submitCodeResponse(false)
       error: => @submitCodeResponse(false)
     }
 

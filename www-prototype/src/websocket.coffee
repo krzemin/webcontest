@@ -10,9 +10,7 @@ class WebSocket
   	@faye.bind 'transport:down', => @transportDown()
   	@faye.bind 'transport:up', => @transportUp()
 
-  	@broadcast = @faye.subscribe('/broadcast', (message) =>
-  					@broadcastReceived(message)
-  	)
+  	@broadcast = @faye.subscribe '/broadcast', @broadcastReceived
 
   transportDown: =>
     console.log "transport is down!!!"
