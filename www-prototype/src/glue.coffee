@@ -40,10 +40,9 @@ class Glue
     # ranking update
     After @websocket, 'rankingUpdateIndication', (ranking) => @useCase.setRanking(ranking)
     # gui updates
-    After @gui, 'showRanking', @gui.uiChanged
-    # AfterAll @gui, ['showProblem',
-    #                 'showCode',
-    #                 'showSubmissions',
-    #                 'showRanking',
-    #                 'submissionPosted'], => @gui.uiChanged()
+    AfterAll @gui, ['showProblem',
+                    'showCode',
+                    'showSubmissions',
+                    'showRanking',
+                    'submissionPosted'], => @gui.uiChanged()
 

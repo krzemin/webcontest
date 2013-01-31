@@ -11,14 +11,10 @@ class UseCase
     @setSubmissions(data.submissions)
     @setRanking(data.ranking)
 
-  setProblem: (problem) =>
-    @problem = problem
-  setCode: (code) =>
-    @code = code
-  setSubmissions: (submissions) =>
-    @submissions = submissions
-  setRanking: (ranking) =>
-    @ranking = ranking
+  setProblem: (@problem) =>
+  setCode: (@code) =>
+  setSubmissions: (@submissions) =>
+  setRanking: (@ranking) =>
 
   start: =>
     @prefetchAll()
