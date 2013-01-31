@@ -8,6 +8,12 @@ class Glue
     LogAll @storage, 'Storage'
     LogAll @websocket, 'WebSocket'
 
+    AfterAll @gui, ['showProblem',
+                    'showCode',
+                    'showSubmissions',
+                    'showRanking',
+                    'submissionPosted'], @gui.uiChanged
+
     # initiation & starting an application
     After @useCase, 'start', @gui.start
     After @useCase, 'start', @websocket.init
@@ -19,6 +25,7 @@ class Glue
     After @useCase, 'setCode', @gui.showCode
     After @useCase, 'setSubmissions', @gui.showSubmissions
     After @useCase, 'setRanking', @gui.showRanking
+
     # saving code to a remote storage
     After @gui, 'saveCode', (code) => @useCase.saveCode(code)
     After @useCase, 'saveCode', (code) => @api.saveCodeRequest(code)
@@ -40,9 +47,9 @@ class Glue
     # ranking update
     After @websocket, 'rankingUpdateIndication', (ranking) => @useCase.setRanking(ranking)
     # gui updates
-    AfterAll @gui, ['showProblem',
-                    'showCode',
-                    'showSubmissions',
-                    'showRanking',
-                    'submissionPosted'], => @gui.uiChanged()
+    # AfterAll @gui, ['showProblem',
+    #                 'showCode',
+    #                 'showSubmissions',
+    #                 'showRanking',
+    #                 'submissionPosted'], => @gui.uiChanged()
 

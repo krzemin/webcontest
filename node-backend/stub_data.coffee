@@ -33,7 +33,7 @@ class StubData
         mode: 'text/x-c++src'
         text: @code
       }
-      submissions: @example_submissions
+      submissions: @example_submissions.add(@example_submissions).add(@example_submissions)
       ranking: @ranking
     }
 

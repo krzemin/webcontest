@@ -95,7 +95,6 @@ class Gui
     $('#fullscreen').click( => @_setFullScreen(!@_isFullScreen()) )
 
   uiChanged: =>
-    console.log '--------- UI CHANGED ----------'
     $('body').scrollspy('refresh')
 
   start: =>

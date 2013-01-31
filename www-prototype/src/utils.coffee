@@ -16,7 +16,7 @@ _.defaults this,
     for own key, value of object
       if _.isFunction(value)
         do (key) ->
-          Before(object, key, -> console.log("calling: #{name}::#{key}"))
+          Before(object, key, -> console.log("=> #{name}::#{key}"))
 
   AutoBind: (gui, useCase) ->
     for key, value of gui
