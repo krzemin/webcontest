@@ -65,7 +65,6 @@ app.post '/compile-code', (req, res) ->
     res.json {status: false}
 
 rankingIndication = ->
-  data.updateRanking()
   msg = {
     type: 'ranking-indication'
     data: data.updateRanking()
