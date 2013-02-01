@@ -2,7 +2,7 @@ class StubData
   constructor: ->
     @code = @example_code
     @ranking = @_generateRanking ['A', 'B', 'C', 'D'], [ 'Piotr Krzemiński', 'Joe Bonamassa', 'Eric Johnson', 'Jimi Hendrix', 'Eric Clapton', 'Jimmy Page', 'George Harrison', 'Ritchie Blackmore', 'Buddy Guy', 'Eddie Van Halen', 'Steve Vai', 'John Petrucci' ]
-    @my_submissions = @example_submissions.add(@example_submissions).add(@example_submissions)
+    @my_submissions = @example_submissions
 
   all_data: =>
   	{
