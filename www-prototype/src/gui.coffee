@@ -197,7 +197,10 @@ class Gui
         $('<td>').addClass('submission-performance-memory').addClass('hidden-phone')
       )
 
-      $('table#submissions-table > tbody > tr:first').before(row)
+      if $('table#submissions-table > tbody > tr').length != 0 
+        $('table#submissions-table > tbody > tr:first').before(row)
+      else
+        $('table#submissions-table > tbody').append(row)
     else
       opts = { type: 'error', title: 'Error', text: 'An error has occured while trying submit a code. Try again.'}
       @_render('alert.tmpl', '#code-alert-container', opts)

@@ -7,6 +7,27 @@ sugar = require 'sugar'
 stub_data = require './stub_data'
 data = new stub_data.StubData()
 
+db_url = 'mongodb://localhost/webcontest'
+
+mongoose = require 'mongoose'
+db = mongoose.connect(db_url)
+Schema = mongoose.Schema
+ObjectId = mongoose.ObjectId
+
+ProblemSchema = new Schema({
+  name: String
+  limits: Schema.Types.Mixed
+  content: String
+  input: String
+  output: String
+  examples: [Schema.Types.Mixed]
+})
+
+mongoose.model('Problem', ProblemSchema)
+
+Problem = mongoose.model('Problem')
+
+
 app = express()
 
 bayeux = new faye.NodeAdapter {
@@ -27,7 +48,13 @@ app.configure 'development', ->
 ### API calls ###
 
 app.get '/prefetch-all', (req, res) ->
-  res.json data.all_data()
+  prefetch_data = data.all_data()
+  Problem.find().execFind( (err, problems) =>
+    res.json { status: false } if err
+    prefetch_data.problem = problems[Number.random(0, problems.length)]
+    prefetch_data.submissions = []
+    res.json prefetch_data
+  )
 
 app.post '/save-code', (req, res) ->
   if Number.random(0,4) != 0

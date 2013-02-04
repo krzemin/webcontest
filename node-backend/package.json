@@ -9,6 +9,7 @@
     "express": "3.1.0",
     "faye": "0.8.x",
     "coffee-script": "*",
-    "sugar": "*"
+    "sugar": "*",
+    "mongoose": "*"
   }
 }
