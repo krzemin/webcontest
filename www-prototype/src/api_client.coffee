@@ -15,7 +15,6 @@ class ApiClient
       error: => @prefetchAllResponse(false)
     }
 
-
   # saving code
   saveCodeRequest: (code) =>
     $.ajax {

@@ -53,10 +53,7 @@ app.get '/prefetch-all', (req, res) ->
     if err
       res.json { status: false } 
     else
-      console.log(problems)
-      console.log(problems.length)
       i = Number.random(problems.length-1)
-      console.log(i)
       prefetch_data.problem = problems[i]
       prefetch_data.submissions = []
       res.json prefetch_data
