@@ -50,10 +50,16 @@ app.configure 'development', ->
 app.get '/prefetch-all', (req, res) ->
   prefetch_data = data.all_data()
   Problem.find().execFind( (err, problems) =>
-    res.json { status: false } if err
-    prefetch_data.problem = problems[Number.random(0, problems.length)]
-    prefetch_data.submissions = []
-    res.json prefetch_data
+    if err
+      res.json { status: false } 
+    else
+      console.log(problems)
+      console.log(problems.length)
+      i = Number.random(problems.length-1)
+      console.log(i)
+      prefetch_data.problem = problems[i]
+      prefetch_data.submissions = []
+      res.json prefetch_data
   )
 
 app.post '/save-code', (req, res) ->

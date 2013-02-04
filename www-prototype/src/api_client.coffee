@@ -8,7 +8,10 @@ class ApiClient
     $.ajax {
       url: '/prefetch-all'
       dataType: 'json'
-      success: @prefetchAllResponse
+      success: (data) => if data.status == false
+        @prefetchAllResponse(false)
+      else
+        @prefetchAllResponse(data)
       error: => @prefetchAllResponse(false)
     }
 
