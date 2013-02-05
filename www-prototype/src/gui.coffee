@@ -122,6 +122,7 @@ class Gui
     @_bindCodeActions()
 
   showSubmissions: (submissions) =>
+    submissions.each (s) -> s.timestamp = new Date(s.timestamp).format('{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}')
     @_render('submissions.tmpl', '#submissions', submissions)
 
   showRanking: (ranking) =>
@@ -183,9 +184,9 @@ class Gui
       console.log(result)
       status = Handlebars.helpers['submission_status'](result).toString()
 
-      row = $('<tr>').attr('data-id', result.id).append(
+      row = $('<tr>').attr('data-id', result._id).append(
         $('<td>').addClass('submission-timestamp').append(
-          $('<a>').attr('nohref', '').append(result.timestamp)
+          $('<a>').attr('nohref', '').append(new Date(result.timestamp).format('{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}'))
         )
       ).append(
         $('<td>').addClass('submission-status').html(status)
@@ -209,7 +210,7 @@ class Gui
   submissionResultUpdated: (result) =>
     console.log(result)
     status_html = Handlebars.helpers['submission_status'](result).toString()
-    tr = $("""table#submissions-table > tbody > tr[data-id="#{result.id}"]""")
+    tr = $("""table#submissions-table > tbody > tr[data-id="#{result._id}"]""")
     tr.find('td.submission-status').html(status_html)
     if result.score
       tr.find('td.submission-score').text(result.score)

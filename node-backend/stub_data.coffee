@@ -101,7 +101,7 @@ class StubData
     performance.time = parseFloat(Number.random(50, 600) / 100).toFixed(2) + 's' if c != 5
     performance.memory = Number.random(4000, 30000) + 'kb' if c != 6
     {
-      id: id
+      _id: id
       status: 'finished'
       code: code
       score: parseFloat(if c <= 2 then Number.random(10000, 50000) / 100 else 0).toFixed(2)

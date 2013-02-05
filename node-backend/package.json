@@ -10,6 +10,7 @@
     "faye": "0.8.x",
     "coffee-script": "*",
     "sugar": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "async": "*"
   }
 }
