@@ -33,7 +33,7 @@ SubmissionSchema = new Schema({
   progress: Number
   code: String
   performance: Mixed
-  score: Number
+  score: String
 })
 
 mongoose.model('Problem', ProblemSchema)
@@ -71,6 +71,7 @@ app.get '/prefetch-all', (req, res) ->
         callback err
     (callback) ->
       Submission.find({}, null, {sort: { timestamp: -1}}).execFind (err, submissions) ->
+        submissions.each (s) -> s.score = parseFloat(s.score).toFixed(2)
         prefetch_data.submissions = submissions
         callback err
     ], (err) ->

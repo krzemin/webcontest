@@ -2,7 +2,6 @@ class StubData
   constructor: ->
     @code = @example_code
     @ranking = @_generateRanking ['A', 'B', 'C', 'D'], [ 'Piotr Krzemiński', 'Joe Bonamassa', 'Eric Johnson', 'Jimi Hendrix', 'Eric Clapton', 'Jimmy Page', 'George Harrison', 'Ritchie Blackmore', 'Buddy Guy', 'Eddie Van Halen', 'Steve Vai', 'John Petrucci' ]
-    @my_submissions = @example_submissions
 
   all_data: =>
   	{
@@ -34,7 +33,7 @@ class StubData
         mode: 'text/x-c++src'
         text: @code
       }
-      submissions: @my_submissions
+      submissions: []
       ranking: @ranking
     }
 
@@ -104,7 +103,7 @@ class StubData
       _id: id
       status: 'finished'
       code: code
-      score: parseFloat(if c <= 2 then Number.random(10000, 50000) / 100 else 0).toFixed(2)
+      score: parseFloat(if c <= 5 then Number.random(10000, 50000) / 100 else 0).toFixed(2)
       performance: performance
     }
 
@@ -120,71 +119,6 @@ class StubData
 
 using namespace std;
 
-bool op_hi(char op) { return op == '/' || op == '*'; }
-bool op_lo(char op) { return op == '+' || op == '-'; }
-bool is_op(char op) { return op_hi(op) || op_lo(op); }
-
-bool can_omit(char inop, char leop, char riop) {
-  if(op_lo(inop) && (op_hi(leop) || op_hi(riop))) return false;
-  if(leop == '-' && op_lo(inop)) return false;
-  if(leop == '/' && op_hi(inop)) return false;
-  return true;
-}
-
-char find_inop(const string & s) {
-  int f = -1, p = 0;
-  for(int i = 0; i < s.size(); ++i) {
-    if(s[i] == '(') ++p;
-    else if(s[i] == ')') --p;
-    else if(p == 1 && op_lo(s[i])) f = i;
-  }
-  if(f != -1) return s[f];
-  for(int i = 0; i < s.size(); ++i) {
-    if(s[i] == '(') ++p;
-    else if(s[i] == ')') --p;
-    else if(p == 1 && op_hi(s[i])) f = i;
-  }
-  return s[f];
-}
-
-string simplify(const string & s) {
-  if(s.find('(') == string::npos) return s;
-  int i = 0, N = s.size();
-  bool omit[N];
-  for(int i = 0; i < N; omit[i++] = false);
-  while(i < N) {
-    i = s.find('(', i);
-    if(i == string::npos) break;
-    int p,j;
-    for(p = 1, j = i+1; p>0; ++j) {
-      if(s[j] == '(') ++p;
-      else if(s[j] == ')') --p;
-    }
-    --j;
-
-    int le = i-1, ri = j+1;
-    char c_le, c_ri;
-    while(le >= 0 && omit[le]) --le;
-    if(is_op(s[le])) c_le = s[le]; else c_le = '(';
-    while(ri < N && omit[ri]) ++ri;
-    if(is_op(s[ri])) c_ri = s[ri]; else c_ri = ')';
-    char c_in = find_inop(s.substr(i,j-i+1));
-
-    if(can_omit(c_in,c_le,c_ri)) {
-      omit[i] = omit[j] = true;
-    }
-    ++i;
-  }
-
-
-  string r;
-  for(int i = 0; i < N; ++i) {
-    if(omit[i]) continue;
-    r += s[i];
-  }
-  return r;
-}
-
 int main() {
   int n;
   string s;
@@ -197,61 +131,6 @@ int main() {
 }
 
 """
-
-
-  example_submissions: [
-        #{
-        #  id: 6
-        #  timestamp: '2013-01-03 20:59:21'
-        #  status: 'running'
-        #  progress: 70
-        #}
-        {
-          id: 5
-          timestamp: '2013-01-03 20:55:08'
-          status: 'finished'
-          progress: 100
-          code: 'passed'
-          performance: { time: '4.12', memory: '22368kb'}
-          score: '315.23'
-        }
-        {
-          id: 4
-          timestamp: '2013-01-03 20:51:21'
-          status: 'finished'
-          progress: 10
-          code: 're'
-          performance: { time: '1.02s', memory: '31337kb'}
-          score: '0.00'
-        }
-        {
-          id: 3
-          timestamp: '2013-01-03 20:03:29'
-          status: 'finished'
-          progress: 40
-          code: 'wa'
-          performance: { time: '4.77s', memory: '21356kb'}
-          score: '0.00'
-        }
-        {
-          id: 2
-          timestamp: '2013-01-03 19:26:11'
-          status: 'finished'
-          progress: 90
-          code: 'tle'
-          performance: { memory: '22368kb'}
-          score: '0.00'
-        }
-        {
-          id: 1
-          timestamp: '2013-01-03 19:26:11'
-          status: 'finished'
-          progress: 60
-          code: 'mle'
-          performance: { time: '2.11s' }
-          score: '0.00'
-        }
-      ]
 
   compilation_with_warning: """clang++ -c -g -MMD -MP -MF
 syscallshandler.cpp:14:13: warning: enumeration value 'stBlockedFile' not handled in switch [-Wswitch]
