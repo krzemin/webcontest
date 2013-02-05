@@ -16,6 +16,7 @@ ObjectId = mongoose.Schema.ObjectId
 Mixed = mongoose.Schema.Types.Mixed
 
 ProblemSchema = new Schema({
+  _id: ObjectId
   name: String
   limits: Mixed
   content: String
@@ -25,7 +26,7 @@ ProblemSchema = new Schema({
 })
 
 SubmissionSchema = new Schema({
-  id: ObjectId
+  _id: ObjectId
   timestamp: Date
   status: String
   progress: Number
