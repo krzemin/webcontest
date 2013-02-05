@@ -4,29 +4,38 @@ http = require 'http'
 path = require 'path'
 faye = require 'faye'
 sugar = require 'sugar'
+mongoose = require 'mongoose'
 stub_data = require './stub_data'
 data = new stub_data.StubData()
 
 db_url = 'mongodb://localhost/webcontest'
-
-mongoose = require 'mongoose'
 db = mongoose.connect(db_url)
+
 Schema = mongoose.Schema
-ObjectId = mongoose.ObjectId
+ObjectId = mongoose.Schema.ObjectId
+Mixed = mongoose.Schema.Types.Mixed
 
 ProblemSchema = new Schema({
   name: String
-  limits: Schema.Types.Mixed
+  limits: Mixed
   content: String
   input: String
   output: String
-  examples: [Schema.Types.Mixed]
+  examples: [Mixed]
+})
+
+SubmissionSchema = new Schema({
+  id: ObjectId
+  timestamp: Date
+  status: String
+  progress: Number
+  code: String
+  performance: Mixed
+  score: Number
 })
 
 mongoose.model('Problem', ProblemSchema)
-
-Problem = mongoose.model('Problem')
-
+mongoose.model('Submission', SubmissionSchema)
 
 app = express()
 
@@ -49,6 +58,7 @@ app.configure 'development', ->
 
 app.get '/prefetch-all', (req, res) ->
   prefetch_data = data.all_data()
+  Problem = mongoose.model('Problem')
   Problem.find().execFind( (err, problems) =>
     if err
       res.json { status: false } 
